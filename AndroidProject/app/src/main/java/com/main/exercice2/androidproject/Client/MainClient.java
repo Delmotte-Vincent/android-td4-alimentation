@@ -1,45 +1,25 @@
 package com.main.exercice2.androidproject.Client;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.R;
 
-public class MainClient extends AppCompatActivity implements iButtonClickListener {
-
+public class MainClient extends AppCompatActivity {
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
-        FragmentMenu fragmentMenu = (FragmentMenu) getSupportFragmentManager().findFragmentById(R.id.menu);
-        if(fragmentMenu ==null){
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.menu,new FragmentMenu());
-            transaction.addToBackStack(null);
-            transaction.commit();
-        }
+        bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
+        this.configureBottomView();
     }
 
-    @Override
-    public void onButtonProfileClicked(View button) {
-        Intent intent = new Intent(getApplicationContext(),ProfileClientActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onButtonMapClicked(View button) {
-        Intent intent = new Intent(getApplicationContext(),MapActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onButtonSignalerClicked(View button) {
-        Intent intent = new Intent(getApplicationContext(),SignalementActivity.class);
-        startActivity(intent);
-
+    private void configureBottomView() {
+        //bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
     }
 }
+
