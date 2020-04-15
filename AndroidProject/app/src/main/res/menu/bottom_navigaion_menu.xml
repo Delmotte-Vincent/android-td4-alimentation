@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_profil"
+        android:enabled="true"
+        android:icon="@drawable/baseline_account_circle_black_18dp"
+        android:title="@string/bottom_navigation_menu_profil"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_alertes"
+        android:enabled="true"
+        android:icon="@drawable/baseline_notifications_black_18dp"
+        android:title="@string/bottom_navigation_menu_alertes"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@drawable/baseline_map_black_18dp"
+        android:title="@string/bottom_navigation_menu_map"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_signal"
+        android:enabled="true"
+        android:icon="@drawable/baseline_report_problem_black_18dp"
+        android:title="@string/bottom_navigation_menu_signal"
+        app:showAsAction="ifRoom"/>
+</menu>
