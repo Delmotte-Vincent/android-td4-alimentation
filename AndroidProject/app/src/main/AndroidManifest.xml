@@ -9,9 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Client.SignalementActivity"></activity>
-        <activity android:name=".Client.MapActivity" />
-        <activity android:name=".Client.ProfileClientActivity" />
         <activity android:name=".Commercant.MainCommercant" />
         <activity android:name=".Client.MainClient" />
         <activity android:name=".LoginActivity" />
