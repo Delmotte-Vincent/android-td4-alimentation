@@ -7,12 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.R;
 
 public class MainClient extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    FrameLayout frameLayout ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,7 @@ public class MainClient extends AppCompatActivity {
             trans.addToBackStack(null);
             trans.commit();
         }
+
     }
 
     private void configureBottomView() {
@@ -39,32 +42,23 @@ public class MainClient extends AppCompatActivity {
 
     private boolean updateFragment(int itemId) {
         FragmentTransaction trans;
+        trans= getSupportFragmentManager().beginTransaction();
         switch (itemId) {
             case R.id.action_profil:
-                trans= getSupportFragmentManager().beginTransaction();
                 trans.replace(R.id.client_frame, new ClientProfilFragment());
-                trans.addToBackStack(null);
-                trans.commit();
                 break;
             case R.id.action_alertes :
-                trans= getSupportFragmentManager().beginTransaction();
                 trans.replace(R.id.client_frame, new ClientAlertFragment());
-                trans.addToBackStack(null);
-                trans.commit();
                 break;
             case R.id.action_map:
-                trans= getSupportFragmentManager().beginTransaction();
                 trans.replace(R.id.client_frame, new ClientMapFragment());
-                trans.addToBackStack(null);
-                trans.commit();
                 break;
             case R.id.action_signal :
-                trans= getSupportFragmentManager().beginTransaction();
                 trans.replace(R.id.client_frame, new ClientSignalFragment());
-                trans.addToBackStack(null);
-                trans.commit();
                 break;
         }
+        trans.addToBackStack(null);
+        trans.commit();
         return true;
     }
 }
