@@ -7,17 +7,22 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
 
-public class MainClient extends AppCompatActivity {
+public class MainClient extends AppCompatActivity implements IButtonCLickedListener {
     BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout ;
+    ClientAlertFragment clientAlertFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,7 @@ public class MainClient extends AppCompatActivity {
             trans.addToBackStack(null);
             trans.commit();
         }
+        clientAlertFragment= new ClientAlertFragment();
 
     }
 
@@ -51,7 +57,7 @@ public class MainClient extends AppCompatActivity {
                 trans.replace(R.id.client_frame, new ClientProfilFragment());
                 break;
             case R.id.action_alertes :
-                trans.replace(R.id.client_frame, new ClientAlertFragment());
+                trans.replace(R.id.client_frame, clientAlertFragment);
                 break;
             case R.id.action_map:
                 trans.replace(R.id.client_frame, new ClientMapFragment());
@@ -63,6 +69,29 @@ public class MainClient extends AppCompatActivity {
         trans.addToBackStack(null);
         trans.commit();
         return true;
+    }
+
+    public  ArrayList<String> getSignal(){
+        ArrayList<String> retour=new ArrayList<>();
+        String title="Sans Titre";
+        String description="sans description";
+        EditText titre=findViewById(R.id.titre_signal);
+        EditText desc=findViewById(R.id.desc_signal);
+        if(!titre.getText().toString().equals("")){title=titre.getText().toString();}
+        if(!desc.getText().toString().equals("")){description=desc.getText().toString(); }
+        retour.add(title);
+        retour.add(description);
+        return retour;
+    }
+
+    @Override
+    public void onButtonSignalClicked(View but) {
+        ArrayList<String> data = getSignal();
+        String titre = data.get(0);
+        String desc = data.get(1);
+        Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
+        clientAlertFragment.newAlert(titre,desc);
+
     }
 }
 
