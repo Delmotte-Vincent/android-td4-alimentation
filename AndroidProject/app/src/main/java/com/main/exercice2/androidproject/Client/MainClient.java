@@ -10,7 +10,10 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
+
+import java.util.ArrayList;
 
 public class MainClient extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
