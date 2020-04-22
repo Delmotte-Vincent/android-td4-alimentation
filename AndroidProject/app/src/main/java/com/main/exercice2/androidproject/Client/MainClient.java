@@ -1,10 +1,14 @@
 package com.main.exercice2.androidproject.Client;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,16 +17,19 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
 
-public class MainClient extends AppCompatActivity implements IButtonCLickedListener {
+public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes {
+    private Bitmap picture;
     BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout ;
     ClientAlertFragment clientAlertFragment;
+    ClientSignalFragment clientSignalFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +70,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 trans.replace(R.id.client_frame, new ClientMapFragment());
                 break;
             case R.id.action_signal :
-                trans.replace(R.id.client_frame, new ClientSignalFragment());
+                trans.replace(R.id.client_frame, clientSignalFragment=new ClientSignalFragment());
                 break;
         }
         trans.addToBackStack(null);
@@ -92,6 +99,48 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc);
 
+    }
+
+    @Override
+    public void onButtonPictureSignalClicked(View view) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case REQUEST_CAMERA:{
+                if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                    Toast toast = Toast.makeText(getApplicationContext(),"autorisation caméra validée",Toast.LENGTH_LONG);
+                    toast.show();
+                    clientSignalFragment.takePicture();
+                }
+                else{
+                    Toast toast = Toast.makeText(getApplicationContext(),"autorisation caméra refusée",Toast.LENGTH_LONG);
+                    toast.show();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== REQUEST_CAMERA){
+            if (resultCode==RESULT_OK){
+                picture = (Bitmap) data.getExtras().get("data");
+                clientSignalFragment.setImage(picture);
+            }
+            else if (resultCode==RESULT_CANCELED){
+                Toast toast = Toast.makeText(getApplicationContext(),"la photo n'a pas été prise",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(),"Erreur de caméra",Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
     }
 }
 
