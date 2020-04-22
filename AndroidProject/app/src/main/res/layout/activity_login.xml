@@ -11,6 +11,18 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/fbInfo"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/profile"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/qui"/>
 
     <TextView
@@ -34,8 +46,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Se connecter"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="150dp"
         android:id="@+id/connexion"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loginFb"
+        />
+
+
 
 
 

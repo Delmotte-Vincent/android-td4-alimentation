@@ -4,4 +4,8 @@
     <string name="bottom_navigation_menu_alertes">Alertes</string>
     <string name="bottom_navigation_menu_map">Map</string>
     <string name="bottom_navigation_menu_signal">Signalement</string>
+
+    <string name="facebook_app_id">671166103648720</string>
+    <string name="fb_login_protocol_scheme">fb671166103648720</string>
+
 </resources>
