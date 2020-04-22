@@ -7,9 +7,9 @@ import android.os.Build;
 
 import java.util.Objects;
 
-public class Notification extends Application {
+public class App extends Application {
 
-    private static final String CHANNEL_ID ="channel1";
+    public static final String CHANNEL_ID ="channel1";
     private static NotificationManager notificationManager;
 
     @Override

@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Application;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +14,14 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
-import com.main.exercice2.androidproject.Notification;
-import com.main.exercice2.androidproject.Post;
+import com.main.exercice2.androidproject.App;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
 
+import static com.main.exercice2.androidproject.App.CHANNEL_ID;
+
 public class MainClient extends AppCompatActivity implements IButtonCLickedListener {
-    private static final String CHANNEL_ID ="channel1";
     private int notificationId = 0;
     BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout ;
@@ -94,7 +92,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
-        //sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+        sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc);
     }
@@ -105,7 +103,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 .setContentTitle(titre)
                 .setContentText("id=" + notificationId + " - " + desc)
                 .setPriority(priority);
-        Notification.getNotificationManager().notify(++notificationId, notification.build());
+        App.getNotificationManager().notify(++notificationId, notification.build());
     }
 }
 
