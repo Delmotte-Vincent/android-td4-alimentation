@@ -2,8 +2,10 @@ package com.main.exercice2.androidproject.Client;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -14,12 +16,15 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
+import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
 
 public class MainClient extends AppCompatActivity implements IButtonCLickedListener {
+    private static final String CHANNEL_ID ="channel1";
+    private int notificationId = 0;
     BottomNavigationView bottomNavigationView;
     FrameLayout frameLayout ;
     ClientAlertFragment clientAlertFragment;
@@ -89,9 +94,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
+        //sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc);
+    }
 
+    private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), channelId)
+                .setSmallIcon(R.drawable.baseline_account_circle_black_18dp)
+                .setContentTitle(titre)
+                .setContentText("id=" + notificationId + " - " + desc)
+                .setPriority(priority);
+        Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
 }
 
