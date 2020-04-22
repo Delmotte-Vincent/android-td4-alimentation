@@ -27,6 +27,35 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_signal"
+            android:src="@drawable/noimageavailable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_weight="4" />
+        <Button
+            android:id="@+id/but_photo_signal"
+            android:text="Ajouter une photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/but_signal"
         android:text="Envoyer le signalement"
