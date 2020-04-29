@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -36,6 +37,7 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     private IButtonCLickedListener mCallBack;
     private ImageView imageView;
     Spinner spinner;
+    String spinnerText;
 
     ClientSignalFragment(){
     }
@@ -48,6 +50,7 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
 
         // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
+        //spinnerText = spinner.getSelectedItem().toString();
         List choix = new ArrayList<>();
         choix.add(AlertType.BOUCHERIE);
         choix.add(AlertType.BOULANGERIE);
@@ -57,7 +60,6 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, choix);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         rootView.findViewById(R.id.but_signal).setOnClickListener(this);
         rootView.findViewById(R.id.but_photo_signal).setOnClickListener(this);
         return rootView;

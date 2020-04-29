@@ -32,21 +32,16 @@ public class ClientAlertFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.frag_alert_client,container,false);
 
 
+
+
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        if(postList.size()==0) {
-
-        }
-
         AlerteListAdapter adapter = new AlerteListAdapter(getContext(), postList);
-
         listView.setAdapter(adapter);
-
-
 
         return rootView;
     }
 
-    public void newAlert(String titre, String desc) {
-        postList.add(new Post(titre,desc,AlertType.DEFAULT));
+    public void newAlert(String titre, String desc, String type) {
+        postList.add(new Post(titre, desc, type));
     }
 }

@@ -7,27 +7,22 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.AlertType;
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
-import com.main.exercice2.androidproject.App;
+import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.R;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -36,7 +31,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     private static final String CHANNEL_ID ="channel1";
     private int notificationId = 0;
     BottomNavigationView bottomNavigationView;
-    FrameLayout frameLayout ;
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
 
@@ -109,9 +103,10 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
-        sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+        sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-        clientAlertFragment.newAlert(titre,desc);
+
+        clientAlertFragment.newAlert(titre,desc, AlertType.DEFAULT);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
@@ -122,7 +117,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 .setPriority(priority)
                 .setShowWhen(true);
 
-        App.getNotificationManager().notify(++notificationId, notification.build());
+        Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
 
     @Override
