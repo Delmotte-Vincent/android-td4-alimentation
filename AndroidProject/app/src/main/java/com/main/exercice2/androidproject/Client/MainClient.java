@@ -12,12 +12,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -109,9 +111,11 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
+        ImageView imageView = findViewById(R.id.image_signal);
+        Drawable draw =imageView.getDrawable();
         sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-        clientAlertFragment.newAlert(titre,desc);
+        clientAlertFragment.newAlert(titre,desc,draw);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {

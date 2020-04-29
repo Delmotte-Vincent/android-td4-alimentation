@@ -1,5 +1,6 @@
 package com.main.exercice2.androidproject.Client;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,7 @@ public class ClientAlertFragment extends Fragment {
         return rootView;
     }
 
-    public void newAlert(String titre, String desc) {
-        postList.add(new Post(titre,desc,AlertType.DEFAULT));
+    public void newAlert(String titre, String desc, Drawable drawable) {
+        postList.add(new Post(titre,desc,AlertType.DEFAULT,drawable));
     }
 }
