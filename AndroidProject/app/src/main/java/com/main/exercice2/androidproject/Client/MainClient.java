@@ -25,6 +25,7 @@ import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.App;
 import com.main.exercice2.androidproject.R;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -113,8 +114,10 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), channelId)
                 .setSmallIcon(R.drawable.baseline_account_circle_black_18dp)
                 .setContentTitle(titre)
-                .setContentText("id=" + notificationId + " - " + desc)
-                .setPriority(priority);
+                .setContentText("Vous avez une news !")
+                .setPriority(priority)
+                .setShowWhen(true);
+
         App.getNotificationManager().notify(++notificationId, notification.build());
     }
 
