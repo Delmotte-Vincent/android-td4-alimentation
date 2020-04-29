@@ -30,8 +30,9 @@ public class AlerteListAdapter extends ArrayAdapter<Post > {
 
         String title = getItem(position).getTitle();
         String message = getItem(position).getMessage();
+        String type = getItem(position).getType();
 
-        Post post = new Post(title, message);
+        Post post = new Post(title, message, type);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
@@ -44,7 +45,22 @@ public class AlerteListAdapter extends ArrayAdapter<Post > {
         tvMessage.setText(message);
 
         if(convertView == null )
-            ivPhoto.setImageResource(R.drawable.boulangerie);
+            switch (type) {
+                case AlertType.BOUCHERIE:
+                    ivPhoto.setImageResource(R.drawable.boucherie);
+                    break;
+                case AlertType.BOULANGERIE:
+                    ivPhoto.setImageResource(R.drawable.boulangerie);
+                    break;
+                case AlertType.POISONNERIE:
+                    ivPhoto.setImageResource(R.drawable.poissonnerie);
+                    break;
+                case AlertType.EPICERIE:
+                    ivPhoto.setImageResource(R.drawable.epicerie);
+                    break;
+                default:
+                    ivPhoto.setImageResource(R.drawable.news);
+            }
         else
             rowView = (View)convertView;
         return rowView;
