@@ -15,8 +15,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -39,12 +41,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     ClientSignalFragment clientSignalFragment;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
         this.configureBottomView();
+
         ClientProfilFragment clientProfilFragment = (ClientProfilFragment)getSupportFragmentManager().findFragmentById(R.id.client_frame);
         if (clientProfilFragment==null){
             FragmentTransaction trans= getSupportFragmentManager().beginTransaction();
