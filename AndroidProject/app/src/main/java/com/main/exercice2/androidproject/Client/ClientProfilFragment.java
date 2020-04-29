@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.PostListAdapter;
 import com.main.exercice2.androidproject.R;
 
 public class ClientProfilFragment extends Fragment {
