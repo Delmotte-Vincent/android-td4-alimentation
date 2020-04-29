@@ -11,12 +11,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Eat it pour smartphone"
         android:layout_marginBottom="10dp"
         android:id="@+id/fbInfo"/>
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:src="@drawable/eat_it_logo"
         android:id="@+id/profile"
         android:layout_marginBottom="10dp"/>
 
@@ -34,11 +36,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="@string/adrname"
         android:id="@+id/mail"
         android:layout_marginBottom="10dp"/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="@string/mdp"
         android:id="@+id/pass"
         android:layout_marginBottom="10dp"/>
 
