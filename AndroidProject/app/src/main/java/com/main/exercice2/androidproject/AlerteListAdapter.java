@@ -14,13 +14,6 @@ import java.util.ArrayList;
 
 public class AlerteListAdapter extends ArrayAdapter<Post > {
 
-    private Integer[] tab_images_pour_la_liste = {
-            R.drawable.epicerie,
-            R.drawable.poissonnerie,
-            R.drawable.boucherie,
-            R.drawable.boulangerie,
-    };
-
     public AlerteListAdapter(@NonNull Context context, @NonNull ArrayList<Post> objects) {
         super(context, R.layout.rowlayout, objects);
     }

@@ -31,16 +31,10 @@ public class ClientAlertFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_alert_client,container,false);
 
-        String[] values = new String[] { "Device", "Géo localisation", "Accéléromètre",
-                "Navigateur internet"};
-
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         if(postList.size()==0) {
-            postList.add(new Post("Rupture de stock", "Il n'y a plus de pain dans la boulangerie, nous en referons dès que possible !", AlertType.BOULANGERIE));
-            postList.add(new Post("Arrivage de viande", "De nouvelles variétés de boeuf sont arrivées aujourd'hui, vous pouvez venir en boucherie pour en profiter.", AlertType.BOUCHERIE));
-            postList.add(new Post("post 3", "Ceci est le post 3, je suis beaucoup plus long que les deux autres pour faire un test", AlertType.DEFAULT));
-            postList.add(new Post("post 4", "Ceci est le post 3, je suis beaucoup plus long que les deux autres pour faire un test", AlertType.DEFAULT));
+
         }
 
         AlerteListAdapter adapter = new AlerteListAdapter(getContext(), postList);
