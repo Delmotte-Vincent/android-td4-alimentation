@@ -41,6 +41,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     FrameLayout frameLayout ;
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
+    ClientMapFragment clientMapFragment;
 
 
 
@@ -59,6 +60,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
             trans.commit();
         }
         clientAlertFragment= new ClientAlertFragment();
+        clientMapFragment=new ClientMapFragment();
 
     }
 
@@ -82,7 +84,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 trans.replace(R.id.client_frame, clientAlertFragment);
                 break;
             case R.id.action_map:
-                trans.replace(R.id.client_frame, new ClientMapFragment());
+                trans.replace(R.id.client_frame, clientMapFragment);
                 break;
             case R.id.action_signal :
                 trans.replace(R.id.client_frame, clientSignalFragment=new ClientSignalFragment());

@@ -109,7 +109,12 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public boolean onQueryTextChange(String s) {
-        listView.setVisibility(View.VISIBLE);
+        if(s.equals("")){
+            listView.setVisibility(View.GONE);
+        }
+        else {
+            listView.setVisibility(View.VISIBLE);
+        }
         return true;
     }
 }
