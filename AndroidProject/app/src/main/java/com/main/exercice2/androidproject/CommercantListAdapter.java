@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,10 +17,15 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 
-public class CommercantListAdapter extends ArrayAdapter<CommercantObjet > {
+public class CommercantListAdapter extends ArrayAdapter<CommercantObjet > implements Filterable {
+    ArrayList<CommercantObjet> data;
+    ArrayList<CommercantObjet> datafiltre;
+    filtre filtre;
 
     public CommercantListAdapter(@NonNull Context context, @NonNull ArrayList<CommercantObjet> objects) {
         super(context, R.layout.researsh_commercant, objects);
+        data=objects;
+        datafiltre=objects;
     }
 
     @NonNull
@@ -28,7 +35,7 @@ public class CommercantListAdapter extends ArrayAdapter<CommercantObjet > {
         String message = getItem(position).getMessage();
         Drawable drawable =getItem(position).getDrawable();
 
-        CommercantObjet commercantObjet = new CommercantObjet(title,message,drawable);
+        //CommercantObjet commercantObjet = new CommercantObjet(title,message,drawable);
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View resView = inflater.inflate(R.layout.researsh_commercant, parent, false);
 
@@ -47,5 +54,43 @@ public class CommercantListAdapter extends ArrayAdapter<CommercantObjet > {
         }
 
         return resView;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        if(filtre==null){
+            filtre = new filtre();
+        }
+        return filtre;
+    }
+
+    private class filtre extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults filterResults = new FilterResults();
+            if(charSequence!=null && charSequence.length()>0){
+                ArrayList<CommercantObjet> listfiltre=new ArrayList<>();
+                for(CommercantObjet c : datafiltre){
+                    if(c.getTitle().toUpperCase().contains(charSequence.toString().toUpperCase())||
+                            c.getMessage().toUpperCase().contains(charSequence.toString().toUpperCase())){
+                        listfiltre.add(c);
+                    }
+                }
+                filterResults.count=listfiltre.size();
+                filterResults.values=listfiltre;
+            }
+            else {
+                filterResults.count=datafiltre.size();
+                filterResults.values=datafiltre;
+            }
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                data= (ArrayList<CommercantObjet>) filterResults.values;
+                notifyDataSetChanged();
+        }
     }
 }

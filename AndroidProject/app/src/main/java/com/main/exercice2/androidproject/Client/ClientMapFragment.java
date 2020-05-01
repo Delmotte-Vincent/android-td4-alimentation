@@ -37,6 +37,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     ArrayList<CommercantObjet> commercantObjetArrayList;
     SearchView searchView;
     ListView listView;
+    ArrayAdapter adapter;
     ClientMapFragment(){}
 
     @Nullable
@@ -76,7 +77,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
 
         /** Mise en place de l'adapteur pour l'array list**/
 
-        ArrayAdapter adapter =new CommercantListAdapter(this.getContext(),commercantObjetArrayList);
+        adapter =new CommercantListAdapter(this.getContext(),commercantObjetArrayList);
         ((ListView)rootView.findViewById(R.id.listSearch)).setAdapter(adapter);
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getActivity().getApplicationContext(), items,
@@ -127,6 +128,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         else {
             listView.setVisibility(View.VISIBLE);
         }
+        adapter.getFilter().filter(s);
         return true;
     }
 }
