@@ -11,9 +11,12 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -29,8 +32,11 @@ import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.App;
 import com.main.exercice2.androidproject.R;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes {
@@ -42,6 +48,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
     ClientMapFragment clientMapFragment;
+    private static final String TAG = "TWEET" ;
+
 
 
 
@@ -109,7 +117,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
-    public void onButtonSignalClicked(View but) {
+    public void onButtonSignalClicked(View but,boolean checked) {
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
@@ -118,6 +126,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc,draw);
+        if(checked)
+            shareTwitter(titre+"\n"+desc);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
@@ -134,6 +144,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     @Override
     public void onButtonPictureSignalClicked(View view) {
 
+    }
+
+    @Override
+    public void onCheckClicked(View view, boolean status) {
+        if(status)
+            Toast.makeText(this,"cette notification va être transferer à Twitter ",Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this,"cette notification ne va pas être transferer à Twitter ",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -172,4 +190,46 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
             }
         }
     }
+
+    private void shareTwitter(String message) {
+        Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+        Bundle extra = new Bundle();
+        tweetIntent.putExtra(Intent.EXTRA_TEXT, message);
+        tweetIntent.setType("text/plain");
+        PackageManager packManager = getPackageManager();
+        List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        boolean resolved = false;
+        for (ResolveInfo resolveInfo : resolvedInfoList) {
+            if (resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")) {
+                tweetIntent.setClassName(
+                        resolveInfo.activityInfo.packageName,
+                        resolveInfo.activityInfo.name);
+                tweetIntent.setAction("POST");
+                resolved = true;
+                break;
+            }
+        }
+        if (resolved) {
+            startActivity(tweetIntent);
+        } else {
+            Intent i = new Intent();
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + urlEncode(message)));
+            startActivity(i);
+            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.wtf(TAG, "UTF-8 should always be supported", e);
+            return "";
+        }
+    }
+
+
 }
