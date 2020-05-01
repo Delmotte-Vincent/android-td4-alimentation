@@ -205,7 +205,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 tweetIntent.setClassName(
                         resolveInfo.activityInfo.packageName,
                         resolveInfo.activityInfo.name);
-                tweetIntent.setAction("POST");
                 resolved = true;
                 break;
             }
