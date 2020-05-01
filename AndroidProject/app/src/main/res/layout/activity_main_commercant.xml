@@ -57,6 +57,16 @@
         android:layout_marginLeft="20dp"/>
 
     <Button
+        android:id="@+id/description_button"
+        android:text="Modifier la description"
+        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_height="50dp"/>
+
+    <Button
         android:id="@+id/categorie_button"
         android:text="Modifier les catégories"
         android:layout_width="match_parent"

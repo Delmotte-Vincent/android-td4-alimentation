@@ -24,6 +24,7 @@ public class MainCommercant extends AppCompatActivity {
     };
 
     Button categorie_button ;
+    Button description_button ;
 
 
     @Override
@@ -36,6 +37,15 @@ public class MainCommercant extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CommercantCategorie.class);
+                startActivity(intent);
+            }
+        });
+
+        description_button = findViewById(R.id.description_button);
+        description_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CommercantDescription.class);
                 startActivity(intent);
             }
         });

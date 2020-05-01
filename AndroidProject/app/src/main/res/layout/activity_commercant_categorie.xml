@@ -6,13 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".Commercant.CommercantCategorie" >
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Catégorie"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:background="#537fd7"
+        android:textColor="#FFFFFF"/>
+
     <Button
         android:id="@+id/button1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
         android:layout_centerHorizontal="true"
-        android:text="ADD Values to listview" />
+        android:text="Ajouter la catégorie" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:text="Supprimer la catégorie" />
 
     <EditText
         android:id="@+id/editText1"
@@ -20,15 +37,14 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
-        android:ems="10"
-        android:hint="Add elements listView" />
+        android:layout_marginTop="50dp"
+        android:hint="Nom de la catégorie à ajouter ou supprimer" />
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true" >
     </ListView>
 

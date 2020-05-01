@@ -21,6 +21,7 @@ public class CommercantCategorie extends AppCompatActivity {
 
     ListView listview;
     Button Addbutton;
+    Button DeleteButton;
     EditText GetValue;
     String[] ListElements = new String[] {
             "Poisson",
@@ -33,6 +34,7 @@ public class CommercantCategorie extends AppCompatActivity {
 
         listview = (ListView) findViewById(R.id.listView1);
         Addbutton = (Button) findViewById(R.id.button1);
+        DeleteButton = (Button) findViewById(R.id.button2);
         GetValue = (EditText) findViewById(R.id.editText1);
 
         final List< String > ListElementsArrayList = new ArrayList< String >
@@ -50,7 +52,23 @@ public class CommercantCategorie extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                for (int i=0;i<ListElementsArrayList.size();i++){
+                    if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
+                        GetValue.setError("Une catégorie de ce nom existe déjà");
+                        return;
+                    }
+                }
                 ListElementsArrayList.add(GetValue.getText().toString());
+                adapter.notifyDataSetChanged();
+            }
+        });
+
+        DeleteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                ListElementsArrayList.remove(GetValue.getText().toString());
                 adapter.notifyDataSetChanged();
             }
         });
