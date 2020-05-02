@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.main.exercice2.androidproject.R;
 
@@ -25,6 +26,10 @@ public class MainCommercant extends AppCompatActivity {
 
     Button categorie_button ;
     Button description_button ;
+    Button nom_horaire_button;
+
+    TextView nom_magasin_text;
+    TextView horaire_text;
 
 
     @Override
@@ -50,5 +55,21 @@ public class MainCommercant extends AppCompatActivity {
             }
         });
 
+        nom_horaire_button = findViewById(R.id.nom_horaire_button);
+        nom_horaire_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CommercantNomHoraire.class);
+                startActivity(intent);
+            }
+        });
+
+        String nom = getIntent().getStringExtra("nom_magasin_key");
+        nom_magasin_text = (TextView)findViewById(R.id.nom_magasin_text);
+        nom_magasin_text.setText(nom);
+
+        String horaire = getIntent().getStringExtra("horaire_key");
+        horaire_text = (TextView)findViewById(R.id.horaire_text);
+        horaire_text.setText(horaire);
     }
 }
