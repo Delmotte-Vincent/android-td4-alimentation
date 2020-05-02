@@ -52,6 +52,10 @@ public class CommercantCategorie extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                if (GetValue.getText().toString().isEmpty()){
+                    GetValue.setError("Il faut entrer un nom de catégorie");
+                    return;
+                }
                 for (int i=0;i<ListElementsArrayList.size();i++){
                     if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
                         GetValue.setError("Une catégorie de ce nom existe déjà");
@@ -67,9 +71,14 @@ public class CommercantCategorie extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
-                ListElementsArrayList.remove(GetValue.getText().toString());
-                adapter.notifyDataSetChanged();
+                for (int i=0;i<ListElementsArrayList.size();i++){
+                    if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
+                        ListElementsArrayList.remove(GetValue.getText().toString());
+                        adapter.notifyDataSetChanged();
+                        return;
+                    }
+                }
+                GetValue.setError("Il n'existe pas de nom de cette catégorie");
             }
         });
     }

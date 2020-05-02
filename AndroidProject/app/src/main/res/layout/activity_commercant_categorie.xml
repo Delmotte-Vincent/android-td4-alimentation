@@ -40,11 +40,21 @@
         android:layout_marginTop="50dp"
         android:hint="Nom de la catégorie à ajouter ou supprimer" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@+id/button2"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:text="Vos catégories visibles :"
+        android:layout_marginLeft="20dp"/>
+
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true" >
     </ListView>
 
