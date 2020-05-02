@@ -27,6 +27,20 @@ public class CommercantListAdapter extends ArrayAdapter<CommercantObjet > implem
         data=objects;
         datafiltre=objects;
     }
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public CommercantObjet getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     @NonNull
     @Override
