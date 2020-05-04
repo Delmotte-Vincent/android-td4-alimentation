@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.Clients;
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.App;
@@ -63,7 +64,12 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
         clientName= findViewById(R.id.client);
-        clientName.setText("test");
+        Bundle b = this.getIntent().getExtras();
+        int id =b.getInt("id");
+
+        client = Clients.findClientId(id);
+        clientName.setText(client.getFirstName()+" "+client.getLastName());
+
         this.configureBottomView();
 
         ClientProfilFragment clientProfilFragment = (ClientProfilFragment)getSupportFragmentManager().findFragmentById(R.id.client_frame);

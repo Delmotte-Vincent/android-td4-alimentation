@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Client.NewClient"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:layout_marginHorizontal="15dp"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Saisissez les informations suivantes :"
+        android:id="@+id/saisie"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" nom "
+        android:id="@+id/nouveauClientNom"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" prénom "
+        android:id="@+id/nouveauClientPrenom"
+
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint=" adreese mail"
+        android:id="@+id/nouveauClientMail"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" mot de passe"
+        android:inputType="textPassword"
+        android:id="@+id/nouveauClientPass"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="confirmez votre mot de passe"
+        android:inputType="textPassword"
+        android:id="@+id/nouveauClientPassConf"
+
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="créer votre compte"
+        android:id="@+id/send"
+        />
+
+
+
+
+</LinearLayout>

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.Client.MainClient;
+import com.main.exercice2.androidproject.Client.NewClient;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 
 import java.io.Serializable;
@@ -24,12 +25,12 @@ public class LoginActivity extends AppCompatActivity implements  LoginAs{
     Button connexion ;
     TextView info ;
     ImageView profile ;
-    Client test = new Client("mohamed","fertala","test","test");
-    static ArrayList  <Client>clients = new ArrayList<>();
+    Client test = new Client("mohamed","fertala","test","test",0);
     EditText mail ;
     EditText pass ;
     String  mailIn ;
     String  passIn ;
+    Button nouveau ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,40 +39,51 @@ public class LoginActivity extends AppCompatActivity implements  LoginAs{
         info =findViewById(R.id.InfoApp);
         profile=findViewById(R.id.profile);
         connexion = findViewById(R.id.connexion);
+        nouveau = findViewById(R.id.nouveau);
         mail = findViewById(R.id.mail);
         pass = findViewById(R.id.pass);
         Intent intent = this.getIntent();
         client= intent.getBooleanExtra(logClient,true);
-        clients.add(test);
+        Clients.add(test);
         TextView qui = findViewById(R.id.qui);
-        if(client) {
+        if(client)
             qui.setText("connexion en tant que client");
-            connexion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    connexionClient();
-                }
-            });
-        }
-        else {
+         else
             qui.setText("connexion en tant que commercant");
-            connexion.setOnClickListener(new View.OnClickListener() {
+
+        connexion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
-                    //intent.putExtra(logClient,true);
-                    startActivity(intent);
-                }
-            });
-        }
+                    if (client)
+                        connexionClient();
+                    else {
+                        Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
+                        startActivity(intent);
+                    }
 
+                }
+        });
+
+        nouveau.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewClient.class);
+                finishAffinity();
+                intent.putExtra("client",client);
+                startActivity(intent);
+
+            }
+        });
     }
+
+
+
 
     private void  connexionClient(){
         Intent intent = new Intent(getApplicationContext(), MainClient.class);
         mailIn = mail.getText().toString();
         passIn = pass.getText().toString() ;
-        Client find = findClients(mailIn,passIn) ;
+        Client find = Clients.findClients(mailIn,passIn) ;
 
 
         //intent.putExtra(logClient,true);
@@ -79,19 +91,17 @@ public class LoginActivity extends AppCompatActivity implements  LoginAs{
         if(find!=null){
             Toast.makeText(this,"connexion réussie",Toast.LENGTH_SHORT).show();
             finishAffinity();
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",find.getId());
+            intent.putExtras(bundle);
             startActivity(intent);
         }
         else
             Toast.makeText(this,"connexion échouée",Toast.LENGTH_SHORT).show();
     }
 
-    public static Client findClients(String mailIn , String passIn){
-        for (int i = 0 ; i<clients.size() ;i++){
-            if(clients.get(i).getEmail().equals(mailIn) && clients.get(i).getPassword().equals(passIn)){
-                return clients.get(i) ;
-            }
-        }
-        return null ;
-    }
+
+
+
 
 }

@@ -45,14 +45,6 @@
         android:gravity="center_horizontal"
         />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="connectez-vous par e-mail"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +68,7 @@
             android:hint="@string/mdp"
             android:inputType="textPassword"
             android:id="@+id/pass"
-            android:layout_marginBottom="150dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
@@ -88,8 +80,6 @@
 
             />
     </LinearLayout>
-
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,8 +87,27 @@
         android:id="@+id/connexion"
         android:gravity="center_horizontal"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="130dp"
 
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="vous êtes nouveau  :"
+        android:textAlignment="center"
+
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="créer un nouveau compte "
+        android:textAlignment="center"
+        android:layout_marginHorizontal="30dp"
+        android:textColor="#00F"
+        android:id="@+id/nouveau"
+        />
+
+
 
 
 
