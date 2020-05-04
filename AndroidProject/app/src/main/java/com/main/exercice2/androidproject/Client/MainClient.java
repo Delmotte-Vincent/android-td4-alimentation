@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -32,6 +33,7 @@ import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.App;
 import com.main.exercice2.androidproject.R;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -48,7 +50,9 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
     ClientMapFragment clientMapFragment;
+    TextView  clientName;
     private static final String TAG = "TWEET" ;
+    private Client client ;
 
 
 
@@ -58,6 +62,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
+        clientName= findViewById(R.id.client);
+        clientName.setText("test");
         this.configureBottomView();
 
         ClientProfilFragment clientProfilFragment = (ClientProfilFragment)getSupportFragmentManager().findFragmentById(R.id.client_frame);

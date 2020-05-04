@@ -2,62 +2,104 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="350dp"
     android:layout_height="wrap_content"
     tools:context=".LoginActivity"
     android:orientation="vertical"
     android:layout_gravity="center"
     >
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Eat it pour smartphone"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/fbInfo"/>
+        android:layout_marginBottom="20dp"
+        android:id="@+id/InfoApp"
+        android:gravity="center_horizontal"
 
-    <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/eat_it_logo"
-        android:id="@+id/profile"
-        android:layout_marginBottom="10dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/qui"/>
+        android:layout_gravity="center_horizontal"
+        >
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/eat_it_logo"
+            android:id="@+id/profile"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:layout_marginHorizontal="95dp"
+            android:background="#0F6"
+            android:scaleType="centerCrop"
+            />
+
+    </LinearLayout>
+
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/qui"
+        android:gravity="center_horizontal"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="connectez-vous par e-mail"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/adrname"
         android:id="@+id/mail"
-        android:layout_marginBottom="10dp"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/mdp"
-        android:id="@+id/pass"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="30dp"
+
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="30dp"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mdp"
+            android:inputType="textPassword"
+            android:id="@+id/pass"
+            android:layout_marginBottom="150dp"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+
+            />
+    </LinearLayout>
+
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Se connecter"
-        android:layout_marginBottom="150dp"
-        android:id="@+id/connexion"/>
+        android:id="@+id/connexion"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="30dp"
 
-    <com.facebook.login.widget.LoginButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginFb"
         />
+
 
 
 
