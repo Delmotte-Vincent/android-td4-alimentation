@@ -181,6 +181,15 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 }
                 break;
             }
+            case REQUEST_GPS: {  //GPS FINE LOCATION only autorisation result code
+                if( grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "FINE authorisation Granted", Toast.LENGTH_LONG);
+                    toast.show();
+                    Log.d( TAG, "(only) FINE LOCATION permission Granted");
+                } else {
+                    Log.d( TAG, "(only) FINE LOCATION permission NOT Granted");
+                }
+            } break;
         }
     }
 
