@@ -185,7 +185,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 if( grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast toast = Toast.makeText(getApplicationContext(), "FINE authorisation Granted", Toast.LENGTH_LONG);
                     toast.show();
-                    Log.d( TAG, "(only) FINE LOCATION permission Granted");
+                    clientMapFragment.getLocation();
                 } else {
                     Log.d( TAG, "(only) FINE LOCATION permission NOT Granted");
                 }
