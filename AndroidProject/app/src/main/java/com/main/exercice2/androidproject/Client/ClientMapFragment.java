@@ -114,7 +114,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                     Log.d(TAG, provider+" sensor OFF");
                 }
             };
-            currentLocation=locationManager.getLastKnownLocation(Context.LOCATION_SERVICE);
+            currentLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, loclistener);
         }else {
             Log.d(TAG, "Permission NOT GRANTED  ! ");
