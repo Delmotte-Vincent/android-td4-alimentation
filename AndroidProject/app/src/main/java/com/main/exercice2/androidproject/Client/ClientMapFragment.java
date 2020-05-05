@@ -42,8 +42,12 @@ import org.osmdroid.views.overlay.OverlayItem;
 import java.util.ArrayList;
 import java.util.Objects;
 import com.main.exercice2.androidproject.Constantes;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.Context.LOCATION_SERVICE;
 import static androidx.constraintlayout.widget.Constraints.TAG;
+import static androidx.core.content.ContextCompat.getSystemService;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener {
     private MapView map;
@@ -57,9 +61,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     ClientMapFragment() {
     }
 
-    private LocationManager locationManager;
+    private LocationManager lm;
     private Location currentLocation;
-    Location cLocation;
 
     @Nullable
     @Override
@@ -76,8 +79,62 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
         //GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
-        currentLocation=getLocation();
+
+        lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
+        if (!isGpsAble(lm)) {
+            Toast.makeText(getContext(), "请打开GPS~", Toast.LENGTH_SHORT).show();
+            openGPS2();
+        }
+        //from GPS to get the latest location
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        updateShow(lc);
+        //every 60 seconds get gps
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                // when gps change, update location
+                updateShow(location);
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                // when GPS LocationProvider is available，update location
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                updateShow(lm.getLastKnownLocation(provider));
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                updateShow(null);
+            }
+        });
+
         GeoPoint startPoint = new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6);
+        //transformer location à geopoint
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
         mapController.setZoom(18.0);
@@ -125,65 +182,25 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         return rootView;
     }
 
-    Location getLocation(){
-        final LocationManager locationManager = (LocationManager) (getActivity().getSystemService(LOCATION_SERVICE));
-        //check if GPS permission is already GRANTED
-        final boolean permissionGranted = ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        Log.d(TAG, "permissionGranted = " + permissionGranted);
-        if (permissionGranted) {
-            LocationListener loclistener = new LocationListener() {
-
-                @Override
-                public void onLocationChanged(Location location) {
-                    cLocation = location;
-                }
-
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String provider) {
-                    Log.d(TAG, provider + " sensor ON");
-                    if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
-                        // here to request the missing permissions, and then overriding
-                        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                        //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        return;
-                    }
-                    cLocation = locationManager.getLastKnownLocation(provider);
-                }
-
-                @Override
-                public void onProviderDisabled(String provider) {
-                    Log.d(TAG, provider+" sensor OFF");
-                    Intent intent=new Intent();
-                    intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivityForResult(intent,Constantes.REQUEST_CAMERA);
-                    return;
-                }
-            };
-            cLocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 1, loclistener);
-        }else {
-            Log.d(TAG, "Permission NOT GRANTED  ! ");
-            if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
-                cLocation=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }else {
-                Intent intent=new Intent();
-                intent.setAction(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivityForResult(intent,Constantes.REQUEST_GPS);
-
-            }
-        }
-
-        return cLocation;
+    //define the function to update location
+    private void updateShow(Location location) {
+        if (location != null) {
+            currentLocation=location;
+        } else {
+            currentLocation=null;}
     }
+
+    //check if GPS permission is already permmitted
+    private boolean isGpsAble(LocationManager lm) {
+        return lm.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER) ? true : false;
+    }
+
+    //打开设置页面让用户自己设置 ouvrir la page de settings
+    void openGPS2() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivityForResult(intent, Constantes.REQUEST_GPS);
+    }
+
 
     @Override
     public void onPause() {
