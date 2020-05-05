@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,7 +140,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc,draw);
         if(checked)
-            shareTwitter(titre+"\n"+desc);
+            this.shareOnTwitter(this,titre+"\n"+desc,null);
+            //shareTwitter(titre+"\n"+desc);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
@@ -214,7 +216,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
     private void shareTwitter(String message) {
         Intent tweetIntent = new Intent(Intent.ACTION_SEND);
-        Bundle extra = new Bundle();
         tweetIntent.putExtra(Intent.EXTRA_TEXT, message);
         tweetIntent.setType("text/plain");
         PackageManager packManager = getPackageManager();
@@ -248,6 +249,26 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         } catch (UnsupportedEncodingException e) {
             Log.wtf(TAG, "UTF-8 should always be supported", e);
             return "";
+        }
+    }
+
+    public  void shareOnTwitter(AppCompatActivity appCompatActivity, String textBody, Uri fileUri) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.setPackage("com.twitter.android");
+        intent.putExtra(Intent.EXTRA_TEXT,!TextUtils.isEmpty(textBody) ? textBody : "");
+
+        if (fileUri != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+        }
+
+        try {
+            appCompatActivity.startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
         }
     }
 
