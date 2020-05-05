@@ -21,33 +21,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="200dp"
         android:hint="Nom du magasin" />
 
-    <Button
-        android:id="@+id/nom_magasin_button"
-        android:text="Modifier le nom du magasin"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_height="50dp"/>
 
     <EditText
         android:id="@+id/horaire_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:hint="Horaires" />
 
     <Button
-        android:id="@+id/horaire_button"
-        android:text="Modifier les horaires"
+        android:id="@+id/nom_horaire_button"
+        android:text="Modifier"
         android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="15dp"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"

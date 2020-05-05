@@ -32,10 +32,10 @@ public class CommercantCategorie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commercant_categorie);
 
-        listview = (ListView) findViewById(R.id.listView1);
-        Addbutton = (Button) findViewById(R.id.button1);
-        DeleteButton = (Button) findViewById(R.id.button2);
-        GetValue = (EditText) findViewById(R.id.editText1);
+        listview = (ListView) findViewById(R.id.categorie_listView);
+        Addbutton = (Button) findViewById(R.id.ajouter_categorie_button);
+        DeleteButton = (Button) findViewById(R.id.supprimer_categorie_button);
+        GetValue = (EditText) findViewById(R.id.edit_nom_categorie_text);
 
         final List< String > ListElementsArrayList = new ArrayList< String >
                 (Arrays.asList(ListElements));

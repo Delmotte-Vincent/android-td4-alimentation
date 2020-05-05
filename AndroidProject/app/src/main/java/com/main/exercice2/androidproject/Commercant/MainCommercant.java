@@ -30,6 +30,7 @@ public class MainCommercant extends AppCompatActivity {
 
     TextView nom_magasin_text;
     TextView horaire_text;
+    TextView description_text;
 
 
     @Override
@@ -66,10 +67,14 @@ public class MainCommercant extends AppCompatActivity {
 
         String nom = getIntent().getStringExtra("nom_magasin_key");
         nom_magasin_text = (TextView)findViewById(R.id.nom_magasin_text);
-        nom_magasin_text.setText(nom);
+        nom_magasin_text.setText(nom==null?"Nom du magasin":nom);
 
         String horaire = getIntent().getStringExtra("horaire_key");
         horaire_text = (TextView)findViewById(R.id.horaire_text);
-        horaire_text.setText(horaire);
+        horaire_text.setText(horaire==null?"Horaires : ":horaire);
+
+        String description = getIntent().getStringExtra("description_key");
+        description_text = (TextView)findViewById(R.id.description_text);
+        description_text.setText(description==null?"Description":description);
     }
 }
