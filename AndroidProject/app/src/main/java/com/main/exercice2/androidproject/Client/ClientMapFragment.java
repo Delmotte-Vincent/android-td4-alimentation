@@ -94,7 +94,52 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return null;
+            GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
+            IMapController mapController = map.getController();
+            mapController.setCenter(startPoint);
+            mapController.setZoom(18.0);
+
+            items = new ArrayList<>();
+            commercantObjetArrayList = new ArrayList<>();
+            //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
+            CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
+            CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
+            commercantObjetArrayList.add(homeCom);
+            commercantObjetArrayList.add(restoCom);
+            for (CommercantObjet c : commercantObjetArrayList) {
+                items.add(new OverlayItem(c.getTitle(), c.getMessage(), c.getGeoPoint()));
+            }
+            //OverlayItem home = new OverlayItem("home","rallo's home", new GeoPoint(43.65020,7.00517));
+            //Drawable m =home.getMarker(0);
+            //items.add(home);
+
+
+
+            //items.add(new OverlayItem("resto","delice de maman",new GeoPoint(43.64950,7.00517)));
+
+            /** Mise en place de l'adapteur pour l'array list**/
+
+            adapter =new CommercantListAdapter(this.getContext(),commercantObjetArrayList);
+            ((ListView)rootView.findViewById(R.id.listSearch)).setAdapter(adapter);
+
+            ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getActivity().getApplicationContext(), items,
+                    new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                        @Override
+                        public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                            return true;
+                        }
+
+                        @Override
+                        public boolean onItemLongPress(int index, OverlayItem item) {
+                            return false;
+                        }
+                    });
+
+            mOverlay.setFocusItemsOnTap(true);
+            map.getOverlays().add(mOverlay);
+
+            listView.setVisibility(View.GONE);
+            return rootView;
         }
         Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         updateShow(lc);
