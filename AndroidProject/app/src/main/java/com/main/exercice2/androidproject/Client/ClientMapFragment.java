@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -25,6 +26,7 @@ import androidx.preference.PreferenceManager;
 import com.main.exercice2.androidproject.AlertType;
 import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
 import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.ICallBack;
 import com.main.exercice2.androidproject.R;
 
 import org.osmdroid.api.IMapController;
@@ -43,13 +45,14 @@ import com.main.exercice2.androidproject.Constantes;
 import static android.content.Context.LOCATION_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
     private MapView map;
     ArrayList<OverlayItem> items;
     ArrayList<CommercantObjet> commercantObjetArrayList;
     SearchView searchView;
     ListView listView;
     ArrayAdapter adapter;
+    private ICallBack callBack;
 
 
     ClientMapFragment() {
@@ -65,6 +68,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         searchView = rootView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(this);
         listView = rootView.findViewById(R.id.listSearch);
+        listView.setOnItemClickListener(this);
         Configuration.getInstance().load(getActivity().getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()));
 
@@ -96,7 +100,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         //every 60 seconds get gps
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
 
-        GeoPoint startPoint = new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6);
+        GeoPoint startPoint = new GeoPoint(currentLocation);
         //transformer location à geopoint
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
@@ -230,5 +234,11 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         }
         adapter.getFilter().filter(s);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CommercantObjet commercantObjet =(CommercantObjet) adapterView.getItemAtPosition(i);
+        if(commercantObjet!=null) callBack.sendCommercantObjet(commercantObjet);
     }
 }
