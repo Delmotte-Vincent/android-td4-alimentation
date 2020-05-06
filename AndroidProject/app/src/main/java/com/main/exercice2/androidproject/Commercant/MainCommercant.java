@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.main.exercice2.androidproject.ClientList;
+import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -31,12 +33,18 @@ public class MainCommercant extends AppCompatActivity {
     TextView nom_magasin_text;
     TextView horaire_text;
     TextView description_text;
+    Commercant commercant;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_commercant);
+
+        Bundle b = this.getIntent().getExtras();
+        int id =b.getInt("id");
+        commercant = CommercantList.findClientId(id);
+
 
         categorie_button = findViewById(R.id.categorie_button);
         categorie_button.setOnClickListener(new View.OnClickListener() {
@@ -67,14 +75,29 @@ public class MainCommercant extends AppCompatActivity {
 
         String nom = getIntent().getStringExtra("nom_magasin_key");
         nom_magasin_text = (TextView)findViewById(R.id.nom_magasin_text);
-        nom_magasin_text.setText(nom==null?"Nom du magasin":nom);
+        //nom_magasin_text.setText(nom==null?"Nom du magasin":commercant.getNom());
 
         String horaire = getIntent().getStringExtra("horaire_key");
         horaire_text = (TextView)findViewById(R.id.horaire_text);
-        horaire_text.setText(horaire==null?"Horaires : ":horaire);
+        //horaire_text.setText(horaire==null?"Horaires : ":commercant.getDescription());
 
         String description = getIntent().getStringExtra("description_key");
         description_text = (TextView)findViewById(R.id.description_text);
-        description_text.setText(description==null?"Description":description);
+        //description_text.setText(description==null?"Description":commercant.getDescription());
+        setInfo();
     }
+    @Override
+    protected void onRestart() {
+
+        super.onRestart();
+        setInfo();
+    }
+
+
+    void setInfo(){
+        description_text.setText("Description :"+commercant.getDescription());
+        horaire_text.setText("Horaires : "+commercant.getHoraires());
+        nom_magasin_text.setText("Nom du magasin :"+commercant.getNom());
+    }
+
 }

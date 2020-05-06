@@ -7,8 +7,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -20,25 +18,21 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.main.exercice2.androidproject.Clients;
+import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.App;
 import com.main.exercice2.androidproject.R;
 
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +62,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
 
-        client = Clients.findClientId(id);
+        client = ClientList.findClientId(id);
         clientName.setText(client.getFirstName()+" "+client.getLastName());
 
         this.configureBottomView();

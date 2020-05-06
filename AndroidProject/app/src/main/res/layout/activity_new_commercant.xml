@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Client.NewClient"
+    tools:context=".Commercant.NewCommercant"
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:layout_marginHorizontal="15dp"
@@ -22,22 +22,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint=" nom "
-        android:id="@+id/nouveauClientNom"
+        android:id="@+id/nouveauCommercantNom"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" prénom "
-        android:id="@+id/nouveauClientPrenom"
+        android:hint=" Horaires "
+        android:id="@+id/nouveauHoraires"
 
 
         />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint=" Description "
+        android:id="@+id/nouveauCommercantDescription"
+
+
+        />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:hint=" adreese mail"
-        android:id="@+id/nouveauClientMail"
+        android:id="@+id/nouveauCommercantMail"
 
         />
     <EditText
@@ -45,14 +55,14 @@
         android:layout_height="wrap_content"
         android:hint=" mot de passe"
         android:inputType="textPassword"
-        android:id="@+id/nouveauClientPass"
+        android:id="@+id/nouveauCommercantPass"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="confirmez votre mot de passe"
         android:inputType="textPassword"
-        android:id="@+id/nouveauClientPassConf"
+        android:id="@+id/nouveauCommercantPassConf"
 
         />
 
@@ -60,11 +70,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="créer votre compte"
-        android:id="@+id/send"
+        android:id="@+id/sendCommercant"
         android:layout_marginBottom="150dp"
-
         />
-
 
     <Button
         android:layout_width="match_parent"
