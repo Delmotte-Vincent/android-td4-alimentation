@@ -82,7 +82,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
 
         lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         if (!isGpsAble(lm)) {
-            Toast.makeText(getContext(), "请打开GPS~", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
             openGPS2();
         }
         //from GPS to get the latest location
@@ -98,40 +98,9 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         }
         Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         updateShow(lc);
+
         //every 60 seconds get gps
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                // when gps change, update location
-                updateShow(location);
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                // when GPS LocationProvider is available，update location
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
-                }
-                updateShow(lm.getLastKnownLocation(provider));
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                updateShow(null);
-            }
-        });
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
 
         GeoPoint startPoint = new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6);
         //transformer location à geopoint
@@ -143,7 +112,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         commercantObjetArrayList = new ArrayList<>();
         //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
         CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
-        CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
+        CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(startPoint.getLatitude()+0.001,startPoint.getLongitude()));
+        //CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
         commercantObjetArrayList.add(homeCom);
         commercantObjetArrayList.add(restoCom);
         for (CommercantObjet c : commercantObjetArrayList) {
@@ -182,6 +152,40 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         return rootView;
     }
 
+    private LocationListener mLocationListener =new  LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            // when gps change, update location
+            updateShow(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // when GPS LocationProvider is available，update location
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            }
+            updateShow(lm.getLastKnownLocation(provider));
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            updateShow(null);
+        }
+    };
+
     //define the function to update location
     private void updateShow(Location location) {
         if (location != null) {
@@ -206,6 +210,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     public void onPause() {
         super.onPause();
         map.onPause();
+        lm.removeUpdates(mLocationListener);
     }
 
     @Override
