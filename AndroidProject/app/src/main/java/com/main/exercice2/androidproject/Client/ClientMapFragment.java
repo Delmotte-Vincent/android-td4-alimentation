@@ -142,7 +142,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         items = new ArrayList<>();
         commercantObjetArrayList = new ArrayList<>();
         //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
-        CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6));
+        CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
         CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
         commercantObjetArrayList.add(homeCom);
         commercantObjetArrayList.add(restoCom);
