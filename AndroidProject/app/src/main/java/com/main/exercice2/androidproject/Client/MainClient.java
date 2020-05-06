@@ -10,10 +10,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
+
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -103,10 +109,12 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
-        sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
-        Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
 
-        clientAlertFragment.newAlert(titre,desc, AlertType.DEFAULT);
+        ImageView imageView = findViewById(R.id.image_signal);
+        Drawable draw =imageView.getDrawable();
+        sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+        Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
+        clientAlertFragment.newAlert(titre,desc,draw);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {

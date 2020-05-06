@@ -1,6 +1,7 @@
 package com.main.exercice2.androidproject;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +25,9 @@ public class AlerteListAdapter extends ArrayAdapter<Post > {
         String title = getItem(position).getTitle();
         String message = getItem(position).getMessage();
         String type = getItem(position).getType();
+        Drawable drawable =getItem(position).getDrawable();
 
-        Post post = new Post(title, message, type);
+        Post post = new Post(title, message, type,drawable);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
@@ -54,8 +56,11 @@ public class AlerteListAdapter extends ArrayAdapter<Post > {
                 default:
                     ivPhoto.setImageResource(R.drawable.news);
             }
-        else
-            rowView = (View)convertView;
+        else{
+            ivPhoto.setImageDrawable(drawable);
+        }
+        ivPhoto.setImageDrawable(drawable);
+            //rowView = (View)convertView;
         return rowView;
     }
 

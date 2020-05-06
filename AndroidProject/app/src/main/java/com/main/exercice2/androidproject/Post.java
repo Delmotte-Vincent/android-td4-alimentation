@@ -1,15 +1,19 @@
 package com.main.exercice2.androidproject;
 
+import android.graphics.drawable.Drawable;
+
 public class Post {
 
     private String title;
     private String message;
     private String type;
+    private Drawable drawable;
 
-    public Post(String title, String message, String type) {
+    public Post(String title, String message, String type, Drawable drawable) {
         this.title = title;
         this.message = message;
         this.type = type;
+        this.drawable=drawable;
     }
 
     public String getTitle() {
@@ -35,6 +39,8 @@ public class Post {
     public void setType(String type) {
         this.type = type;
     }
+
+    public Drawable getDrawable(){return this.drawable;}
 
 
 }
