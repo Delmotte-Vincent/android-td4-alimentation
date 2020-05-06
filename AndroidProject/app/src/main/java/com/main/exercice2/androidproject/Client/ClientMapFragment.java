@@ -1,16 +1,13 @@
 package com.main.exercice2.androidproject.Client;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.main.exercice2.androidproject.AlertType;
-import com.main.exercice2.androidproject.CommercantListAdapter;
+import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
 import com.main.exercice2.androidproject.CommercantObjet;
 import com.main.exercice2.androidproject.R;
 
@@ -40,13 +37,10 @@ import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 import com.main.exercice2.androidproject.Constantes;
 
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.Context.LOCATION_SERVICE;
-import static androidx.constraintlayout.widget.Constraints.TAG;
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener {
