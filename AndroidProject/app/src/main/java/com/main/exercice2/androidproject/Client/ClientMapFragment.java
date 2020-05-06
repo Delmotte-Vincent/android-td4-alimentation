@@ -76,12 +76,15 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
-        //GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
+        GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
 
         lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        if (!isGpsAble(lm)) {
-            Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
-            openGPS2();
+        if (lm!=null)
+        {
+            if (!isGpsAble(lm)) {
+                Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
+                openGPS2();
+            }
         }
         //from GPS to get the latest location
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -93,14 +96,15 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            updateShow(lc);
+
+            //every 60 seconds get gps
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
+
+            startPoint = new GeoPoint(currentLocation);
         }
-        Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        updateShow(lc);
 
-        //every 60 seconds get gps
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
-
-        GeoPoint startPoint = new GeoPoint(currentLocation);
         //transformer location à geopoint
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
