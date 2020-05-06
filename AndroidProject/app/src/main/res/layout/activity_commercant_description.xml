@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_gravity="center"
     tools:context=".Commercant.CommercantDescription">
 
     <TextView
@@ -16,14 +17,13 @@
         android:background="#537fd7"
         android:textColor="#FFFFFF"/>
 
-    <TextView
-        android:id="@+id/description_view"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginTop="60dp"
-        android:textSize="20sp"
-        android:text="descr"
-        android:layout_marginLeft="20dp"/>
+    <EditText
+        android:id="@+id/description_edit_text"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:hint="Description" />
 
     <Button
         android:id="@+id/description_button"

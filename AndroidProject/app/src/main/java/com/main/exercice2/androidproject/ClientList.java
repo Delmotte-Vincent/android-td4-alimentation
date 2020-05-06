@@ -4,7 +4,7 @@ import com.main.exercice2.androidproject.Client.Client;
 
 import java.util.ArrayList;
 
-public class Clients {
+public class ClientList {
 
     static ArrayList<Client> clients = new ArrayList<>();
 
@@ -28,7 +28,9 @@ public class Clients {
 
     public static void add(Client client){
         clients.add(client);
+
     }
+
 
     public static void post(int id , Client client){
         clients.set(id,client);
@@ -44,9 +46,20 @@ public class Clients {
     }
 
     public static int nouveau(String firstName, String lastName,String email ,String password){
-        Client client = new Client(firstName,lastName,email,password,clients.size());
+        Client client = new Client(firstName,lastName,email,password,maxId()+1);
         add(client);
         return client.getId();
     }
+    public static int maxId(){
+        int max = clients.get(0).getId() ;
+        for (int i = 1 ; i<clients.size() ;i++){
+            if(clients.get(i).getId()>(max)){
+                max = clients.get(i).getId() ;
+            }
+        }
+        return max ;
+    }
+
+
 
 }

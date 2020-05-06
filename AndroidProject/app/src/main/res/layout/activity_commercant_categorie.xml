@@ -16,23 +16,23 @@
         android:textColor="#FFFFFF"/>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/ajouter_categorie_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/edit_nom_categorie_text"
         android:layout_centerHorizontal="true"
         android:text="Ajouter la catégorie" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/supprimer_categorie_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/ajouter_categorie_button"
         android:layout_centerHorizontal="true"
         android:text="Supprimer la catégorie" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edit_nom_categorie_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -41,20 +41,20 @@
         android:hint="Nom de la catégorie à ajouter ou supprimer" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textView_categorie_visible"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@+id/button2"
+        android:layout_below="@+id/supprimer_categorie_button"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
         android:text="Vos catégories visibles :"
         android:layout_marginLeft="20dp"/>
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/categorie_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/textView_categorie_visible"
         android:layout_centerHorizontal="true" >
     </ListView>
 

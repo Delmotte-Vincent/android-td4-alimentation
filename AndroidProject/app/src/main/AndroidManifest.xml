@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Client.NewClient"></activity>
+        <activity android:name=".Commercant.NewCommercant"></activity>
+        <activity android:name=".Client.NewClient" />
         <activity android:name=".Commercant.CommercantNomHoraire" />
         <activity android:name=".Commercant.CommercantDescription" />
         <activity android:name=".Commercant.CommercantCategorie" />

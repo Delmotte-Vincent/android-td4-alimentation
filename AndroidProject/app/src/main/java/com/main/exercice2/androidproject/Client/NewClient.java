@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.main.exercice2.androidproject.Clients;
+import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.R;
 
 public class NewClient extends AppCompatActivity {
@@ -49,7 +48,7 @@ public class NewClient extends AppCompatActivity {
         String mailS  = mail.getText().toString();
         String passS  = pass.getText().toString();
         String confirmationS  = confirmation.getText().toString();
-        if(Clients.exist(mailS)) {
+        if(ClientList.exist(mailS)) {
             Toast.makeText(this, "cet email est déjà utilisé ", Toast.LENGTH_SHORT).show();
             stop = true ;
         }
@@ -59,7 +58,7 @@ public class NewClient extends AppCompatActivity {
         }
         if(stop)
             return;
-        int id = Clients.nouveau(nomS,prenomS,mailS,passS);
+        int id = ClientList.nouveau(nomS,prenomS,mailS,passS);
         Intent intent = new Intent(getApplicationContext(), MainClient.class);
         Toast.makeText(this,"compte crée ",Toast.LENGTH_SHORT).show();
         finishAffinity();
