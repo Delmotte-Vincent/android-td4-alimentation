@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.AlertType;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.AlerteListAdapter;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;

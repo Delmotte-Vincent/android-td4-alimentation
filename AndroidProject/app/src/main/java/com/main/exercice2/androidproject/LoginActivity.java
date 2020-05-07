@@ -18,8 +18,9 @@ import com.main.exercice2.androidproject.Client.NewClient;
 import com.main.exercice2.androidproject.Commercant.Commercant;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 import com.main.exercice2.androidproject.Commercant.NewCommercant;
+import com.main.exercice2.androidproject.Interfaces.LoginAs;
 
-public class LoginActivity extends AppCompatActivity implements  LoginAs{
+public class LoginActivity extends AppCompatActivity implements LoginAs {
     boolean client ;
     Button connexion ;
     TextView info ;

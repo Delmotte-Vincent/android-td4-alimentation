@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -24,11 +23,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import com.main.exercice2.androidproject.AlertType;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
-import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.CommercantObjet;
-import com.main.exercice2.androidproject.ICallBack;
+import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.R;
 
 import org.osmdroid.api.IMapController;
@@ -42,7 +40,7 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 
-import com.main.exercice2.androidproject.Constantes;
+import com.main.exercice2.androidproject.Interfaces.Constantes;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
