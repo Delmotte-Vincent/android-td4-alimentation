@@ -1,4 +1,4 @@
-package com.main.exercice2.androidproject;
+package com.main.exercice2.androidproject.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,9 +11,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.main.exercice2.androidproject.AlertType;
+import com.main.exercice2.androidproject.Post;
+import com.main.exercice2.androidproject.R;
+
 import java.util.ArrayList;
 
-public class AlerteListAdapter extends ArrayAdapter<Post > {
+public class AlerteListAdapter extends ArrayAdapter<Post> {
 
     public AlerteListAdapter(@NonNull Context context, @NonNull ArrayList<Post> objects) {
         super(context, R.layout.rowlayout, objects);

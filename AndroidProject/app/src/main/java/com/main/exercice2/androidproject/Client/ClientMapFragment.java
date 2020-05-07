@@ -1,19 +1,17 @@
 package com.main.exercice2.androidproject.Client;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -26,8 +24,9 @@ import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import com.main.exercice2.androidproject.AlertType;
-import com.main.exercice2.androidproject.CommercantListAdapter;
+import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
 import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.ICallBack;
 import com.main.exercice2.androidproject.R;
 
 import org.osmdroid.api.IMapController;
@@ -40,22 +39,20 @@ import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 import com.main.exercice2.androidproject.Constantes;
 
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.Context.LOCATION_SERVICE;
-import static androidx.constraintlayout.widget.Constraints.TAG;
-import static androidx.core.content.ContextCompat.getSystemService;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
     private MapView map;
     ArrayList<OverlayItem> items;
     ArrayList<CommercantObjet> commercantObjetArrayList;
     SearchView searchView;
     ListView listView;
     ArrayAdapter adapter;
+    private ICallBack callBack;
 
 
     ClientMapFragment() {
@@ -71,6 +68,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         searchView = rootView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(this);
         listView = rootView.findViewById(R.id.listSearch);
+        listView.setOnItemClickListener(this);
         Configuration.getInstance().load(getActivity().getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()));
 
@@ -78,12 +76,15 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
-        //GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
+        GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
 
         lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        if (!isGpsAble(lm)) {
-            Toast.makeText(getContext(), "请打开GPS~", Toast.LENGTH_SHORT).show();
-            openGPS2();
+        if (lm!=null)
+        {
+            if (!isGpsAble(lm)) {
+                Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
+                openGPS2();
+            }
         }
         //from GPS to get the latest location
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -94,91 +95,16 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
-            IMapController mapController = map.getController();
-            mapController.setCenter(startPoint);
-            mapController.setZoom(18.0);
+            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            updateShow(lc);
 
-            items = new ArrayList<>();
-            commercantObjetArrayList = new ArrayList<>();
-            //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
-            CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
-            CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
-            commercantObjetArrayList.add(homeCom);
-            commercantObjetArrayList.add(restoCom);
-            for (CommercantObjet c : commercantObjetArrayList) {
-                items.add(new OverlayItem(c.getTitle(), c.getMessage(), c.getGeoPoint()));
-            }
-            //OverlayItem home = new OverlayItem("home","rallo's home", new GeoPoint(43.65020,7.00517));
-            //Drawable m =home.getMarker(0);
-            //items.add(home);
+            //every 60 seconds get gps
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
 
-
-
-            //items.add(new OverlayItem("resto","delice de maman",new GeoPoint(43.64950,7.00517)));
-
-            /** Mise en place de l'adapteur pour l'array list**/
-
-            adapter =new CommercantListAdapter(this.getContext(),commercantObjetArrayList);
-            ((ListView)rootView.findViewById(R.id.listSearch)).setAdapter(adapter);
-
-            ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getActivity().getApplicationContext(), items,
-                    new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                        @Override
-                        public boolean onItemSingleTapUp(int index, OverlayItem item) {
-                            return true;
-                        }
-
-                        @Override
-                        public boolean onItemLongPress(int index, OverlayItem item) {
-                            return false;
-                        }
-                    });
-
-            mOverlay.setFocusItemsOnTap(true);
-            map.getOverlays().add(mOverlay);
-
-            listView.setVisibility(View.GONE);
-            return rootView;
+            startPoint = new GeoPoint(currentLocation);
         }
-        Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        updateShow(lc);
-        //every 60 seconds get gps
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                // when gps change, update location
-                updateShow(location);
-            }
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-                // when GPS LocationProvider is available，update location
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                updateShow(lm.getLastKnownLocation(provider));
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                updateShow(null);
-            }
-        });
-
-        GeoPoint startPoint = new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6);
         //transformer location à geopoint
         IMapController mapController = map.getController();
         mapController.setCenter(startPoint);
@@ -188,7 +114,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         commercantObjetArrayList = new ArrayList<>();
         //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
         CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
-        CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
+        CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(startPoint.getLatitude()+0.001,startPoint.getLongitude()));
+        //CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
         commercantObjetArrayList.add(homeCom);
         commercantObjetArrayList.add(restoCom);
         for (CommercantObjet c : commercantObjetArrayList) {
@@ -227,6 +154,40 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         return rootView;
     }
 
+    private LocationListener mLocationListener =new  LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            // when gps change, update location
+            updateShow(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // when GPS LocationProvider is available，update location
+            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            }
+            updateShow(lm.getLastKnownLocation(provider));
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            updateShow(null);
+        }
+    };
+
     //define the function to update location
     private void updateShow(Location location) {
         if (location != null) {
@@ -251,6 +212,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     public void onPause() {
         super.onPause();
         map.onPause();
+        lm.removeUpdates(mLocationListener);
     }
 
     @Override
@@ -276,5 +238,11 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         }
         adapter.getFilter().filter(s);
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CommercantObjet commercantObjet =(CommercantObjet) adapterView.getItemAtPosition(i);
+        if(commercantObjet!=null) callBack.sendCommercantObjet(commercantObjet);
     }
 }
