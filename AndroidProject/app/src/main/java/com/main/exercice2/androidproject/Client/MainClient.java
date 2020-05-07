@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -301,5 +302,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         }
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(findViewById(R.id.com_list)!=null&&findViewById(R.id.com_list).getVisibility()==(View.VISIBLE)) {
+                findViewById(R.id.com_list).setVisibility(View.GONE);
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
