@@ -7,10 +7,13 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -38,7 +41,9 @@ import com.main.exercice2.androidproject.ClientList;
 
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
+import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
+import com.main.exercice2.androidproject.NotificationReceiver;
 import com.main.exercice2.androidproject.R;
 
 
@@ -151,12 +156,30 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(getApplicationContext(), channelId)
+        Intent activityIntent = new Intent(this, MainActivity.class);
+        //TODO trouver le moyen de mettre MainClient.class sans que ça plante
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, activityIntent, 0);
+
+        Intent broadcastIntent = new Intent (this, NotificationReceiver.class);
+        broadcastIntent.putExtra("toastMessage", desc);
+        PendingIntent actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Bitmap picture = BitmapFactory.decodeResource(getResources(), R.drawable.photo_profil_base);
+
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.baseline_account_circle_black_18dp)
                 .setContentTitle(titre)
-                .setContentText("Vous avez une news !")
+                .setContentText(desc)
+                .setLargeIcon(picture)
+                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(picture).bigLargeIcon(null))
                 .setPriority(priority)
-                .setShowWhen(true);
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setColor(Color.GREEN)
+                .setShowWhen(true)
+                .setContentIntent(contentIntent)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .addAction(R.mipmap.ic_launcher, "Toast", actionIntent);
 
         Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
