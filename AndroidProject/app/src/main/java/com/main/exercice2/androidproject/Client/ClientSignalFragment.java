@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,10 +26,8 @@ import androidx.fragment.app.Fragment;
 import com.main.exercice2.androidproject.AlertType;
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
-import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +35,9 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     private IButtonCLickedListener mCallBack;
     private ImageView imageView;
     Spinner spinner;
-    String spinnerText;
+
+    private CheckBox checkBox ;
+
 
     ClientSignalFragment(){
     }
@@ -47,6 +47,8 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_signal_client,container,false);
         imageView=rootView.findViewById(R.id.image_signal);
+        checkBox=rootView.findViewById(R.id.checkBox);
+        checkBox.setOnClickListener(this);
 
         // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
@@ -71,9 +73,13 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
         mCallBack = (IButtonCLickedListener) getActivity();
     }
 
-    @Override
+
+        @Override
     public void onClick(View view) {
-        if(view.getId()==R.id.but_signal)mCallBack.onButtonSignalClicked(view);
+        if(view.getId()==R.id.checkBox){
+            mCallBack.onCheckClicked(view,checkBox.isChecked());
+        }
+        if(view.getId()==R.id.but_signal)mCallBack.onButtonSignalClicked(view,checkBox.isChecked());
         if(view.getId()==R.id.but_photo_signal){
             if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, Constantes.REQUEST_CAMERA);
@@ -89,4 +95,5 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     }
 
     public void setImage(Bitmap bitmap){imageView.setImageBitmap(bitmap);}
+
 }

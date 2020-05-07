@@ -9,27 +9,44 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
 import android.widget.ListView;
 
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.AlertType;
+
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.main.exercice2.androidproject.ClientList;
+
 import com.main.exercice2.androidproject.Constantes;
 import com.main.exercice2.androidproject.IButtonCLickedListener;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.R;
 
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes {
@@ -39,6 +56,11 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     BottomNavigationView bottomNavigationView;
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
+    ClientMapFragment clientMapFragment;
+    TextView  clientName;
+    private static final String TAG = "TWEET" ;
+    private Client client ;
+
 
 
 
@@ -47,6 +69,13 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
+        clientName= findViewById(R.id.client);
+        Bundle b = this.getIntent().getExtras();
+        int id =b.getInt("id");
+
+        client = ClientList.findClientId(id);
+        clientName.setText(client.getFirstName()+" "+client.getLastName());
+
         this.configureBottomView();
 
         ClientProfilFragment clientProfilFragment = (ClientProfilFragment)getSupportFragmentManager().findFragmentById(R.id.client_frame);
@@ -57,6 +86,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
             trans.commit();
         }
         clientAlertFragment= new ClientAlertFragment();
+        clientMapFragment=new ClientMapFragment();
 
     }
 
@@ -80,7 +110,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 trans.replace(R.id.client_frame, clientAlertFragment);
                 break;
             case R.id.action_map:
-                trans.replace(R.id.client_frame, new ClientMapFragment());
+                trans.replace(R.id.client_frame, clientMapFragment);
                 break;
             case R.id.action_signal :
                 trans.replace(R.id.client_frame, clientSignalFragment=new ClientSignalFragment());
@@ -105,7 +135,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
-    public void onButtonSignalClicked(View but) {
+    public void onButtonSignalClicked(View but,boolean checked) {
         ArrayList<String> data = getSignal();
         String titre = data.get(0);
         String desc = data.get(1);
@@ -115,6 +145,9 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc,draw);
+        if(checked)
+            this.shareOnTwitter(this,titre+"\n"+desc,null);
+            //shareTwitter(titre+"\n"+desc);
     }
 
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
@@ -134,6 +167,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
+    public void onCheckClicked(View view, boolean status) {
+        if(status)
+            Toast.makeText(this,"cette notification va être transferer à Twitter ",Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(this,"cette notification ne va pas être transferer à Twitter ",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CAMERA:{
@@ -148,6 +189,15 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 }
                 break;
             }
+            case REQUEST_GPS: {  //GPS FINE LOCATION only autorisation result code
+                if( grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "FINE authorisation Granted", Toast.LENGTH_LONG);
+                    toast.show();
+                    clientMapFragment.openGPS2();
+                } else {
+                    Log.d( TAG, "(only) FINE LOCATION permission NOT Granted");
+                }
+            } break;
         }
     }
 
@@ -169,4 +219,64 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
             }
         }
     }
+
+    private void shareTwitter(String message) {
+        Intent tweetIntent = new Intent(Intent.ACTION_SEND);
+        tweetIntent.putExtra(Intent.EXTRA_TEXT, message);
+        tweetIntent.setType("text/plain");
+        PackageManager packManager = getPackageManager();
+        List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+        boolean resolved = false;
+        for (ResolveInfo resolveInfo : resolvedInfoList) {
+            if (resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")) {
+                tweetIntent.setClassName(
+                        resolveInfo.activityInfo.packageName,
+                        resolveInfo.activityInfo.name);
+                resolved = true;
+                break;
+            }
+        }
+        if (resolved) {
+            startActivity(tweetIntent);
+        } else {
+            Intent i = new Intent();
+            i.putExtra(Intent.EXTRA_TEXT, message);
+            i.setAction(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + urlEncode(message)));
+            startActivity(i);
+            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private String urlEncode(String s) {
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.wtf(TAG, "UTF-8 should always be supported", e);
+            return "";
+        }
+    }
+
+    public  void shareOnTwitter(AppCompatActivity appCompatActivity, String textBody, Uri fileUri) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.setPackage("com.twitter.android");
+        intent.putExtra(Intent.EXTRA_TEXT,!TextUtils.isEmpty(textBody) ? textBody : "");
+
+        if (fileUri != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+        }
+
+        try {
+            appCompatActivity.startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 }

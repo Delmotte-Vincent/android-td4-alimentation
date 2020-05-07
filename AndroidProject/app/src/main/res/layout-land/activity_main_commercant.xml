@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Commercant.MainCommercant">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#537fd7"
+        android:text="Accueil"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="136dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/photo_profil_base"
+        app:civ_border_color="#000"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/nom_prenom"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Nom - Prénom"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
+        app:layout_constraintVertical_bias="0.057"
+        tools:layout_editor_absoluteX="33dp" />
+
+    <TextView
+        android:id="@+id/nom_magasin_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="18dp"
+        android:text="Nom du magasin"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/horaire_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <TextView
+        android:id="@+id/horaire_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Horaires : 9h00 - 17h00"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Catégories :"
+        app:layout_constraintEnd_toStartOf="@+id/nom_horaire_button"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nom_prenom" />
+
+    <Button
+        android:id="@+id/nom_horaire_button"
+        android:layout_width="255dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="12dp"
+        android:text="Modifier le nom ou les horaires"
+        app:layout_constraintBottom_toTopOf="@+id/description_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/description_button"
+        android:layout_width="255dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:text="Modifier la description"
+        app:layout_constraintBottom_toTopOf="@+id/categorie_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/categorie_button"
+        android:layout_width="255dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:text="Modifier les catégories"
+        app:layout_constraintBottom_toTopOf="@+id/but_signal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/but_signal"
+        android:layout_width="258dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:text="Envoyer le signalement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
