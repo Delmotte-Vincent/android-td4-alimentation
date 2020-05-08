@@ -85,7 +85,6 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
                 ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, Constantes.REQUEST_CAMERA);
             }
             else{
-                mc.setDefaultPicture(false);
                 takePicture();
             }
             mCallBack.onButtonPictureSignalClicked(view);
@@ -95,8 +94,12 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     }
 
     public void takePicture(){
+        MainClient mc = (MainClient) getActivity();
+        System.out.println("PASSE A FALSE DANS TAKE PICTURE");
+        mc.setDefaultPicture(false);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         getActivity().startActivityForResult(intent, Constantes.REQUEST_CAMERA);
+
     }
 
     public void setImage(Bitmap bitmap){imageView.setImageBitmap(bitmap);}

@@ -66,7 +66,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     private static final String TAG = "TWEET" ;
     private Client client ;
     private String type;
-    private boolean defaultPicture;
+    private boolean defaultPicture = true;
 
 
 
@@ -158,15 +158,15 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
 
-
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-
 
         clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
         if(checked)
             this.shareOnTwitter(this,titre+"\n"+desc,null);
             //shareTwitter(titre+"\n"+desc);
+
+        this.setDefaultPicture(true);
     }
 
 
