@@ -32,9 +32,6 @@ public class ClientAlertFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_alert_client,container,false);
 
-
-
-
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         AlerteListAdapter adapter = new AlerteListAdapter(getContext(), postList);
         listView.setAdapter(adapter);
@@ -43,8 +40,9 @@ public class ClientAlertFragment extends Fragment {
     }
 
 
-    public void newAlert(String titre, String desc, Drawable drawable) {
-        postList.add(new Post(titre,desc,AlertType.DEFAULT,drawable));
+    public void newAlert(String titre, String desc, String type, Drawable drawable, Boolean defaultPicture) {
+
+        postList.add(new Post(titre,desc, type, drawable, defaultPicture));
 
     }
 }

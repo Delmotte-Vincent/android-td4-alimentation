@@ -14,6 +14,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,8 +35,12 @@ import android.widget.TextView;
 
 import com.main.exercice2.androidproject.ClientList;
 
+
+import com.main.exercice2.androidproject.CommercantObjet;
+
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
+import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
@@ -49,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes {
+public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes, ICallBack {
     private Bitmap picture;
     private static final String CHANNEL_ID ="channel1";
     private int notificationId = 0;
@@ -60,6 +65,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     TextView  clientName;
     private static final String TAG = "TWEET" ;
     private Client client ;
+    private String type;
+    private boolean defaultPicture = true;
 
 
 
@@ -121,35 +128,55 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         return true;
     }
 
-    public  ArrayList<String> getSignal(){
-        ArrayList<String> retour=new ArrayList<>();
-        String title="Sans Titre";
-        String description="sans description";
-        EditText titre=findViewById(R.id.titre_signal);
-        EditText desc=findViewById(R.id.desc_signal);
-        if(!titre.getText().toString().equals("")){title=titre.getText().toString();}
-        if(!desc.getText().toString().equals("")){description=desc.getText().toString(); }
-        retour.add(title);
-        retour.add(description);
-        return retour;
+
+    /**
+     * Recupère le titre du signalement
+     * @return
+     */
+    public String getSignalTitle() {
+        EditText title = findViewById(R.id.titre_signal);
+        return !title.getText().toString().equals("") ? title.getText().toString() : "Sans titre";
+    }
+
+    /**
+     * Récupère la description du signalement
+     * @return
+     */
+    public String getSignalDesc() {
+        EditText title = findViewById(R.id.desc_signal);
+        return !title.getText().toString().equals("") ? title.getText().toString() : "Sans description";
+    }
+
+    public Drawable getSignalPicture() {
+        ImageView imageView = findViewById(R.id.image_signal);
+        return imageView.getDrawable();
     }
 
     @Override
     public void onButtonSignalClicked(View but,boolean checked) {
-        ArrayList<String> data = getSignal();
-        String titre = data.get(0);
-        String desc = data.get(1);
+        String titre = getSignalTitle();
+        String desc = getSignalDesc();
+        Drawable draw = getSignalPicture();
 
-        ImageView imageView = findViewById(R.id.image_signal);
-        Drawable draw =imageView.getDrawable();
-        sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+        sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-        clientAlertFragment.newAlert(titre,desc,draw);
+
+        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
         if(checked)
             this.shareOnTwitter(this,titre+"\n"+desc,null);
             //shareTwitter(titre+"\n"+desc);
+
+        this.setDefaultPicture(true);
     }
 
+
+    /**
+     * Création de la notification
+     * @param titre
+     * @param desc
+     * @param channelId
+     * @param priority
+     */
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
         Intent activityIntent = new Intent(this, MainActivity.class);
         //TODO trouver le moyen de mettre MainClient.class sans que ça plante
@@ -159,22 +186,26 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         broadcastIntent.putExtra("toastMessage", desc);
         PendingIntent actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Bitmap picture = BitmapFactory.decodeResource(getResources(), R.drawable.photo_profil_base);
+        Bitmap picture = this.picture;
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.baseline_account_circle_black_18dp)
                 .setContentTitle(titre)
                 .setContentText(desc)
-                .setLargeIcon(picture)
-                .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(picture).bigLargeIcon(null))
                 .setPriority(priority)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(Color.GREEN)
+                .setColor(Color.BLUE)
                 .setShowWhen(true)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
                 .addAction(R.mipmap.ic_launcher, "Toast", actionIntent);
+
+        if (!this.defaultPicture) {
+            notification.setLargeIcon(picture)
+                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
+                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(picture).bigLargeIcon(null));
+        }
 
         Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
@@ -305,5 +336,27 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    /**
+     * Permet d'obtenir le type de signalement renseigné dans le fragment
+     * @param type
+     */
+    public void getTypeFromFrag(String type) {
+        this.type = type;
+    }
+
+    public void setDefaultPicture(Boolean defaultPicture) {
+        this.defaultPicture = defaultPicture;
+    }
+
+    @Override
+    public void sendCommercantObjet(CommercantObjet c) {
+        ClientCommercantFragment clientCommercantFragment = new ClientCommercantFragment();
+        Bundle args = new Bundle();
+        //On aura juste à passer l'id du commercant dans le bundle
+        getSupportFragmentManager().beginTransaction().replace(R.id.client_frame,clientCommercantFragment).commit();
+
     }
 }

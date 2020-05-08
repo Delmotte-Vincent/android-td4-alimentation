@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
+import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -44,19 +45,18 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_signal_client,container,false);
-        imageView=rootView.findViewById(R.id.image_signal);
-        checkBox=rootView.findViewById(R.id.checkBox);
+        imageView = rootView.findViewById(R.id.image_signal);
+        checkBox = rootView.findViewById(R.id.checkBox);
         checkBox.setOnClickListener(this);
 
         // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
-        //spinnerText = spinner.getSelectedItem().toString();
         List choix = new ArrayList<>();
+        choix.add(AlertType.DEFAULT);
         choix.add(AlertType.BOUCHERIE);
         choix.add(AlertType.BOULANGERIE);
         choix.add(AlertType.EPICERIE);
         choix.add(AlertType.POISONNERIE);
-        choix.add(AlertType.DEFAULT);
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, choix);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -74,6 +74,8 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
 
         @Override
     public void onClick(View view) {
+        MainClient mc = (MainClient) getActivity();
+        mc.getTypeFromFrag(spinner.getSelectedItem().toString());
         if(view.getId()==R.id.checkBox){
             mCallBack.onCheckClicked(view,checkBox.isChecked());
         }
@@ -82,16 +84,23 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
             if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, Constantes.REQUEST_CAMERA);
             }
-            else{takePicture();}
+            else{
+                takePicture();
+            }
             mCallBack.onButtonPictureSignalClicked(view);
         };
+
+
     }
 
     public void takePicture(){
+        MainClient mc = (MainClient) getActivity();
+        System.out.println("PASSE A FALSE DANS TAKE PICTURE");
+        mc.setDefaultPicture(false);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         getActivity().startActivityForResult(intent, Constantes.REQUEST_CAMERA);
+
     }
 
     public void setImage(Bitmap bitmap){imageView.setImageBitmap(bitmap);}
-
 }
