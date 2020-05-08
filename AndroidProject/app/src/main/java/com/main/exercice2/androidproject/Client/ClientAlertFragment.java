@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.AlertType;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.AlerteListAdapter;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
@@ -33,21 +33,18 @@ public class ClientAlertFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.frag_alert_client,container,false);
 
 
+
+
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
-        if(postList.size()==0) {
-
-        }
-
         AlerteListAdapter adapter = new AlerteListAdapter(getContext(), postList);
-
         listView.setAdapter(adapter);
-
-
 
         return rootView;
     }
 
+
     public void newAlert(String titre, String desc, Drawable drawable) {
         postList.add(new Post(titre,desc,AlertType.DEFAULT,drawable));
+
     }
 }

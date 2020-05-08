@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +21,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.AlertType;
-import com.main.exercice2.androidproject.Constantes;
-import com.main.exercice2.androidproject.IButtonCLickedListener;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
+import com.main.exercice2.androidproject.Interfaces.Constantes;
+import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -34,7 +33,9 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     private IButtonCLickedListener mCallBack;
     private ImageView imageView;
     Spinner spinner;
+
     private CheckBox checkBox ;
+
 
     ClientSignalFragment(){
     }
@@ -49,6 +50,7 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
 
         // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
+        //spinnerText = spinner.getSelectedItem().toString();
         List choix = new ArrayList<>();
         choix.add(AlertType.BOUCHERIE);
         choix.add(AlertType.BOULANGERIE);
@@ -58,7 +60,6 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, choix);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
         rootView.findViewById(R.id.but_signal).setOnClickListener(this);
         rootView.findViewById(R.id.but_photo_signal).setOnClickListener(this);
         return rootView;

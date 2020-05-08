@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -22,9 +23,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
-import com.main.exercice2.androidproject.AlertType;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
 import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.R;
 
 import org.osmdroid.api.IMapController;
@@ -38,18 +40,23 @@ import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 
-import com.main.exercice2.androidproject.Constantes;
+import com.main.exercice2.androidproject.Interfaces.Constantes;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class ClientMapFragment extends Fragment implements SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
     private MapView map;
     ArrayList<OverlayItem> items;
     ArrayList<CommercantObjet> commercantObjetArrayList;
+    ArrayList<CommercantObjet> commercantObjetsShow;
     SearchView searchView;
-    ListView listView;
+    ListView listResearch;
+    ListView listShow;
     ArrayAdapter adapter;
+    ArrayAdapter adapter2;
+    private ICallBack callBack;
+    IMapController mapController;
 
 
     ClientMapFragment() {
@@ -64,7 +71,11 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         View rootView = inflater.inflate(R.layout.frag_map_client, container, false);
         searchView = rootView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(this);
-        listView = rootView.findViewById(R.id.listSearch);
+        listResearch = rootView.findViewById(R.id.listSearch);
+        listResearch.setOnItemClickListener(this);
+        listShow = rootView.findViewById(R.id.com_list);
+        listShow.setOnItemClickListener(this);
+        commercantObjetsShow= new ArrayList<>();
         Configuration.getInstance().load(getActivity().getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext()));
 
@@ -72,12 +83,15 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
-        //GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
+        GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
 
         lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
-        if (!isGpsAble(lm)) {
-            Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
-            openGPS2();
+        if (lm!=null)
+        {
+            if (!isGpsAble(lm)) {
+                Toast.makeText(getContext(), "Please open GPS~", Toast.LENGTH_SHORT).show();
+                openGPS2();
+            }
         }
         //from GPS to get the latest location
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,16 +103,17 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            updateShow(lc);
+
+            //every 60 seconds get gps
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
+
+            startPoint = new GeoPoint(currentLocation);
         }
-        Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        updateShow(lc);
 
-        //every 60 seconds get gps
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
-
-        GeoPoint startPoint = new GeoPoint(currentLocation.getAltitude()* 1E6, currentLocation.getLongitude()* 1E6);
         //transformer location à geopoint
-        IMapController mapController = map.getController();
+        mapController = map.getController();
         mapController.setCenter(startPoint);
         mapController.setZoom(18.0);
 
@@ -122,9 +137,10 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         //items.add(new OverlayItem("resto","delice de maman",new GeoPoint(43.64950,7.00517)));
 
         /** Mise en place de l'adapteur pour l'array list**/
-
         adapter =new CommercantListAdapter(this.getContext(),commercantObjetArrayList);
         ((ListView)rootView.findViewById(R.id.listSearch)).setAdapter(adapter);
+        adapter2 = new CommercantListAdapter(this.getContext(),commercantObjetsShow);
+        listShow.setAdapter(adapter2);
 
         ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(getActivity().getApplicationContext(), items,
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
@@ -142,7 +158,9 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         mOverlay.setFocusItemsOnTap(true);
         map.getOverlays().add(mOverlay);
 
-        listView.setVisibility(View.GONE);
+
+        listResearch.setVisibility(View.GONE);
+        listShow.setVisibility(View.GONE);
         return rootView;
     }
 
@@ -216,19 +234,39 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        listView.setVisibility(View.GONE);
+        listResearch.setVisibility(View.GONE);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String s) {
         if(s.equals("")){
-            listView.setVisibility(View.GONE);
+            listResearch.setVisibility(View.GONE);
         }
         else {
-            listView.setVisibility(View.VISIBLE);
+            listResearch.setVisibility(View.VISIBLE);
         }
         adapter.getFilter().filter(s);
         return true;
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        CommercantObjet commercantObjet =(CommercantObjet) adapterView.getItemAtPosition(i);
+        System.out.println(view);
+       if(adapterView==listResearch){
+           System.out.println(commercantObjet);
+           commercantObjetsShow.clear();
+           commercantObjetsShow.add(commercantObjet);
+           adapter2 = new CommercantListAdapter(this.getContext(),commercantObjetsShow);
+           listShow.setAdapter(adapter2);
+           listShow.setVisibility(View.VISIBLE);
+           if (!searchView.isIconified()) {
+               searchView.onActionViewCollapsed();}
+           mapController.setCenter(commercantObjet.getGeoPoint());
+           mapController.setZoom(19.0);
+
+       }
     }
 }

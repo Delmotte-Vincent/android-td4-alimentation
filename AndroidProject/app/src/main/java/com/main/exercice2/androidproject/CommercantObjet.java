@@ -2,6 +2,8 @@ package com.main.exercice2.androidproject;
 
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
+
 import org.osmdroid.util.GeoPoint;
 
 public class CommercantObjet {
@@ -50,4 +52,10 @@ public class CommercantObjet {
     public Drawable getDrawable(){return this.drawable;}
 
     public GeoPoint getGeoPoint(){return this.geoPoint;}
+
+    @NonNull
+    @Override
+    public String toString() {
+        return title;
+    }
 }

@@ -8,7 +8,7 @@ import android.os.Build;
 
 import java.util.Objects;
 
-public class App extends Application {
+public class Notification extends Application {
 
     public static final String CHANNEL_ID ="channel1";
     private static NotificationManager notificationManager;
