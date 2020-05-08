@@ -8,12 +8,14 @@ public class Post {
     private String message;
     private String type;
     private Drawable drawable;
+    private Boolean defaultPicture;
 
     public Post(String title, String message, String type, Drawable drawable) {
         this.title = title;
         this.message = message;
         this.type = type;
         this.drawable=drawable;
+        this.defaultPicture = true;
     }
 
     public String getTitle() {
@@ -41,6 +43,14 @@ public class Post {
     }
 
     public Drawable getDrawable(){return this.drawable;}
+
+    public void setDefaultPicture(Boolean b) {
+        this.defaultPicture = b;
+    }
+
+    public Boolean getDefaultPicture() {
+        return this.defaultPicture;
+    }
 
 
 }

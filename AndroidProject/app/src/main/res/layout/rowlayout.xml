@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
@@ -13,6 +13,17 @@
         android:layout_marginRight="10dp"
         android:text="Title"
         android:textSize="20dp"
+        android:gravity="center">
+    </TextView>
+    <TextView
+        android:id="@+id/textViewType"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="Title"
+        android:textSize="10dp"
         android:gravity="center">
     </TextView>
 
@@ -28,7 +39,7 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textViewMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"

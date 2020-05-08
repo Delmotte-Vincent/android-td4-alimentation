@@ -29,21 +29,24 @@ public class AlerteListAdapter extends ArrayAdapter<Post> {
         String title = getItem(position).getTitle();
         String message = getItem(position).getMessage();
         String type = getItem(position).getType();
-        Drawable drawable =getItem(position).getDrawable();
+        Drawable drawable = getItem(position).getDrawable();
+        Boolean defaultPicture = getItem(position).getDefaultPicture();
 
-        Post post = new Post(title, message, type,drawable);
+        System.out.println(type);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
 
-        TextView tvTitle = (TextView) rowView.findViewById(R.id.textView1);
-        TextView tvMessage = (TextView) rowView.findViewById(R.id.textView2);
+        TextView tvTitle = (TextView) rowView.findViewById(R.id.textViewTitle);
+        TextView tvMessage = (TextView) rowView.findViewById(R.id.textViewMessage);
+        TextView tvType = (TextView) rowView.findViewById(R.id.textViewType);
         ImageView ivPhoto = (ImageView) rowView.findViewById(R.id.photo);
 
         tvTitle.setText(title);
         tvMessage.setText(message);
+        tvType.setText(type);
 
-        if(convertView == null )
+        if(defaultPicture)
             switch (type) {
                 case AlertType.BOUCHERIE:
                     ivPhoto.setImageResource(R.drawable.boucherie);
@@ -63,8 +66,7 @@ public class AlerteListAdapter extends ArrayAdapter<Post> {
         else{
             ivPhoto.setImageDrawable(drawable);
         }
-        ivPhoto.setImageDrawable(drawable);
-            //rowView = (View)convertView;
+        //ivPhoto.setImageDrawable(drawable);
         return rowView;
     }
 
