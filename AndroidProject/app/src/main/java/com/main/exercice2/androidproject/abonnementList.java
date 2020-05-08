@@ -22,6 +22,26 @@ public class abonnementList
         return ab ;
     }
 
+
+    public static ArrayList<Abonnement> getCommercant(int idCommercant){
+        ArrayList<Abonnement> ab =new ArrayList<>();
+        for(int i=0 ; i<abonnements.size();i++){
+            if(abonnements.get(i).getIdCommercant() ==idCommercant){
+                ab.add(abonnements.get(i));
+            }
+        }
+        return ab ;
+    }
+
+    public static ArrayList<Abonnement> getAbonnementCommercant(int idCommercant){
+        ArrayList<Abonnement> allClient = new ArrayList<>();
+        ArrayList<Abonnement> ab = getCommercant(idCommercant);
+        for(int i=0 ; i<ab.size();i++){
+            allClient.add(ab.get(i));
+        }
+        return allClient ;
+    }
+
     public static ArrayList<Abonnement> getAbonnementClientCommercant(int idClient , int idCommercant){
         ArrayList<Abonnement> ab =new ArrayList<>();
         for(int i=0 ; i<abonnements.size();i++){
