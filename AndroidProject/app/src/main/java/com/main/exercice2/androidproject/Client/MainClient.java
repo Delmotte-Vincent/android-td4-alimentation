@@ -35,9 +35,12 @@ import android.widget.TextView;
 
 import com.main.exercice2.androidproject.ClientList;
 
-import com.main.exercice2.androidproject.Interfaces.AlertType;
+
+import com.main.exercice2.androidproject.CommercantObjet;
+
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
+import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
@@ -51,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes {
+public class MainClient extends AppCompatActivity implements IButtonCLickedListener, Constantes, ICallBack {
     private Bitmap picture;
     private static final String CHANNEL_ID ="channel1";
     private int notificationId = 0;
@@ -160,7 +163,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
 
 
-        clientAlertFragment.newAlert(titre,desc, type, draw);
+        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
         if(checked)
             this.shareOnTwitter(this,titre+"\n"+desc,null);
             //shareTwitter(titre+"\n"+desc);
@@ -335,6 +338,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         return super.onKeyDown(keyCode, event);
     }
 
+
     /**
      * Permet d'obtenir le type de signalement renseigné dans le fragment
      * @param type
@@ -343,7 +347,16 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         this.type = type;
     }
 
-    public void setDefaultPicture() {
-        this.defaultPicture = false;
+    public void setDefaultPicture(Boolean defaultPicture) {
+        this.defaultPicture = defaultPicture;
+    }
+
+    @Override
+    public void sendCommercantObjet(CommercantObjet c) {
+        ClientCommercantFragment clientCommercantFragment = new ClientCommercantFragment();
+        Bundle args = new Bundle();
+        //On aura juste à passer l'id du commercant dans le bundle
+        getSupportFragmentManager().beginTransaction().replace(R.id.client_frame,clientCommercantFragment).commit();
+
     }
 }

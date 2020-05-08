@@ -40,9 +40,9 @@ public class ClientAlertFragment extends Fragment {
     }
 
 
-    public void newAlert(String titre, String desc, String type, Drawable drawable) {
+    public void newAlert(String titre, String desc, String type, Drawable drawable, Boolean defaultPicture) {
 
-        postList.add(new Post(titre,desc, type, drawable));
+        postList.add(new Post(titre,desc, type, drawable, defaultPicture));
 
     }
 }

@@ -10,12 +10,12 @@ public class Post {
     private Drawable drawable;
     private Boolean defaultPicture;
 
-    public Post(String title, String message, String type, Drawable drawable) {
+    public Post(String title, String message, String type, Drawable drawable, Boolean defaultPicture) {
         this.title = title;
         this.message = message;
         this.type = type;
         this.drawable=drawable;
-        this.defaultPicture = true;
+        this.defaultPicture = defaultPicture;
     }
 
     public String getTitle() {

@@ -85,7 +85,7 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
                 ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, Constantes.REQUEST_CAMERA);
             }
             else{
-                mc.setDefaultPicture();
+                mc.setDefaultPicture(false);
                 takePicture();
             }
             mCallBack.onButtonPictureSignalClicked(view);
