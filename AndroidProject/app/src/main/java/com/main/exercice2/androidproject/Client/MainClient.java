@@ -19,28 +19,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import android.widget.ListView;
-
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.main.exercice2.androidproject.AlertType;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.main.exercice2.androidproject.ClientList;
 
-import com.main.exercice2.androidproject.Constantes;
-import com.main.exercice2.androidproject.IButtonCLickedListener;
+import com.main.exercice2.androidproject.Interfaces.Constantes;
+import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
@@ -302,5 +297,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         }
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(findViewById(R.id.com_list)!=null&&findViewById(R.id.com_list).getVisibility()==(View.VISIBLE)) {
+                findViewById(R.id.com_list).setVisibility(View.GONE);
+                return false;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

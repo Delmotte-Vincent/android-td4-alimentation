@@ -29,6 +29,7 @@ public class MainCommercant extends AppCompatActivity {
     Button categorie_button ;
     Button description_button ;
     Button nom_horaire_button;
+    Button envoyer_signal_button;
 
     TextView nom_magasin_text;
     TextView horaire_text;
@@ -51,6 +52,15 @@ public class MainCommercant extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CommercantCategorie.class);
+                startActivity(intent);
+            }
+        });
+
+        envoyer_signal_button = findViewById(R.id.envoyer_signal_button);
+        envoyer_signal_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CommercantSignalement.class);
                 startActivity(intent);
             }
         });

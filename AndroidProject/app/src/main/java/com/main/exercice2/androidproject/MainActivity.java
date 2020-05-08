@@ -3,19 +3,13 @@ package com.main.exercice2.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import com.main.exercice2.androidproject.Interfaces.LoginAs;
 
-public class MainActivity extends AppCompatActivity implements LoginAs{
+public class MainActivity extends AppCompatActivity implements LoginAs {
     Button client ;
     Button commercant ;
 
