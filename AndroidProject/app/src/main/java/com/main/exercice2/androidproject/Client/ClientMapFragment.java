@@ -1,6 +1,7 @@
 package com.main.exercice2.androidproject.Client;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -146,11 +147,17 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
                     @Override
                     public boolean onItemSingleTapUp(int index, OverlayItem item) {
+                        commercantObjetsShow.clear();
+                        commercantObjetsShow.add(commercantObjetArrayList.get(index));
+                        listShow.setAdapter(adapter2);
+                        listShow.setVisibility(View.VISIBLE);
                         return true;
                     }
 
                     @Override
                     public boolean onItemLongPress(int index, OverlayItem item) {
+
+                        callBack.sendCommercantObjet(commercantObjetArrayList.get(index));
                         return false;
                     }
                 });
@@ -242,14 +249,21 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     public boolean onQueryTextChange(String s) {
         if(s.equals("")){
             listResearch.setVisibility(View.GONE);
+
         }
         else {
             listResearch.setVisibility(View.VISIBLE);
         }
+        listShow.setVisibility(View.GONE);
         adapter.getFilter().filter(s);
         return true;
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        callBack = (ICallBack) getActivity();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -268,5 +282,10 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
            mapController.setZoom(19.0);
 
        }
+       if(adapterView==listShow){
+           callBack.sendCommercantObjet(commercantObjet);
+       }
     }
+
+
 }
