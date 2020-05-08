@@ -95,5 +95,4 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     }
 
     public void setImage(Bitmap bitmap){imageView.setImageBitmap(bitmap);}
-
 }

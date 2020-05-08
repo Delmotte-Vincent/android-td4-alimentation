@@ -147,7 +147,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
         ImageView imageView = findViewById(R.id.image_signal);
         Drawable draw =imageView.getDrawable();
-        sendNotificationOnChannel("titre", "desc", CHANNEL_ID, NotificationCompat.PRIORITY_DEFAULT);
+        sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
         clientAlertFragment.newAlert(titre,desc,draw);
         if(checked)
@@ -164,17 +164,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         broadcastIntent.putExtra("toastMessage", desc);
         PendingIntent actionIntent = PendingIntent.getBroadcast(this, 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Bitmap picture = BitmapFactory.decodeResource(getResources(), R.drawable.photo_profil_base);
+        Bitmap picture = this.picture;
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.baseline_account_circle_black_18dp)
                 .setContentTitle(titre)
                 .setContentText(desc)
                 .setLargeIcon(picture)
+                .setStyle(new NotificationCompat.DecoratedCustomViewStyle())
                 .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(picture).bigLargeIcon(null))
                 .setPriority(priority)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(Color.GREEN)
+                .setColor(Color.BLUE)
                 .setShowWhen(true)
                 .setContentIntent(contentIntent)
                 .setAutoCancel(true)
