@@ -97,11 +97,10 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 openGPS2();
             }
         }
-
         //from GPS to get the latest location
         initLocation();
 
-        //every 2 seconds get gps
+        //every 60 seconds get gps
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -111,9 +110,6 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener);
-            currentLocation=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            startPoint=new GeoPoint(currentLocation);
-
         }
 
         //transformer location à geopoint
@@ -197,6 +193,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 //                                          int[] grantResults)
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
+
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_GPS);
             }
             updateShow(lm.getLastKnownLocation(provider));
@@ -204,6 +201,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
 
         @Override
         public void onProviderDisabled(String provider) {
+
             startPoint = new GeoPoint(43.6520, 7.00517);
         }
     };
@@ -244,7 +242,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             updateShow(lc);
 
             //every 2 seconds get gps
-            //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener);
 
             startPoint = new GeoPoint(currentLocation);
         }
@@ -267,7 +265,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 updateShow(lc);
 
                 //every 2 seconds get gps
-                //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener );
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener );
 
                 this.startPoint = new GeoPoint(currentLocation);
             }else {
@@ -320,22 +318,22 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         CommercantObjet commercantObjet =(CommercantObjet) adapterView.getItemAtPosition(i);
         System.out.println(view);
-       if(adapterView==listResearch){
-           System.out.println(commercantObjet);
-           commercantObjetsShow.clear();
-           commercantObjetsShow.add(commercantObjet);
-           adapter2 = new CommercantListAdapter(this.getContext(),commercantObjetsShow);
-           listShow.setAdapter(adapter2);
-           listShow.setVisibility(View.VISIBLE);
-           if (!searchView.isIconified()) {
-               searchView.onActionViewCollapsed();}
-           mapController.setCenter(commercantObjet.getGeoPoint());
-           mapController.setZoom(19.0);
+        if(adapterView==listResearch){
+            System.out.println(commercantObjet);
+            commercantObjetsShow.clear();
+            commercantObjetsShow.add(commercantObjet);
+            adapter2 = new CommercantListAdapter(this.getContext(),commercantObjetsShow);
+            listShow.setAdapter(adapter2);
+            listShow.setVisibility(View.VISIBLE);
+            if (!searchView.isIconified()) {
+                searchView.onActionViewCollapsed();}
+            mapController.setCenter(commercantObjet.getGeoPoint());
+            mapController.setZoom(19.0);
 
-       }
-       if(adapterView==listShow){
-           callBack.sendCommercantObjet(commercantObjet);
-       }
+        }
+        if(adapterView==listShow){
+            callBack.sendCommercantObjet(commercantObjet);
+        }
     }
 
 
