@@ -45,12 +45,13 @@ public class abonnementList
     public static ArrayList<Abonnement> getAbonnementClientCommercant(int idClient , int idCommercant){
         ArrayList<Abonnement> ab =new ArrayList<>();
         for(int i=0 ; i<abonnements.size();i++){
-            if(abonnements.get(i).getIdClient() ==idClient && abonnements.get(i).getIdClient() == idCommercant ){
+            if(abonnements.get(i).getIdClient() ==idClient && abonnements.get(i).getIdCommercant() == idCommercant ){
                 ab.add(abonnements.get(i));
             }
         }
         return ab ;
     }
+
 
     public static void  addAbonnement(int idClient , int idCommercant){
         abonnements.add(new Abonnement(idClient,idCommercant));
