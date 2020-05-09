@@ -29,7 +29,6 @@
         <activity android:name=".Commercant.CommercantSignalement" />
         <activity android:name=".Commercant.NewCommercant" />
         <activity android:name=".Client.NewClient" />
-        <activity android:name=".Commercant.CommercantNomHoraire" />
         <activity android:name=".Commercant.CommercantDescription" />
         <activity android:name=".Commercant.CommercantCategorie" />
 

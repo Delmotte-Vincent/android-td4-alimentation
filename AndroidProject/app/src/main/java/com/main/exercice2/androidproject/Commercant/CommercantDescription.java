@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.main.exercice2.androidproject.R;
 
@@ -30,8 +31,8 @@ public class CommercantDescription extends AppCompatActivity {
                 Intent intent = new Intent(CommercantDescription.this,MainCommercant.class);
                 EditText description_edit_text = (EditText)findViewById(R.id.description_edit_text);
                 String description = description_edit_text.getText().toString();
-                System.out.println("/n/nwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"+description);
                 intent.putExtra("description_key",description);
+                Toast.makeText(CommercantDescription.this, "La description a été mise à jour", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });

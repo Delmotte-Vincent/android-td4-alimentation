@@ -4,29 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.icu.util.Calendar;
-import android.icu.util.TimeZone;
-import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import com.main.exercice2.androidproject.Abonnement;
-import com.main.exercice2.androidproject.EventCalendar;
 import com.main.exercice2.androidproject.Signalement;
 import com.main.exercice2.androidproject.abonnementList;
 import com.main.exercice2.androidproject.R;
 
-import java.util.ArrayList;
 
 public class CommercantSignalement extends AppCompatActivity {
 
