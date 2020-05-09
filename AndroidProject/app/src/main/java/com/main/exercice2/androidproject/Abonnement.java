@@ -1,5 +1,7 @@
 package com.main.exercice2.androidproject;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 public class Abonnement {
@@ -27,5 +29,11 @@ public class Abonnement {
 
     public int getIdCommercant() {
         return idCommercant;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return CommercantList.findClientId(idCommercant).toString();
     }
 }

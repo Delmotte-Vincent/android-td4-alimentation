@@ -38,19 +38,22 @@ public class ClientCommercantFragment extends Fragment implements Constantes, Vi
             ((TextView)rootView.findViewById(R.id.frag_com_nom)).setText(com.getTitle());
             String desc=com.getMessage()+"\n Contact : "+com.getEmail();
             ((TextView)rootView.findViewById(R.id.frag_com_desc)).setText(desc);
-            ((ImageView)rootView.findViewById(R.id.frag_com_im)).setImageDrawable(com.getDrawable());
+            if(com.getDrawable()!=null) {
+                ((ImageView) rootView.findViewById(R.id.frag_com_im)).setImageDrawable(com.getDrawable());
+            }
         }
         return rootView;
     }
 
     @Override
     public void onClick(View view) {
-
+        System.out.println(abonnementList.getAbonnementClient(client.getId()));
         if(abonnementList.getAbonnementClientCommercant(client.getId(),com.getId()).size()==0){
             abonnementList.addAbonnement(client.getId(),com.getId());
             Toast.makeText(getContext(), "Vous vous êtes abonné à "+com.getTitle(), Toast.LENGTH_SHORT).show();
         }
         else{
+            System.out.println(abonnementList.getAbonnementClientCommercant(client.getId(),com.getId()));
             Toast.makeText(getContext(), "Vous êtes déjà abonné à "+com.getTitle(), Toast.LENGTH_SHORT).show();
         }
     }
