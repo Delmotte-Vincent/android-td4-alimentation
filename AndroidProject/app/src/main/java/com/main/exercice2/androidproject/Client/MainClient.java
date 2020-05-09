@@ -45,6 +45,7 @@ import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
 import com.main.exercice2.androidproject.R;
+import com.main.exercice2.androidproject.Signalement;
 
 
 import java.io.UnsupportedEncodingException;
@@ -68,7 +69,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     private String type;
     private boolean defaultPicture = true;
 
-
+    EditText title;
+    EditText description;
 
 
     @Override
@@ -132,7 +134,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      * @return
      */
     public String getSignalTitle() {
-        EditText title = findViewById(R.id.titre_signal);
+        title = findViewById(R.id.titre_signal);
         return !title.getText().toString().equals("") ? title.getText().toString() : "Sans titre";
     }
 
@@ -141,7 +143,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      * @return
      */
     public String getSignalDesc() {
-        EditText title = findViewById(R.id.desc_signal);
+        description = findViewById(R.id.desc_signal);
         return !title.getText().toString().equals("") ? title.getText().toString() : "Sans description";
     }
 
@@ -155,6 +157,9 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         String titre = getSignalTitle();
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
+
+        Signalement.AlertDialogCalendar(this);
+        Signalement.AlertDialogSMS(this, title, description);
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
