@@ -97,6 +97,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 openGPS2();
             }
         }
+
         //from GPS to get the latest location
         initLocation();
 

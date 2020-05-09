@@ -13,102 +13,108 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Accueil"
-        android:textAlignment="center"
-        android:textSize="25dp"
-        android:background="#537fd7"
-        android:textColor="#FFFFFF"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Accueil"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:background="#537fd7"
+            android:textColor="#FFFFFF"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center"
-        android:src="@drawable/photo_profil_base"
-        android:layout_marginTop="20dp"
-        app:civ_border_color="#000"
-        app:civ_border_width="2dp" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:src="@drawable/photo_profil_base"
+            android:layout_marginTop="20dp"
+            app:civ_border_color="#000"
+            app:civ_border_width="2dp" />
 
-    <TextView
-        android:id="@+id/nom_prenom"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:textSize="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
-        android:textAlignment="center"
-        android:text="Nom - Prénom"/>
+        <TextView
+            android:id="@+id/nom_prenom"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:textAlignment="center"
+            android:text="Nom - Prénom"/>
 
-    <TextView
-        android:id="@+id/nom_magasin_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:text="Nom du magasin"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/nom_magasin_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Nom du magasin"
+            android:textSize="20dp" />
 
-    <TextView
-        android:id="@+id/horaire_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:text="Horaires : 9h00 - 17h00"
-        android:textSize="20dp" />
+        <Button
+            android:id="@+id/nom_button"
+            android:text="Modifier nom"
+            android:layout_width="200dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="50dp"/>
 
-    <TextView
-        android:id="@+id/description_text"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:textSize="25sp"
-        android:text="Description :"
-        android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/horaire_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Horaires : 9h00 - 17h00"
+            android:textSize="20dp" />
 
-    <Button
-        android:id="@+id/nom_horaire_button"
-        android:text="Modifier le nom ou les horaires"
-        android:layout_width="match_parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/horaire_button"
+            android:text="Modifier horaires"
+            android:layout_width="200dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="50dp"/>
 
-    <Button
-        android:id="@+id/description_button"
-        android:text="Modifier la description"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/description_text"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:textSize="25sp"
+            android:text="Description"
+            android:layout_marginLeft="20dp"/>
 
-    <Button
-        android:id="@+id/categorie_button"
-        android:text="Modifier les catégories"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/description_button"
+            android:text="Modifier la description"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="50dp"/>
 
-    <Button
-        android:id="@+id/envoyer_signal_button"
-        android:text="Envoyer un signalement"
-        android:layout_width="match_parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_height="50dp"/>
+        <Button
+            android:id="@+id/categorie_button"
+            android:text="Modifier les catégories"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="50dp"/>
+
+        <Button
+            android:id="@+id/envoyer_signal_button"
+            android:text="Envoyer un signalement"
+            android:layout_width="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="50dp"/>
 
     </LinearLayout>
 

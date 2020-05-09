@@ -10,13 +10,16 @@
         android:id="@+id/frag_com_nom"
         android:gravity="center"
         android:layout_gravity="center"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"/>
     <ImageView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/noimageavailable"
         android:id="@+id/frag_com_im"/>
     <TextView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="desc du commercant"
@@ -26,10 +29,11 @@
         android:layout_marginLeft="2dp"
         />
     <Button
+        android:id="@+id/frag_com_but"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

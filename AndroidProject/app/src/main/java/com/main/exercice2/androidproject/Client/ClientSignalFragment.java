@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -21,11 +22,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.main.exercice2.androidproject.Commercant.CommercantSignalement;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
+import com.main.exercice2.androidproject.Signalement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +92,6 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
             }
             mCallBack.onButtonPictureSignalClicked(view);
         };
-
 
     }
 

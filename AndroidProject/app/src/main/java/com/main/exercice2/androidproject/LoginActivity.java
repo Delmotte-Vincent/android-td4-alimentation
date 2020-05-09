@@ -106,7 +106,9 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
                 else
                     pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+                pass.setSelection(pass.getText().length());
                 covered = !covered ;
+
 
             }
         });
