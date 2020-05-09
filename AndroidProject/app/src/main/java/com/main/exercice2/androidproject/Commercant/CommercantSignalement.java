@@ -56,7 +56,6 @@ public class CommercantSignalement extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // sendSMS(v);
-                // addEvent();
                 createAndShowAlertDialog();
             }
         });
@@ -107,59 +106,4 @@ public class CommercantSignalement extends AppCompatActivity {
         Toast.makeText(this,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_SHORT).show();
     }
 
-    public void addEvent(){
-        Cursor cursor=getContentResolver().query(Uri.parse("content://com.android.calendar/calendars"),
-                new String[]{"_id", "name"}, null, null, null);
-        cursor.moveToFirst();
-        // Get calendars name
-        String[] calendarNames = new String[cursor.getCount()];
-        if (cursor.getCount()==0){
-            Toast.makeText(this,"Impossible d'ajouter au calendrier",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        // Get calendars id
-        int[] calendarId = new int[cursor.getCount()];
-        for (int i = 0; i < calendarNames.length; i++)
-        {
-            calendarId[i] = cursor.getInt(0);
-            calendarNames[i] = cursor.getString(1);
-            cursor.moveToNext();
-        }
-
-        ContentValues contentEvent = new ContentValues();
-        // Particular Calendar in which we need to add Event
-        contentEvent.put("calendar_id", calendarId[0]);
-        // Title/Caption of the Event
-        contentEvent.put("title", "Wedding");
-        // Description of the Event
-        contentEvent.put("description", "Wedding Party");
-        // Venue/Location of the Event
-        contentEvent.put("eventLocation", "New York");
-
-        Calendar cal = Calendar.getInstance();
-
-        /*
-        // Start Day of the Event
-        contentEvent.put("startDay",cal.get(Calendar.DAY_OF_WEEK);
-        // End Day of the Event
-        contentEvent.put("endDay",cal.get(Calendar.DAY_OF_WEEK));
-         */
-
-        long startTime = cal.getTimeInMillis();
-        long endTime = startTime+60*60*1000;
-        // Start Date of the Event with Time
-        contentEvent.put("dtstart", startTime);
-        // End Date of the Event with Time
-        contentEvent.put("dtend", endTime);
-
-        // All Day Event
-        // contentEvent.put("allDay", 1);
-        // Set alarm for this Event
-        contentEvent.put("hasAlarm",1);
-        contentEvent.put("eventTimezone", TimeZone.getDefault().getID());
-        Uri eventsUri = Uri.parse("content://com.android.calendar/events");
-        // event is added successfully
-        getContentResolver().insert(eventsUri, contentEvent);
-        cursor.close();
-    }
 }

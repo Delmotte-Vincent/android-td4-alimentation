@@ -13,103 +13,111 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/header_text"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Ajouter un événement au calendirer"
-        android:textAlignment="center"
-        android:textSize="25dp"
-        android:background="#537fd7"
-        android:textColor="#FFFFFF"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Ajouter un événement au calendirer"
+            android:textAlignment="center"
+            android:textSize="25dp"
+            android:background="#537fd7"
+            android:textColor="#FFFFFF"/>
 
 
-    <EditText
-        android:id="@+id/titre_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/header_text"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Titre" />
+        <EditText
+            android:id="@+id/titre_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:hint="Titre" />
 
-    <EditText
-        android:id="@+id/description_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titre_text"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Description" />
+        <EditText
+            android:id="@+id/description_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titre_text"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:hint="Description" />
 
-    <EditText
-        android:id="@+id/location_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/description_text"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Location" />
+        <EditText
+            android:id="@+id/location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description_text"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:hint="Location" />
 
-    <EditText
-        android:id="@+id/all_day_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Toute la journée" />
 
-    <EditText
-        android:id="@+id/alarm_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
-        android:hint="Alarme" />
 
-    <EditText
-        android:id="@+id/in_date"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/location_text"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp" />
+        <CheckBox
+            android:id="@+id/all_day_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Activer toute la journée" />
 
-    <Button
-        android:id="@+id/btn_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/in_date"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="3dp"
-        android:layout_toEndOf="@+id/in_date"
-        android:layout_toRightOf="@+id/in_date"
-        android:text="SELECT DATE" />
+        <CheckBox
+            android:id="@+id/alarm_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Activer l'alarme" />
 
-    <EditText
-        android:id="@+id/in_time"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/in_date"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="10dp" />
+        <EditText
+            android:id="@+id/start_time_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/location_text"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp" />
 
-    <Button
-        android:id="@+id/btn_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_date"
-        android:layout_alignStart="@+id/btn_date"
-        android:layout_alignLeft="@+id/btn_date"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:text="SELECT TIME" />
+        <Button
+            android:id="@+id/btn_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/in_date"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="3dp"
+            android:layout_toEndOf="@+id/in_date"
+            android:layout_toRightOf="@+id/in_date"
+            android:text="Sélectionner l'heure de début" />
+
+        <EditText
+            android:id="@+id/end_time_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/in_date"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/btn_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_date"
+            android:layout_alignStart="@+id/btn_date"
+            android:layout_alignLeft="@+id/btn_date"
+            android:layout_marginStart="2dp"
+            android:layout_marginLeft="2dp"
+            android:text="Sélectionner l'heure de fin" />
+
+        <Button
+            android:id="@+id/ajout_calendrier_button"
+            android:text="Ajouter l'événement au calendrier"
+            android:layout_width="match_parent"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_height="60dp"/>
 
     </LinearLayout>
 
