@@ -160,8 +160,11 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
 
         clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
-        if(checked)
+        if(checked){
+           // Uri uri = Uri.
             this.shareOnTwitter(this,titre+"\n"+desc,null);
+
+        }
             //shareTwitter(titre+"\n"+desc);
 
         this.setDefaultPicture(true);
