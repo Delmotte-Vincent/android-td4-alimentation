@@ -101,7 +101,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         //from GPS to get the latest location
         initLocation();
 
-        //every 60 seconds get gps
+        //every 2 seconds get gps
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -110,7 +110,10 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener);
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener);
+            currentLocation=lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            startPoint=new GeoPoint(currentLocation);
+
         }
 
         //transformer location à geopoint
@@ -240,8 +243,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             updateShow(lc);
 
-            //every 60 seconds get gps
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener);
+            //every 2 seconds get gps
+            //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener);
 
             startPoint = new GeoPoint(currentLocation);
         }
@@ -263,8 +266,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
                 Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 updateShow(lc);
 
-                //every 60 seconds get gps
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
+                //every 2 seconds get gps
+                //lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 8, mLocationListener );
 
                 this.startPoint = new GeoPoint(currentLocation);
             }else {
