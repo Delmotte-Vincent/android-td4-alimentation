@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -16,8 +18,10 @@ import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.main.exercice2.androidproject.Abonnement;
+import com.main.exercice2.androidproject.EventCalendar;
 import com.main.exercice2.androidproject.abonnementList;
 import com.main.exercice2.androidproject.R;
 
@@ -34,10 +38,10 @@ public class CommercantSignalement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commercant_signalement);
 
-        abonnementList.addAbonnement(1,5);
-        abonnementList.addAbonnement(2,5);
-        abonnementList.addAbonnement(3,5);
-        abonnementList.addAbonnement(1,6);
+        abonnementList.addAbonnement(1, 5);
+        abonnementList.addAbonnement(2, 5);
+        abonnementList.addAbonnement(3, 5);
+        abonnementList.addAbonnement(1, 6);
 
 
         ActivityCompat.requestPermissions(CommercantSignalement.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS,
@@ -52,10 +56,32 @@ public class CommercantSignalement extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // sendSMS(v);
-                // addEventCalendarAuto();
-                addEvent();
+                // addEvent();
+                createAndShowAlertDialog();
             }
         });
+    }
+
+    private void createAndShowAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(CommercantSignalement.this);
+        builder.setMessage("Voulez-vous ajouter un événement à votre agenda ?")
+                .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getApplicationContext(), EventCalendar.class);
+                startActivity(intent);
+            }
+        })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // on ne fait rien, la boîte de dialogue quitte
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Calendrier");
+        dialog.show();
     }
 
     public void sendSMS(View view){
@@ -78,51 +104,7 @@ public class CommercantSignalement extends AppCompatActivity {
             smsManager.sendTextMessage(number,null,message,null,null);
         }
 
-    }
-
-    public void addEventCalendarAuto(){
-        String[] projection = new String[] { "_id", "name" };
-        Uri calendars = Uri.parse("content://calendar/calendars");
-
-        Cursor managedCursor = managedQuery(calendars, projection, "selected=1", null, null);
-
-        /*String calName;
-        String calId="";
-
-        if (managedCursor.moveToFirst()) {
-
-            int nameColumn = managedCursor.getColumnIndex("name");
-            int idColumn = managedCursor.getColumnIndex("_id");
-            do {
-                calName = managedCursor.getString(nameColumn);
-                calId = managedCursor.getString(idColumn);
-            } while (managedCursor.moveToNext());
-        }*/
-
-        ContentValues event = new ContentValues();
-        event.put("calendar_id", 1);
-
-        event.put("title", "Event Title");
-        event.put("description", "Event Desc");
-        // event.put("eventLocation", "Event Location");
-
-
-        Calendar cal = Calendar.getInstance();
-        long startTime = cal.getTimeInMillis();
-        long endTime = startTime+60*60*100;
-        event.put("dtstart", startTime);
-        event.put("dtend", endTime);
-
-        /*
-        event.put("allDay", 1);   // 0 for false, 1 for true
-        event.put("eventStatus", 1);
-        event.put("visibility", 0);
-        event.put("transparency", 0);
-        event.put("hasAlarm", 1); // 0 for false, 1 for true
-         */
-
-        Uri eventsUri = Uri.parse("content://com.android.calendar/events");
-        Uri url = getContentResolver().insert(eventsUri, event);
+        Toast.makeText(this,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_SHORT).show();
     }
 
     public void addEvent(){
@@ -131,6 +113,10 @@ public class CommercantSignalement extends AppCompatActivity {
         cursor.moveToFirst();
         // Get calendars name
         String[] calendarNames = new String[cursor.getCount()];
+        if (cursor.getCount()==0){
+            Toast.makeText(this,"Impossible d'ajouter au calendrier",Toast.LENGTH_SHORT).show();
+            return;
+        }
         // Get calendars id
         int[] calendarId = new int[cursor.getCount()];
         for (int i = 0; i < calendarNames.length; i++)
@@ -151,12 +137,21 @@ public class CommercantSignalement extends AppCompatActivity {
         contentEvent.put("eventLocation", "New York");
 
         Calendar cal = Calendar.getInstance();
+
+        /*
+        // Start Day of the Event
+        contentEvent.put("startDay",cal.get(Calendar.DAY_OF_WEEK);
+        // End Day of the Event
+        contentEvent.put("endDay",cal.get(Calendar.DAY_OF_WEEK));
+         */
+
         long startTime = cal.getTimeInMillis();
         long endTime = startTime+60*60*1000;
         // Start Date of the Event with Time
         contentEvent.put("dtstart", startTime);
         // End Date of the Event with Time
         contentEvent.put("dtend", endTime);
+
         // All Day Event
         // contentEvent.put("allDay", 1);
         // Set alarm for this Event

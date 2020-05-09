@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.EventCalendar;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -61,6 +62,7 @@ public class MainCommercant extends AppCompatActivity {
         envoyer_signal_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Intent intent = new Intent(getApplicationContext(), CommercantSignalement.class);
                 Intent intent = new Intent(getApplicationContext(), CommercantSignalement.class);
                 startActivity(intent);
             }
