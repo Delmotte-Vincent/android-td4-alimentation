@@ -12,13 +12,19 @@ public class CommercantObjet {
     private String type;
     private Drawable drawable;
     private GeoPoint geoPoint;
+    private String email ;
+    private  String pass ;
+    private int id ;
 
-    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint) {
+    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint,String email , String pass , int id) {
         this.title = title;
         this.message = message;
         this.type = type;
         this.drawable=drawable;
         this.geoPoint=geopoint;
+        this.email = email ;
+        this.pass = pass ;
+        this.id = id ;
     }
     public CommercantObjet(String title,String message,Drawable drawable){
         this.title = title;
@@ -47,6 +53,18 @@ public class CommercantObjet {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPass() {
+        return pass;
     }
 
     public Drawable getDrawable(){return this.drawable;}

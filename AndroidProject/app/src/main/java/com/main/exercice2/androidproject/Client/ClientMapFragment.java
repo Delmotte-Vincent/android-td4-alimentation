@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
+import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
 import com.main.exercice2.androidproject.CommercantObjet;
@@ -121,11 +122,12 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         items = new ArrayList<>();
         commercantObjetArrayList = new ArrayList<>();
         //CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517));
-        CommercantObjet homeCom = new CommercantObjet("home", "rallo's home", AlertType.DEFAULT, null, startPoint);
-        CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(startPoint.getLatitude()+0.001,startPoint.getLongitude()));
+       // CommercantObjet homeCom = new CommercantObjet("home", "rallo's home","er", AlertType.DEFAULT, null, startPoint);
+        //CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(startPoint.getLatitude()+0.001,startPoint.getLongitude()));
         //CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517));
-        commercantObjetArrayList.add(homeCom);
-        commercantObjetArrayList.add(restoCom);
+        //commercantObjetArrayList.add(homeCom);
+        //commercantObjetArrayList.add(restoCom);
+        commercantObjetArrayList = CommercantList.getCommercants();
         for (CommercantObjet c : commercantObjetArrayList) {
             items.add(new OverlayItem(c.getTitle(), c.getMessage(), c.getGeoPoint()));
         }

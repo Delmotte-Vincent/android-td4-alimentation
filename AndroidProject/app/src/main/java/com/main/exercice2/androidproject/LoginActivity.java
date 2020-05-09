@@ -15,10 +15,12 @@ import android.widget.Toast;
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.Client.MainClient;
 import com.main.exercice2.androidproject.Client.NewClient;
-import com.main.exercice2.androidproject.Commercant.Commercant;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 import com.main.exercice2.androidproject.Commercant.NewCommercant;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.LoginAs;
+
+import org.osmdroid.util.GeoPoint;
 
 public class LoginActivity extends AppCompatActivity implements LoginAs {
     boolean client ;
@@ -26,7 +28,11 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
     TextView info ;
     ImageView profile ;
     Client test = new Client("mohamed","fertala","test","test",0);
-    Commercant commercant = new Commercant("Boucherie Halal","le matin","test","test","aprés midi",0);
+    CommercantObjet commercant = new CommercantObjet("Boucherie Halal","aprés midi","le matin",null,new GeoPoint(111,11),"test","test",0);
+    CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517),"them","e",2);
+
+    CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517),"em","pas",1);
+
     EditText mail ;
     EditText pass ;
     String  mailIn ;
@@ -50,6 +56,9 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         client= intent.getBooleanExtra(logClient,true);
         ClientList.add(test);
         CommercantList.add(commercant);
+        CommercantList.add(restoCom);
+        CommercantList.add(homeCom);
+
         TextView qui = findViewById(R.id.qui);
         covered = true ;
         if(client)
@@ -128,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
         mailIn = mail.getText().toString();
         passIn = pass.getText().toString() ;
-        Commercant find = CommercantList.findCommercant(mailIn,passIn) ;
+        CommercantObjet find = CommercantList.findCommercant(mailIn,passIn) ;
         if(find!=null){
             Toast.makeText(this,"connexion réussie",Toast.LENGTH_SHORT).show();
             finishAffinity();

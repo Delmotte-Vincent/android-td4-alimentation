@@ -62,7 +62,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
     ClientMapFragment clientMapFragment;
-    TextView  clientName;
+
     private static final String TAG = "TWEET" ;
     private Client client ;
     private String type;
@@ -76,12 +76,10 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
-        clientName= findViewById(R.id.client);
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
 
         client = ClientList.findClientId(id);
-        clientName.setText(client.getFirstName()+" "+client.getLastName());
 
         this.configureBottomView();
 

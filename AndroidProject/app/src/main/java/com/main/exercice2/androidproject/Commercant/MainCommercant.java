@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.CommercantList;
+import com.main.exercice2.androidproject.CommercantObjet;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class MainCommercant extends AppCompatActivity {
     TextView nom_magasin_text;
     TextView horaire_text;
     TextView description_text;
-    Commercant commercant;
+    CommercantObjet commercant;
 
 
     @Override
@@ -105,9 +106,9 @@ public class MainCommercant extends AppCompatActivity {
 
 
     void setInfo(){
-        description_text.setText("Description :"+commercant.getDescription());
-        horaire_text.setText("Horaires : "+commercant.getHoraires());
-        nom_magasin_text.setText("Nom du magasin :"+commercant.getNom());
+        description_text.setText("Description :"+commercant.getMessage());
+        horaire_text.setText("Horaires : "+commercant.getTitle());
+        nom_magasin_text.setText("Nom du magasin :"+commercant.getType());
     }
 
 }

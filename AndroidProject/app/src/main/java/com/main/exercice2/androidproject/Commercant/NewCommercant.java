@@ -62,7 +62,7 @@ public class NewCommercant extends AppCompatActivity {
         }
         if(conf)
             return;
-        int id = CommercantList.nouveau(nameS,horairesS,mailS,passS,descriptiosS);
+        int id = CommercantList.nouveau(nameS,horairesS,descriptiosS,null,null,mailS,passS);
         Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
         Toast.makeText(this,"compte crée ",Toast.LENGTH_SHORT).show();
         finishAffinity();
