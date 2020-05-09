@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class EventCalendar extends AppCompatActivity implements
         View.OnClickListener {
 
     Button btnStartTime, btnEndTime, ajout_calendrier_button;
-    EditText start_time_text, end_time_text;
+    TextView start_time_text, end_time_text;
     EditText titre_text, description_text, location_text;
     CheckBox all_day_option, alarm_option;
     private int startHour, startMinute, endHour, endMinute;
@@ -36,8 +37,8 @@ public class EventCalendar extends AppCompatActivity implements
         btnStartTime=(Button)findViewById(R.id.btn_start_time);
         btnEndTime=(Button)findViewById(R.id.btn_end_time);
         ajout_calendrier_button=(Button)findViewById(R.id.ajout_calendrier_button);
-        start_time_text=(EditText)findViewById(R.id.start_time_text);
-        end_time_text=(EditText)findViewById(R.id.end_time_text);
+        start_time_text=(TextView)findViewById(R.id.start_time_text);
+        end_time_text=(TextView)findViewById(R.id.end_time_text);
 
         titre_text=(EditText)findViewById(R.id.titre_text);
         description_text=(EditText)findViewById(R.id.description_text);
@@ -69,7 +70,7 @@ public class EventCalendar extends AppCompatActivity implements
         }
     }
 
-    public void setTime(final EditText time, int hour, int minute){
+    public void setTime(final TextView time, int hour, int minute){
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         hour = c.get(Calendar.HOUR_OF_DAY);

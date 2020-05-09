@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:hint="Titre" />
 
         <EditText
@@ -38,6 +39,7 @@
             android:layout_below="@+id/titre_text"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:hint="Description" />
 
         <EditText
@@ -47,6 +49,7 @@
             android:layout_below="@+id/description_text"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:hint="Location" />
 
 
@@ -56,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Activer toute la journée" />
 
         <CheckBox
@@ -63,50 +67,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
             android:text="Activer l'alarme" />
 
-        <EditText
+        <TextView
             android:id="@+id/start_time_text"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/location_text"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/in_date"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginBottom="3dp"
-            android:layout_toEndOf="@+id/in_date"
-            android:layout_toRightOf="@+id/in_date"
             android:text="Sélectionner l'heure de début" />
 
-        <EditText
+        <TextView
             android:id="@+id/end_time_text"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/in_date"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
+            android:textSize="25sp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btn_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_date"
-            android:layout_alignStart="@+id/btn_date"
-            android:layout_alignLeft="@+id/btn_date"
-            android:layout_marginStart="2dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginLeft="10dp"
             android:text="Sélectionner l'heure de fin" />
 
         <Button

@@ -55,13 +55,34 @@ public class CommercantSignalement extends AppCompatActivity {
         but_signal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // sendSMS(v);
-                createAndShowAlertDialog();
+                AlertDialogCalendar();
+                AlertDialogSMS();
             }
         });
     }
 
-    private void createAndShowAlertDialog() {
+    private void AlertDialogSMS() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(CommercantSignalement.this);
+        builder.setMessage("Voulez-vous envoyé un SMS à tous vos abonnés ?")
+                .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sendSMS();
+            }
+        })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // on ne fait rien, la boîte de dialogue quitte
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.setTitle("Envoyer SMS ?");
+        dialog.show();
+    }
+
+    private void AlertDialogCalendar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(CommercantSignalement.this);
         builder.setMessage("Voulez-vous ajouter un événement à votre agenda ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
@@ -83,7 +104,7 @@ public class CommercantSignalement extends AppCompatActivity {
         dialog.show();
     }
 
-    public void sendSMS(View view){
+    public void sendSMS(){
 
         /*
         TelephonyManager tMgr = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
