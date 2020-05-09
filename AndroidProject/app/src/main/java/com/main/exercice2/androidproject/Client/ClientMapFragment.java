@@ -85,8 +85,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
         map = rootView.findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setBuiltInZoomControls(true);
-        GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
-
+        //GeoPoint startPoint = new GeoPoint(43.6520,7.00517);
+        GeoPoint startPoint;
         lm = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
         if (lm!=null)
         {
@@ -104,7 +104,8 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constantes.REQUEST_GPS);
+        }
             Location lc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             updateShow(lc);
 
@@ -112,7 +113,7 @@ public class ClientMapFragment extends Fragment implements SearchView.OnQueryTex
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 8, mLocationListener );
 
             startPoint = new GeoPoint(currentLocation);
-        }
+
 
         //transformer location à geopoint
         mapController = map.getController();
