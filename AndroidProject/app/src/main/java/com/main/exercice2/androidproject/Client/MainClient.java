@@ -359,10 +359,17 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
     @Override
     public void sendCommercantObjet(CommercantObjet c) {
+        FragmentTransaction trans;
+        trans= getSupportFragmentManager().beginTransaction();
         ClientCommercantFragment clientCommercantFragment = new ClientCommercantFragment();
         Bundle args = new Bundle();
+        args.putInt(PASSAGE_COM,c.getId());
+        clientCommercantFragment.setArguments(args);
         //On aura juste à passer l'id du commercant dans le bundle
-        getSupportFragmentManager().beginTransaction().replace(R.id.client_frame,clientCommercantFragment).commit();
+        trans.replace(R.id.client_frame,clientCommercantFragment);
+        trans.addToBackStack(null);
+        trans.commit();
+
 
     }
 }
