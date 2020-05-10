@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,17 +14,21 @@ import android.widget.TimePicker;
 
 import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.LoginActivity;
+import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
 
 import java.util.Calendar;
 
 public class MainCommercant extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
 
+
+
     ListView listeCategorie;
     private String[] categorie = new String[]{
             "Epicerie", "Poissonnerie", "Boucherie", "Boulangerie"
     };
-
+    Button deconnexion ;
     Button categorie_button ;
     Button description_button ;
     Button envoyer_signal_button;
@@ -43,6 +48,20 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_commercant);
+        deconnexion = findViewById(R.id.deconnexionCom);
+        deconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SAVE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(LoginActivity.ID,-1);
+                editor.putBoolean(LoginActivity.MODE,false);
+                editor.apply();
+                finishAffinity();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
@@ -86,6 +105,7 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
         });
 
         nom_magasin_text = (TextView)findViewById(R.id.nom_magasin_text);
+        nom_magasin_text.setText(commercant.getTitle());
         nom_button = (Button)findViewById(R.id.nom_button);
         nom_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +128,8 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
 
     @Override
     public void applyTexts(String nom) {
-        nom_magasin_text.setText(nom);
+        commercant.setTitle(nom);
+        nom_magasin_text.setText(commercant.getTitle());
     }
 
     @Override

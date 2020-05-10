@@ -3,6 +3,7 @@ package com.main.exercice2.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -27,11 +28,11 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
     Button connexion ;
     TextView info ;
     ImageView profile ;
-    Client test = new Client("mohamed","fertala","test","test",0);
-    CommercantObjet commercant = new CommercantObjet("Boucherie Halal","aprés midi","le matin",null,new GeoPoint(111,11),"test","test",0);
-    CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517),"them","e",2);
 
-    CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,null,new GeoPoint(43.65020,7.00517),"em","pas",1);
+    public static final String SAVE = "SAVELOG";
+    public static final String ID = "IDLOG";
+    public static final String MODE = "MODE" ;
+
 
     EditText mail ;
     EditText pass ;
@@ -54,10 +55,6 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         see = findViewById(R.id.see) ;
         Intent intent = this.getIntent();
         client= intent.getBooleanExtra(logClient,true);
-        ClientList.add(test);
-        CommercantList.add(commercant);
-        CommercantList.add(restoCom);
-        CommercantList.add(homeCom);
 
         TextView qui = findViewById(R.id.qui);
         covered = true ;
@@ -129,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
             bundle.putInt("id",find.getId());
             intent.putExtras(bundle);
             startActivity(intent);
+            save(find.getId());
         }
         else
             Toast.makeText(this,"connexion échouée",Toast.LENGTH_SHORT).show();
@@ -147,10 +145,20 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
             bundle.putInt("id",find.getId());
             intent.putExtras(bundle);
             startActivity(intent);
+            save(find.getId());
         }
         else
             Toast.makeText(this,"connexion échouée",Toast.LENGTH_SHORT).show();
     }
+
+    public void save(int id ){
+        SharedPreferences sharedPreferences = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ID,id);
+        editor.putBoolean(MODE,client);
+        editor.apply();
+    }
+
 
 
 

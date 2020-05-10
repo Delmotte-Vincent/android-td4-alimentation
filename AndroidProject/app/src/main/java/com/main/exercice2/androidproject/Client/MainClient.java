@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -41,6 +42,7 @@ import com.main.exercice2.androidproject.CommercantObjet;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
 import com.main.exercice2.androidproject.Interfaces.ICallBack;
+import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
@@ -230,6 +232,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
+    public void deconnexion(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(LoginActivity.ID,-1);
+        editor.putBoolean(LoginActivity.MODE,false);
+        editor.apply();
+        finishAffinity();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CAMERA:{
@@ -361,6 +375,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         trans.addToBackStack(null);
         trans.commit();
 
-
     }
+
 }
