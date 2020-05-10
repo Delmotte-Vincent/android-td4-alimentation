@@ -41,6 +41,8 @@ import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
+import com.main.exercice2.androidproject.Post;
+import com.main.exercice2.androidproject.PostList;
 import com.main.exercice2.androidproject.R;
 import com.main.exercice2.androidproject.AlertDialogCustom;
 
@@ -159,8 +161,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-
-        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture,commercant);
+        PostList.getAlertes().add(new Post(titre,desc, type, draw, this.defaultPicture,commercant));
+        //clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture,commercant);
         if(checked){
            // Uri uri = Uri.
             this.shareOnTwitter(this,titre+"\n"+desc,null);

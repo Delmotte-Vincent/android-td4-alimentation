@@ -99,7 +99,9 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
             alertesfiltre= new ArrayList<>();
             for(Post p : alertes){
                 CommercantObjet c =p.getCommercant();
+                System.out.println("lsit : "+(abonnement)+(abonnement.contains(c)));
                 if(abonnement.contains(c)){
+                    System.out.println(c);
                     alertesfiltre.add(p);
                 }
             }

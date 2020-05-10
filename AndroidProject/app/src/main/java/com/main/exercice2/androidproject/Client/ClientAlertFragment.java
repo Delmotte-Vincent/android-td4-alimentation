@@ -16,6 +16,7 @@ import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.AlerteListAdapter;
 import com.main.exercice2.androidproject.Post;
+import com.main.exercice2.androidproject.PostList;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ClientAlertFragment extends Fragment {
 
 
     ClientAlertFragment(){
-        postList=new ArrayList<>();
+        postList= PostList.getAlertes();
     }
 
     @Nullable
@@ -40,7 +41,6 @@ public class ClientAlertFragment extends Fragment {
         listView.setAdapter(adapter);
 
         adapter.getFilter().filter(String.valueOf(client.getId()));
-
         return rootView;
     }
 
