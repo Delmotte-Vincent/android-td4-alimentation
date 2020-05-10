@@ -3,6 +3,7 @@ package com.main.exercice2.androidproject.Commercant;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.osmdroid.util.GeoPoint;
 
@@ -30,6 +31,9 @@ public class CommercantObjet {
         this.title = title;
         this.message = message;
         this.drawable=drawable;
+    }
+    public CommercantObjet(String title){
+        this.title=title;
     }
     public String getTitle() {
         return title;
@@ -76,4 +80,5 @@ public class CommercantObjet {
     public String toString() {
         return title;
     }
+
 }
