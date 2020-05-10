@@ -23,7 +23,11 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     private int idSaved;
     private boolean modeSaved;
 
-    Client test = new Client("mohamed","fertala","test","test",0);
+    Client test = new Client("mohamed","fertala","test","test",0,0);
+    Client numero7 = new Client("7","7","7","7",5554,7);
+    Client numero8 = new Client("8","8","8","8",5555,8);
+    Client numero9 = new Client("9","9","9","9",5556,9);
+    CommercantObjet numero6 = new CommercantObjet("a","a","a",null,null,"a","a",6);
     CommercantObjet commercantOb = new CommercantObjet("Boucherie Halal","aprés midi","le matin",null,new GeoPoint(111,11),"test","test",0);
     CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT, null, new GeoPoint(43.64950, 7.00517),"them","e",2);
 
@@ -38,9 +42,13 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         commercant = findViewById(R.id.commercant);
 
         ClientList.add(test);
+        ClientList.add(numero7);
+        ClientList.add(numero8);
+        ClientList.add(numero9);
         CommercantList.add(commercantOb);
         CommercantList.add(restoCom);
         CommercantList.add(homeCom);
+        CommercantList.add(numero6);
         load();
         if(idSaved == -1){
             client.setOnClickListener(new View.OnClickListener() {

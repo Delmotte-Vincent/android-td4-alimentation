@@ -9,6 +9,7 @@ public class Client {
     private String lastName;
     private String email ;
     private String password ;
+    private int phoneNumber;
     private int id ;
 
     public Client(String firstName, String lastName) {
@@ -17,12 +18,13 @@ public class Client {
         this.abonnements = new ArrayList();
     }
 
-    public Client(String firstName, String lastName,String email ,String password,int id) {
+    public Client(String firstName, String lastName,String email ,String password,int phoneNumber,int id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.abonnements = new ArrayList();
         this.email = email ;
         this.password = password ;
+        this.phoneNumber=phoneNumber;
         this.id=id ;
     }
 
@@ -56,5 +58,9 @@ public class Client {
 
     public int getId() {
         return id;
+    }
+
+    public int getPhoneNumber(){
+        return phoneNumber;
     }
 }

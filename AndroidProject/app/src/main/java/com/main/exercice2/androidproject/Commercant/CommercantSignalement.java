@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.main.exercice2.androidproject.AlertDialogCustom;
+import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.abonnementList;
 import com.main.exercice2.androidproject.R;
 
@@ -19,16 +20,23 @@ public class CommercantSignalement extends AppCompatActivity {
     private EditText titre_signal;
     private EditText desc_signal;
     private Button but_signal;
+    CommercantObjet commercant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commercant_signalement);
 
+
+        Bundle b = this.getIntent().getExtras();
+        int id =b.getInt("id");
+        commercant = CommercantList.findClientId(id);
+
+
         abonnementList.addAbonnement(1, 5);
-        abonnementList.addAbonnement(2, 5);
-        abonnementList.addAbonnement(3, 5);
-        abonnementList.addAbonnement(1, 6);
+        abonnementList.addAbonnement(7, 6);
+        abonnementList.addAbonnement(8, 6);
+        abonnementList.addAbonnement(9, 6);
 
 
         ActivityCompat.requestPermissions(CommercantSignalement.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS,
@@ -43,7 +51,7 @@ public class CommercantSignalement extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialogCustom.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
-                AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal);
+                AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal,commercant.getId());
             }
         });
     }

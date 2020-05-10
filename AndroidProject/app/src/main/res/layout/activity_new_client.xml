@@ -21,13 +21,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" nom "
+        android:hint="Nom "
         android:id="@+id/nouveauClientNom"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" prénom "
+        android:hint="Prénom "
         android:id="@+id/nouveauClientPrenom"
 
 
@@ -36,23 +36,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint=" adreese mail"
+        android:hint="Adreese mail"
         android:id="@+id/nouveauClientMail"
 
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" mot de passe"
+        android:hint="Mot de passe"
         android:inputType="textPassword"
         android:id="@+id/nouveauClientPass"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="confirmez votre mot de passe"
+        android:hint="Confirmez votre mot de passe"
         android:inputType="textPassword"
         android:id="@+id/nouveauClientPassConf"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Numéro de téléphone"
+        android:inputType="textPassword"
+        android:id="@+id/nouveauClientPhone"
 
         />
 

@@ -41,7 +41,8 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
 
     int hour,minute;
     String horaire,debut;
-
+    Bundle bundle;
+    int idCommercant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,10 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
             }
         });
 
-        Bundle b = this.getIntent().getExtras();
-        int id =b.getInt("id");
-        commercant = CommercantList.findClientId(id);
+        bundle = this.getIntent().getExtras();
+        idCommercant = bundle.getInt("id");
+        commercant = CommercantList.findClientId(idCommercant);
+
 
 
         categorie_button = findViewById(R.id.categorie_button);
@@ -81,6 +83,8 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CommercantSignalement.class);
+                bundle.putInt("id",idCommercant);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

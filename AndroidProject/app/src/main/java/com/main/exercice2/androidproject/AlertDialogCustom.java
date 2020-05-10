@@ -7,17 +7,19 @@ import android.telephony.SmsManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.main.exercice2.androidproject.Client.Client;
+
 import java.util.ArrayList;
 
 public class AlertDialogCustom {
 
-    public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage) {
+    public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage, final int idCommercant) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous envoyé un SMS à tous les abonnés ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                sendSMS(context, editTextNumber, editTextMessage);
+                sendSMS(context, editTextNumber, editTextMessage, idCommercant);
             }
         })
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -56,17 +58,19 @@ public class AlertDialogCustom {
         dialog.show();
     }
 
-    public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage){
+    public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage, int idCommercant){
         /*
         TelephonyManager tMgr = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
         <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
          */
 
-        ArrayList<Abonnement> ab = abonnementList.getCommercant(5);
+        ArrayList<Abonnement> ab = abonnementList.getCommercant(idCommercant);
 
         for (int i=0;i<ab.size();i++){
-            String number = String.valueOf(5554+i);
+            Client client = ClientList.findClientId(ab.get(i).getIdClient());
+            // String number = String.valueOf(5554+i);
+            String number = String.valueOf(client.getPhoneNumber());
             String title = editTextNumber.getText().toString();
             String descr = editTextMessage.getText().toString();
             String message = title+" :\n"+descr;
