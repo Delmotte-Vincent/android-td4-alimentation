@@ -3,8 +3,10 @@ package com.main.exercice2.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,30 +15,36 @@ import android.app.TimePickerDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 
 public class EventCalendar extends AppCompatActivity implements
         View.OnClickListener {
 
-    Button btnStartTime, btnEndTime, ajout_calendrier_button;
-    TextView start_time_text, end_time_text;
+    Button btnDate, btnStartTime, btnEndTime, ajout_calendrier_button;
+    TextView date_text,start_time_text, end_time_text;
     EditText titre_text, description_text, location_text;
     CheckBox all_day_option, alarm_option;
     private int startHour, startMinute, endHour, endMinute;
+    private int mYear, mMonth, mDay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_calendar);
 
+        btnDate=(Button)findViewById(R.id.btn_date);
         btnStartTime=(Button)findViewById(R.id.btn_start_time);
         btnEndTime=(Button)findViewById(R.id.btn_end_time);
         ajout_calendrier_button=(Button)findViewById(R.id.ajout_calendrier_button);
+        date_text=(TextView)findViewById(R.id.date_text);
         start_time_text=(TextView)findViewById(R.id.start_time_text);
         end_time_text=(TextView)findViewById(R.id.end_time_text);
 
@@ -46,7 +54,7 @@ public class EventCalendar extends AppCompatActivity implements
         all_day_option=(CheckBox) findViewById(R.id.all_day_option);
         alarm_option=(CheckBox)findViewById(R.id.alarm_option);
 
-
+        btnDate.setOnClickListener(this);
         btnStartTime.setOnClickListener(this);
         btnEndTime.setOnClickListener(this);
         ajout_calendrier_button.setOnClickListener(this);
@@ -56,6 +64,24 @@ public class EventCalendar extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
+        if (v == btnDate) {
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            date_text.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        }
+                    } , mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
 
         if (v == btnStartTime) {
             setTime(start_time_text, startHour, startMinute);
@@ -84,7 +110,7 @@ public class EventCalendar extends AppCompatActivity implements
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         time.setText(hourOfDay + ":" + minute);
                     }
-                }, hour, minute, false);
+                }, hour, minute, true);
         timePickerDialog.show();
     }
 
@@ -157,11 +183,11 @@ public class EventCalendar extends AppCompatActivity implements
             return true;
         }
         if (start_time_text.getText().toString().isEmpty()){
-            start_time_text.setError("Sélectionner une heure ou cocher \"Acitiver toute la journée\"");
+            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_SHORT).show();
             return false;
         }
         if (end_time_text.getText().toString().isEmpty()){
-            end_time_text.setError("Sélectionner une heure ou cocher \"Acitiver toute la journée\"");
+            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_SHORT).show();
             return false;
         }
         else{
@@ -178,13 +204,28 @@ public class EventCalendar extends AppCompatActivity implements
         endHour = Integer.parseInt(end[0]);
         endMinute = Integer.parseInt(end[1]);
 
-        startHour = startHour - cal.getTime().getHours();
-        startMinute = startMinute - cal.getTime().getMinutes();
-        long startTime = cal.getTimeInMillis() + startHour*60*60*1000 + startMinute*60*1000;
+        Date date1= null;
+        long newTime;
+        String sDate1 = date_text.getText().toString();
+        if (sDate1.isEmpty()){
+            newTime=cal.getTimeInMillis();
+            startHour = startHour - cal.getTime().getHours();
+            startMinute = startMinute - cal.getTime().getMinutes();
+            endHour = endHour - cal.getTime().getHours();
+            endMinute = endMinute - cal.getTime().getMinutes();
+        }
+        else {
+            try {
+                date1 = new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            newTime=date1.getTime();
+        }
 
-        endHour = endHour - cal.getTime().getHours();
-        endMinute = endMinute - cal.getTime().getMinutes();
-        long endTime = cal.getTimeInMillis() + endHour*60*60*1000 + endMinute*60*1000;
+        long startTime = newTime + startHour*60*60*1000 + startMinute*60*1000;
+        long endTime = newTime + endHour*60*60*1000 + endMinute*60*1000;
+
         long[] tab = new long[2];
         tab[0]=startTime;
         tab[1]=endTime;
