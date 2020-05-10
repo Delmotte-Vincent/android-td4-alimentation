@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="256dp">
+
+    <TextView
+        android:id="@+id/text_view_expanded_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:text="Titre du signalement"
+        android:textAlignment="center"
+        style="@style/TextAppearance.Compat.Notification.Title"
+        android:textColor="@android:color/holo_blue_dark"
+        />
+
+    <TextView
+        android:id="@+id/text_view_expanded_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Catégorie du signalement"
+        android:paddingBottom="2dp"
+        android:textAlignment="center"
+        style="@style/TextAppearance.Compat.Notification.Info"
+        android:textColor="@android:color/holo_blue_dark"
+        />
+
+    <ImageView
+        android:id="@+id/image_view_expanded"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>
