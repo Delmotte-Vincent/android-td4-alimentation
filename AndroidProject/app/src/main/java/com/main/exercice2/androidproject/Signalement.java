@@ -33,13 +33,15 @@ public class Signalement {
         dialog.show();
     }
 
-    public static void AlertDialogCalendar(final Context context) {
+    public static void AlertDialogCalendar(final Context context, final String titre, final String description) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous ajouter un événement à votre agenda ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(context, EventCalendar.class);
+                intent.putExtra("titre",titre);
+                intent.putExtra("description",description);
                 context.startActivity(intent);
             }
         })
@@ -74,6 +76,6 @@ public class Signalement {
             smsManager.sendTextMessage(number,null,message,null,null);
         }
 
-        Toast.makeText(context ,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_SHORT).show();
+        Toast.makeText(context ,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_LONG).show();
     }
 }

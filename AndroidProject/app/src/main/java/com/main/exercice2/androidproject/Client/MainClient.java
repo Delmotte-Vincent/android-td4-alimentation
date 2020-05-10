@@ -144,7 +144,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      */
     public String getSignalDesc() {
         description = findViewById(R.id.desc_signal);
-        return !title.getText().toString().equals("") ? title.getText().toString() : "Sans description";
+        return !description.getText().toString().equals("") ? description.getText().toString() : "Sans description";
     }
 
     public Drawable getSignalPicture() {
@@ -158,7 +158,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
 
-        Signalement.AlertDialogCalendar(this);
+        Signalement.AlertDialogCalendar(this, titre, desc);
         Signalement.AlertDialogSMS(this, title, description);
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);

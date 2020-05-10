@@ -22,15 +22,33 @@
             android:background="#537fd7"
             android:textColor="#FFFFFF"/>
 
+        <TextView
+            android:id="@+id/titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp"
+            android:hint="Titre :" />
 
         <EditText
             android:id="@+id/titre_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="Titre" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp"
+            android:hint="Description :" />
 
         <EditText
             android:id="@+id/description_text"
@@ -38,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/titre_text"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="Description" />
 

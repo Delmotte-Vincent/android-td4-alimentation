@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.TimeZone;
@@ -48,8 +49,14 @@ public class EventCalendar extends AppCompatActivity implements
         start_time_text=(TextView)findViewById(R.id.start_time_text);
         end_time_text=(TextView)findViewById(R.id.end_time_text);
 
+        Intent intent = getIntent();
+
         titre_text=(EditText)findViewById(R.id.titre_text);
         description_text=(EditText)findViewById(R.id.description_text);
+
+        titre_text.setText(intent.getStringExtra("titre"));
+        description_text.setText(intent.getStringExtra("description"));
+
         location_text=(EditText)findViewById(R.id.location_text);
         all_day_option=(CheckBox) findViewById(R.id.all_day_option);
         alarm_option=(CheckBox)findViewById(R.id.alarm_option);
@@ -108,7 +115,7 @@ public class EventCalendar extends AppCompatActivity implements
 
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        time.setText(hourOfDay + ":" + minute);
+                        time.setText(hourOfDay + ":" + ((minute<10)?"0"+minute:minute));
                     }
                 }, hour, minute, true);
         timePickerDialog.show();
@@ -174,7 +181,7 @@ public class EventCalendar extends AppCompatActivity implements
             // event is added successfully
             getContentResolver().insert(eventsUri, contentEvent);
             cursor.close();
-            Toast.makeText(this,"Vous avez créé un événement dans votre calendrier",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Vous avez créé un événement dans votre calendrier",Toast.LENGTH_LONG).show();
         }
     }
 
@@ -183,11 +190,22 @@ public class EventCalendar extends AppCompatActivity implements
             return true;
         }
         if (start_time_text.getText().toString().isEmpty()){
-            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_LONG).show();
             return false;
         }
         if (end_time_text.getText().toString().isEmpty()){
-            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Il faut sélectionner une heure ou cocher \"Acitiver toute la journée\"",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        String [] start = start_time_text.getText().toString().split(":");
+        startHour = Integer.parseInt(start[0]);
+        startMinute = Integer.parseInt(start[1]);
+
+        String [] end = end_time_text.getText().toString().split(":");
+        endHour = Integer.parseInt(end[0]);
+        endMinute = Integer.parseInt(end[1]);
+        if (startHour>endHour || (startHour==endHour&&startMinute>endMinute)){
+            Toast.makeText(this,"Impossible : la fin de l'événement est avant le début",Toast.LENGTH_LONG).show();
             return false;
         }
         else{

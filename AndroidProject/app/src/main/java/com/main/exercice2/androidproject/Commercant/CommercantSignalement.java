@@ -16,8 +16,8 @@ import com.main.exercice2.androidproject.R;
 
 public class CommercantSignalement extends AppCompatActivity {
 
-    private EditText editTextNumber;
-    private EditText editTextMessage;
+    private EditText titre_signal;
+    private EditText desc_signal;
     private Button but_signal;
 
     @Override
@@ -34,16 +34,16 @@ public class CommercantSignalement extends AppCompatActivity {
         ActivityCompat.requestPermissions(CommercantSignalement.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS,
                 Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, PackageManager.PERMISSION_GRANTED);
 
-        editTextNumber = findViewById(R.id.titre_signal);
-        editTextMessage = findViewById(R.id.desc_signal);
+        titre_signal = findViewById(R.id.titre_signal);
+        desc_signal = findViewById(R.id.desc_signal);
 
         but_signal = findViewById(R.id.but_signal);
 
         but_signal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Signalement.AlertDialogCalendar(CommercantSignalement.this);
-                Signalement.AlertDialogSMS(CommercantSignalement.this, editTextNumber, editTextMessage);
+                Signalement.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
+                Signalement.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal);
             }
         });
     }
