@@ -1,13 +1,15 @@
 package com.main.exercice2.androidproject;
 
-import com.main.exercice2.androidproject.Commercant.Commercant;
+import android.graphics.drawable.Drawable;
+
+import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 
 public class CommercantList {
-    static ArrayList<Commercant> commercants = new ArrayList<>();
+    static ArrayList<CommercantObjet> commercants = new ArrayList<>();
 
-    public static Commercant findCommercant(String mailIn , String passIn){
+    public static CommercantObjet findCommercant(String mailIn , String passIn){
         for (int i = 0 ; i<commercants.size() ;i++){
             if(commercants.get(i).getEmail().equals(mailIn) && commercants.get(i).getPass().equals(passIn)){
                 return commercants.get(i) ;
@@ -16,7 +18,7 @@ public class CommercantList {
         return null ;
     }
 
-    public static Commercant findClientId (int id){
+    public static CommercantObjet findClientId (int id){
         for (int i = 0 ; i<commercants.size() ;i++){
             if(commercants.get(i).getId()==id ){
                 return commercants.get(i) ;
@@ -26,11 +28,11 @@ public class CommercantList {
     }
 
 
-    public static void add(Commercant commercant){
+    public static void add(CommercantObjet commercant){
         commercants.add(commercant);
     }
 
-    public static void post(int id , Commercant commercant){
+    public static void post(int id , CommercantObjet commercant){
         commercants.set(id,commercant);
     }
 
@@ -43,8 +45,8 @@ public class CommercantList {
         return false ;
     }
 
-    public static int nouveau(String name, String horaires,String email ,String pass,String description){
-        Commercant commercant = new Commercant(name,horaires,email,pass,description,maxId()+1);
+    public static int nouveau(String name, String horaires, String email , GeoPoint geoPoint , Drawable drawable, String pass, String description){
+        CommercantObjet commercant = new CommercantObjet(name,horaires,description,drawable,geoPoint,email, pass,maxId()+1);
         add(commercant);
         return commercant.getId();
     }
@@ -57,5 +59,9 @@ public class CommercantList {
             }
         }
         return max ;
+    }
+
+    public static ArrayList<CommercantObjet> getCommercants() {
+        return commercants;
     }
 }

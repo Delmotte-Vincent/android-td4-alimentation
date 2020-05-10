@@ -3,6 +3,7 @@ package com.main.exercice2.androidproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -15,18 +16,24 @@ import android.widget.Toast;
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.Client.MainClient;
 import com.main.exercice2.androidproject.Client.NewClient;
-import com.main.exercice2.androidproject.Commercant.Commercant;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 import com.main.exercice2.androidproject.Commercant.NewCommercant;
+import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.LoginAs;
+
+import org.osmdroid.util.GeoPoint;
 
 public class LoginActivity extends AppCompatActivity implements LoginAs {
     boolean client ;
     Button connexion ;
     TextView info ;
     ImageView profile ;
-    Client test = new Client("mohamed","fertala","test","test",0);
-    Commercant commercant = new Commercant("Boucherie Halal","le matin","test","test","aprés midi",0);
+
+    public static final String SAVE = "SAVELOG";
+    public static final String ID = "IDLOG";
+    public static final String MODE = "MODE" ;
+
+
     EditText mail ;
     EditText pass ;
     String  mailIn ;
@@ -48,8 +55,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         see = findViewById(R.id.see) ;
         Intent intent = this.getIntent();
         client= intent.getBooleanExtra(logClient,true);
-        ClientList.add(test);
-        CommercantList.add(commercant);
+
         TextView qui = findViewById(R.id.qui);
         covered = true ;
         if(client)
@@ -97,7 +103,9 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
                 else
                     pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
+                pass.setSelection(pass.getText().length());
                 covered = !covered ;
+
 
             }
         });
@@ -118,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
             bundle.putInt("id",find.getId());
             intent.putExtras(bundle);
             startActivity(intent);
+            save(find.getId());
         }
         else
             Toast.makeText(this,"connexion échouée",Toast.LENGTH_SHORT).show();
@@ -128,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
         mailIn = mail.getText().toString();
         passIn = pass.getText().toString() ;
-        Commercant find = CommercantList.findCommercant(mailIn,passIn) ;
+        CommercantObjet find = CommercantList.findCommercant(mailIn,passIn) ;
         if(find!=null){
             Toast.makeText(this,"connexion réussie",Toast.LENGTH_SHORT).show();
             finishAffinity();
@@ -136,10 +145,20 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
             bundle.putInt("id",find.getId());
             intent.putExtras(bundle);
             startActivity(intent);
+            save(find.getId());
         }
         else
             Toast.makeText(this,"connexion échouée",Toast.LENGTH_SHORT).show();
     }
+
+    public void save(int id ){
+        SharedPreferences sharedPreferences = getSharedPreferences(SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(ID,id);
+        editor.putBoolean(MODE,client);
+        editor.apply();
+    }
+
 
 
 

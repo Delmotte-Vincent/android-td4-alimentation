@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.main.exercice2.androidproject.R;
@@ -64,6 +65,7 @@ public class CommercantCategorie extends AppCompatActivity {
                 }
                 ListElementsArrayList.add(GetValue.getText().toString());
                 adapter.notifyDataSetChanged();
+                Toast.makeText(CommercantCategorie.this, "Catégorie \""+GetValue.getText().toString()+"\" ajoutée", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -75,6 +77,7 @@ public class CommercantCategorie extends AppCompatActivity {
                     if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
                         ListElementsArrayList.remove(GetValue.getText().toString());
                         adapter.notifyDataSetChanged();
+                        Toast.makeText(CommercantCategorie.this, "Catégorie \""+GetValue.getText().toString()+"\" supprimée", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

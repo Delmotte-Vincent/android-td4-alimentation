@@ -8,4 +8,6 @@ public interface IButtonCLickedListener {
     void onButtonPictureSignalClicked(View view);
 
     void onCheckClicked(View view , boolean status);
+
+    void deconnexion(View view) ;
 }

@@ -2,45 +2,66 @@ package com.main.exercice2.androidproject.Commercant;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
-import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.CommercantList;
+import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.LoginActivity;
+import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Calendar;
 
-public class MainCommercant extends AppCompatActivity {
+public class MainCommercant extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
+
+
 
     ListView listeCategorie;
     private String[] categorie = new String[]{
             "Epicerie", "Poissonnerie", "Boucherie", "Boulangerie"
     };
-
+    Button deconnexion ;
     Button categorie_button ;
     Button description_button ;
-    Button nom_horaire_button;
     Button envoyer_signal_button;
+    Button horaire_button;
+    Button nom_button;
 
     TextView nom_magasin_text;
     TextView horaire_text;
     TextView description_text;
-    Commercant commercant;
+    CommercantObjet commercant;
+
+    int hour,minute;
+    String horaire,debut;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_commercant);
+        deconnexion = findViewById(R.id.deconnexionCom);
+        deconnexion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SAVE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(LoginActivity.ID,-1);
+                editor.putBoolean(LoginActivity.MODE,false);
+                editor.apply();
+                finishAffinity();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
@@ -74,28 +95,43 @@ public class MainCommercant extends AppCompatActivity {
             }
         });
 
-        nom_horaire_button = findViewById(R.id.nom_horaire_button);
-        nom_horaire_button.setOnClickListener(new View.OnClickListener() {
+        horaire_text = findViewById(R.id.horaire_text);
+        horaire_button = findViewById(R.id.horaire_button);
+        horaire_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CommercantNomHoraire.class);
-                startActivity(intent);
+                setHoraire();
             }
         });
 
-        String nom = getIntent().getStringExtra("nom_magasin_key");
         nom_magasin_text = (TextView)findViewById(R.id.nom_magasin_text);
-        //nom_magasin_text.setText(nom==null?"Nom du magasin":commercant.getNom());
+        nom_magasin_text.setText(commercant.getTitle());
+        nom_button = (Button)findViewById(R.id.nom_button);
+        nom_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
 
-        String horaire = getIntent().getStringExtra("horaire_key");
-        horaire_text = (TextView)findViewById(R.id.horaire_text);
-        //horaire_text.setText(horaire==null?"Horaires : ":commercant.getDescription());
 
         String description = getIntent().getStringExtra("description_key");
         description_text = (TextView)findViewById(R.id.description_text);
-        //description_text.setText(description==null?"Description":commercant.getDescription());
-        setInfo();
+        description_text.setText(description==null?"Description :":"Description :\n"+description);
+        // setInfo();
     }
+
+    public void openDialog() {
+        ExampleDialog exampleDialog = new ExampleDialog();
+        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+    }
+
+    @Override
+    public void applyTexts(String nom) {
+        commercant.setTitle(nom);
+        nom_magasin_text.setText(commercant.getTitle());
+    }
+
     @Override
     protected void onRestart() {
 
@@ -105,9 +141,41 @@ public class MainCommercant extends AppCompatActivity {
 
 
     void setInfo(){
-        description_text.setText("Description :"+commercant.getDescription());
-        horaire_text.setText("Horaires : "+commercant.getHoraires());
-        nom_magasin_text.setText("Nom du magasin :"+commercant.getNom());
+        description_text.setText("Description :"+commercant.getMessage());
+        // nom_magasin_text.setText("Nom du magasin :"+commercant.getType());
+    }
+
+    void setNom(String nom){
+        nom_magasin_text.setText(nom);
+    }
+
+    void setHoraire(){
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        hour = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(MainCommercant.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                debut = " - "+hourOfDay + "h" + minute;
+            }
+        }, hour, minute, true);
+        timePickerDialog.show();
+
+        TimePickerDialog timePickerDialog2 = new TimePickerDialog(MainCommercant.this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                horaire="Horaires : "+hourOfDay + "h" + minute+debut;
+                horaire_text.setText(horaire);
+            }
+        }, hour, minute, true);
+        timePickerDialog2.show();
+    }
+
+    void setDescription(){
+
     }
 
 }

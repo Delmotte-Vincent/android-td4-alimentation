@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
@@ -40,10 +41,12 @@ import com.main.exercice2.androidproject.CommercantObjet;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
 import com.main.exercice2.androidproject.Interfaces.ICallBack;
+import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
 import com.main.exercice2.androidproject.NotificationReceiver;
 import com.main.exercice2.androidproject.R;
+import com.main.exercice2.androidproject.Signalement;
 
 
 import java.io.UnsupportedEncodingException;
@@ -60,13 +63,14 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     ClientAlertFragment clientAlertFragment;
     ClientSignalFragment clientSignalFragment;
     ClientMapFragment clientMapFragment;
-    TextView  clientName;
+
     private static final String TAG = "TWEET" ;
     private Client client ;
     private String type;
     private boolean defaultPicture = true;
 
-
+    EditText title;
+    EditText description;
 
 
     @Override
@@ -74,12 +78,10 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_client);
         bottomNavigationView=findViewById(R.id.activity_main_bottom_navigation);
-        clientName= findViewById(R.id.client);
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
 
         client = ClientList.findClientId(id);
-        clientName.setText(client.getFirstName()+" "+client.getLastName());
 
         this.configureBottomView();
 
@@ -132,7 +134,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      * @return
      */
     public String getSignalTitle() {
-        EditText title = findViewById(R.id.titre_signal);
+        title = findViewById(R.id.titre_signal);
         return !title.getText().toString().equals("") ? title.getText().toString() : "Sans titre";
     }
 
@@ -141,7 +143,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      * @return
      */
     public String getSignalDesc() {
-        EditText title = findViewById(R.id.desc_signal);
+        description = findViewById(R.id.desc_signal);
         return !title.getText().toString().equals("") ? title.getText().toString() : "Sans description";
     }
 
@@ -156,12 +158,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
 
+        Signalement.AlertDialogCalendar(this);
+        Signalement.AlertDialogSMS(this, title, description);
+
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
 
         clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
-        if(checked)
+        if(checked){
+           // Uri uri = Uri.
             this.shareOnTwitter(this,titre+"\n"+desc,null);
+
+        }
             //shareTwitter(titre+"\n"+desc);
 
         this.setDefaultPicture(true);
@@ -220,6 +228,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
+    public void deconnexion(View view) {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SAVE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(LoginActivity.ID,-1);
+        editor.putBoolean(LoginActivity.MODE,false);
+        editor.apply();
+        finishAffinity();
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case REQUEST_CAMERA:{
@@ -234,15 +254,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 }
                 break;
             }
-            case REQUEST_GPS: {  //GPS FINE LOCATION only autorisation result code
-                if( grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "FINE authorisation Granted", Toast.LENGTH_LONG);
-                    toast.show();
-                    clientMapFragment.openGPS2();
-                } else {
-                    Log.d( TAG, "(only) FINE LOCATION permission NOT Granted");
-                }
-            } break;
         }
     }
 
@@ -349,10 +360,17 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
     @Override
     public void sendCommercantObjet(CommercantObjet c) {
+        FragmentTransaction trans;
+        trans= getSupportFragmentManager().beginTransaction();
         ClientCommercantFragment clientCommercantFragment = new ClientCommercantFragment();
         Bundle args = new Bundle();
+        args.putInt(PASSAGE_COM,c.getId());
+        clientCommercantFragment.setArguments(args);
         //On aura juste à passer l'id du commercant dans le bundle
-        getSupportFragmentManager().beginTransaction().replace(R.id.client_frame,clientCommercantFragment).commit();
+        trans.replace(R.id.client_frame,clientCommercantFragment);
+        trans.addToBackStack(null);
+        trans.commit();
 
     }
+
 }
