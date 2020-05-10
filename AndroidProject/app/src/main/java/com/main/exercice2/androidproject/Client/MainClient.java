@@ -110,7 +110,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 trans.replace(R.id.client_frame, new ClientProfilFragment());
                 break;
             case R.id.action_alertes :
-                trans.replace(R.id.client_frame, clientAlertFragment);
+                trans.replace(R.id.client_frame, new ClientAlertFragment());
                 break;
             case R.id.action_map:
                 trans.replace(R.id.client_frame, clientMapFragment);
@@ -149,7 +149,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
-    public void onButtonSignalClicked(View but,boolean checked) {
+    public void onButtonSignalClicked(View but,boolean checked,CommercantObjet commercant) {
         String titre = getSignalTitle();
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
@@ -160,7 +160,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
 
-        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
+        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture,commercant);
         if(checked){
            // Uri uri = Uri.
             this.shareOnTwitter(this,titre+"\n"+desc,null);

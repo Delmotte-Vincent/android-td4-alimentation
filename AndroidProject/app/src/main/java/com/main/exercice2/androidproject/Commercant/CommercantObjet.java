@@ -31,6 +31,9 @@ public class CommercantObjet {
         this.message = message;
         this.drawable=drawable;
     }
+    public CommercantObjet(String title){
+        this.title=title;
+    }
     public String getTitle() {
         return title;
     }

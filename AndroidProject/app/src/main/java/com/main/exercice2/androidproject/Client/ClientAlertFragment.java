@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.main.exercice2.androidproject.ClientList;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Adapter.AlerteListAdapter;
 import com.main.exercice2.androidproject.Post;
@@ -31,18 +33,21 @@ public class ClientAlertFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.frag_alert_client,container,false);
+        Client client = ClientList.findClientId(getActivity().getIntent().getExtras().getInt("id"));
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView);
         AlerteListAdapter adapter = new AlerteListAdapter(getContext(), postList);
         listView.setAdapter(adapter);
 
+        adapter.getFilter().filter(String.valueOf(client.getId()));
+
         return rootView;
     }
 
 
-    public void newAlert(String titre, String desc, String type, Drawable drawable, Boolean defaultPicture) {
+    public void newAlert(String titre, String desc, String type, Drawable drawable, Boolean defaultPicture, CommercantObjet commercantObjet) {
 
-        postList.add(new Post(titre,desc, type, drawable, defaultPicture));
+        postList.add(new Post(titre,desc, type, drawable, defaultPicture,commercantObjet));
 
     }
 }
