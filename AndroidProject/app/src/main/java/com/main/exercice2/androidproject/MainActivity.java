@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.Client.MainClient;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.LoginAs;

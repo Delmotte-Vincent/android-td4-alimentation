@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import com.main.exercice2.androidproject.Signalement;
+import com.main.exercice2.androidproject.AlertDialogCustom;
 import com.main.exercice2.androidproject.abonnementList;
 import com.main.exercice2.androidproject.R;
 
@@ -42,8 +42,8 @@ public class CommercantSignalement extends AppCompatActivity {
         but_signal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Signalement.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
-                Signalement.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal);
+                AlertDialogCustom.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
+                AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal);
             }
         });
     }

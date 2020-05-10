@@ -7,7 +7,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -31,12 +30,10 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import android.widget.TextView;
-
 import com.main.exercice2.androidproject.ClientList;
 
 
-import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
@@ -44,9 +41,8 @@ import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
-import com.main.exercice2.androidproject.NotificationReceiver;
 import com.main.exercice2.androidproject.R;
-import com.main.exercice2.androidproject.Signalement;
+import com.main.exercice2.androidproject.AlertDialogCustom;
 
 
 import java.io.UnsupportedEncodingException;
@@ -158,8 +154,8 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
 
-        Signalement.AlertDialogCalendar(this, titre, desc);
-        Signalement.AlertDialogSMS(this, title, description);
+        AlertDialogCustom.AlertDialogCalendar(this, titre, desc);
+        AlertDialogCustom.AlertDialogSMS(this, title, description);
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();

@@ -1,4 +1,4 @@
-package com.main.exercice2.androidproject;
+package com.main.exercice2.androidproject.Commercant;
 
 import android.graphics.drawable.Drawable;
 

@@ -2,6 +2,8 @@ package com.main.exercice2.androidproject;
 
 import android.graphics.drawable.Drawable;
 
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
+
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;

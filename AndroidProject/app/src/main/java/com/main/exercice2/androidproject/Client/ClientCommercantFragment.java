@@ -12,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.Abonnement;
 import com.main.exercice2.androidproject.ClientList;
 import com.main.exercice2.androidproject.CommercantList;
-import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.R;
 import com.main.exercice2.androidproject.abonnementList;

@@ -1,6 +1,5 @@
 package com.main.exercice2.androidproject;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,10 +9,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Signalement {
+public class AlertDialogCustom {
 
     public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous envoyé un SMS à tous les abonnés ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
@@ -28,13 +27,13 @@ public class Signalement {
                     }
                 });
 
-        AlertDialog dialog = builder.create();
+        android.app.AlertDialog dialog = builder.create();
         dialog.setTitle("Envoyer SMS ?");
         dialog.show();
     }
 
     public static void AlertDialogCalendar(final Context context, final String titre, final String description) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous ajouter un événement à votre agenda ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
@@ -52,7 +51,7 @@ public class Signalement {
                     }
                 });
 
-        AlertDialog dialog = builder.create();
+        android.app.AlertDialog dialog = builder.create();
         dialog.setTitle("Calendrier");
         dialog.show();
     }

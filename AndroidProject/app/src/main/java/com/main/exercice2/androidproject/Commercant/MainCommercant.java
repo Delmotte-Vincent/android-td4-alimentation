@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.main.exercice2.androidproject.CommercantList;
-import com.main.exercice2.androidproject.CommercantObjet;
 import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;

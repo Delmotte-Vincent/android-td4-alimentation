@@ -14,7 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.R;
 
 import java.util.ArrayList;
