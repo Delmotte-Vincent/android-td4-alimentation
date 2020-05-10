@@ -21,13 +21,13 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" nom "
+        android:hint="Nom "
         android:id="@+id/nouveauCommercantNom"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" Horaires "
+        android:hint="Horaires "
         android:id="@+id/nouveauHoraires"
 
 
@@ -36,7 +36,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" Description "
+        android:hint="Description "
         android:id="@+id/nouveauCommercantDescription"
 
 
@@ -46,30 +46,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint=" adreese mail"
+        android:hint="Adreese mail"
         android:id="@+id/nouveauCommercantMail"
 
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint=" mot de passe"
+        android:hint="Mot de passe"
         android:inputType="textPassword"
         android:id="@+id/nouveauCommercantPass"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="confirmez votre mot de passe"
+        android:hint="Confirmez votre mot de passe"
         android:inputType="textPassword"
         android:id="@+id/nouveauCommercantPassConf"
+
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Numéro de téléphone"
+        android:inputType="textPassword"
+        android:id="@+id/nouveauCommercantPhoneNumber"
 
         />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="créer votre compte"
+        android:text="Créer votre compte"
         android:id="@+id/sendCommercant"
         android:layout_marginBottom="150dp"
         />

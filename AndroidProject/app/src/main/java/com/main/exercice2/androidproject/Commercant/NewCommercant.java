@@ -20,6 +20,7 @@ public class NewCommercant extends AppCompatActivity {
     EditText mail;
     EditText pass ;
     EditText passConf ;
+    EditText phoneNumber ;
     Button send ;
 
     @Override
@@ -33,6 +34,7 @@ public class NewCommercant extends AppCompatActivity {
         mail=findViewById(R.id.nouveauCommercantMail);
         pass=findViewById(R.id.nouveauCommercantPass);
         passConf=findViewById(R.id.nouveauCommercantPassConf);
+        phoneNumber=findViewById(R.id.nouveauCommercantPhoneNumber);
         send =findViewById(R.id.sendCommercant);
 
         send.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +53,8 @@ public class NewCommercant extends AppCompatActivity {
         String mailS=mail.getText().toString();
         String passS =pass.getText().toString();
         String passConfS =passConf.getText().toString();
+        String phoneS=phoneNumber.getText().toString();
+        int phoneNumber=Integer.parseInt(phoneS);
 
         if(CommercantList.exist(mailS)) {
             Toast.makeText(this, "cet email est déjà utilisé ", Toast.LENGTH_SHORT).show();
@@ -62,7 +66,7 @@ public class NewCommercant extends AppCompatActivity {
         }
         if(conf)
             return;
-        int id = CommercantList.nouveau(nameS,horairesS,descriptiosS,null,null,mailS,passS);
+        int id = CommercantList.nouveau(nameS,horairesS,descriptiosS,null,null,mailS,passS,phoneNumber);
         Intent intent = new Intent(getApplicationContext(), MainCommercant.class);
         Toast.makeText(this,"compte crée ",Toast.LENGTH_SHORT).show();
         finishAffinity();

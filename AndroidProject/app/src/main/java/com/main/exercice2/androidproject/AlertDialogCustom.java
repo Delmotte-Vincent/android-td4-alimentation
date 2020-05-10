@@ -13,13 +13,13 @@ import java.util.ArrayList;
 
 public class AlertDialogCustom {
 
-    public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage, final int idCommercant) {
+    public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage, final int idCommercant, final int phoneNumber) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous envoyé un SMS à tous les abonnés ?")
                 .setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                sendSMS(context, editTextNumber, editTextMessage, idCommercant);
+                sendSMS(context, editTextNumber, editTextMessage, idCommercant, phoneNumber);
             }
         })
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -58,7 +58,7 @@ public class AlertDialogCustom {
         dialog.show();
     }
 
-    public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage, int idCommercant){
+    public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage, int idCommercant, int phoneNumber){
         /*
         TelephonyManager tMgr = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
         String mPhoneNumber = tMgr.getLine1Number();
@@ -66,17 +66,20 @@ public class AlertDialogCustom {
          */
 
         ArrayList<Abonnement> ab = abonnementList.getCommercant(idCommercant);
+        SmsManager smsManager = SmsManager.getDefault();
+        String title = editTextNumber.getText().toString();
+        String descr = editTextMessage.getText().toString();
+        String message = title+" :\n"+descr;
 
         for (int i=0;i<ab.size();i++){
             Client client = ClientList.findClientId(ab.get(i).getIdClient());
             // String number = String.valueOf(5554+i);
-            String number = String.valueOf(client.getPhoneNumber());
-            String title = editTextNumber.getText().toString();
-            String descr = editTextMessage.getText().toString();
-            String message = title+" :\n"+descr;
-
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number,null,message,null,null);
+            if (phoneNumber!=client.getPhoneNumber()){
+                smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
+            }
+        }
+        if (phoneNumber!=CommercantList.findClientId(idCommercant).getPhoneNumber()){
+            smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
         }
 
         Toast.makeText(context ,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_LONG).show();

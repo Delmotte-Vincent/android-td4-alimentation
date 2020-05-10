@@ -157,7 +157,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Drawable draw = getSignalPicture();
 
         AlertDialogCustom.AlertDialogCalendar(this, titre, desc);
-        AlertDialogCustom.AlertDialogSMS(this, title, description,6);
+        AlertDialogCustom.AlertDialogSMS(this, title, description,commercant.getId(), client.getPhoneNumber());
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();

@@ -15,9 +15,10 @@ public class CommercantObjet {
     private GeoPoint geoPoint;
     private String email ;
     private  String pass ;
+    private int phoneNumber;
     private int id ;
 
-    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint,String email , String pass , int id) {
+    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint,String email , String pass ,int phoneNumber, int id) {
         this.title = title;
         this.message = message;
         this.type = type;
@@ -25,6 +26,7 @@ public class CommercantObjet {
         this.geoPoint=geopoint;
         this.email = email ;
         this.pass = pass ;
+        this.phoneNumber = phoneNumber;
         this.id = id ;
     }
     public CommercantObjet(String title,String message,Drawable drawable){
@@ -74,6 +76,10 @@ public class CommercantObjet {
     public Drawable getDrawable(){return this.drawable;}
 
     public GeoPoint getGeoPoint(){return this.geoPoint;}
+
+    public int getPhoneNumber(){
+        return this.phoneNumber;
+    }
 
     @NonNull
     @Override

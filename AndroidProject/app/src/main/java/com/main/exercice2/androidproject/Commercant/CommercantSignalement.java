@@ -33,10 +33,7 @@ public class CommercantSignalement extends AppCompatActivity {
         commercant = CommercantList.findClientId(id);
 
 
-        abonnementList.addAbonnement(1, 5);
-        abonnementList.addAbonnement(7, 6);
-        abonnementList.addAbonnement(8, 6);
-        abonnementList.addAbonnement(9, 6);
+
 
 
         ActivityCompat.requestPermissions(CommercantSignalement.this, new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS,
@@ -51,7 +48,7 @@ public class CommercantSignalement extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialogCustom.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
-                AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal,commercant.getId());
+                AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal,commercant.getId(),commercant.getPhoneNumber());
             }
         });
     }
