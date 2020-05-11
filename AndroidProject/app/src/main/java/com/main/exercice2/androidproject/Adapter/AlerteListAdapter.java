@@ -26,8 +26,10 @@ import com.main.exercice2.androidproject.EventCalendar;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
+import com.main.exercice2.androidproject.abonnementList;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
 
@@ -40,6 +42,20 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
         alertes=objects;
         alertesfiltre=objects;
 
+    }
+    @Override
+    public int getCount() {
+        return alertes.size();
+    }
+
+    @Override
+    public Post getItem(int position) {
+        return alertes.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -108,14 +124,19 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
 
         protected FilterResults performFiltering(Client client) {
             FilterResults filterResults = new FilterResults();
-            ArrayList abonnement = client.getAbonnements();
+            ArrayList<Abonnement> abonnement = new ArrayList();
+            for(Abonnement a : abonnementList.getAbonnementClient(client.getId()) ){
+                abonnement.add(a);
+            }
             alertesfiltre= new ArrayList<>();
             for(Post p : alertes){
                 CommercantObjet c =p.getCommercant();
-                System.out.println("lsit : "+(abonnement)+(abonnement.contains(c)));
-                if(abonnement.contains(c)){
-                    System.out.println(c);
-                    alertesfiltre.add(p);
+                System.out.println("lsit : "+(abonnement)+(abonnement.contains(c))+c.getId()+abonnement.get(0).getIdCommercant());
+                for(Abonnement a : abonnement) {
+                    if (c.getId()==a.getIdCommercant()) {
+                        System.out.println(c);
+                        alertesfiltre.add(p);
+                    }
                 }
             }
             filterResults.count=alertesfiltre.size();
@@ -125,12 +146,15 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            return performFiltering(ClientList.findClientId(Integer.parseInt(charSequence.toString())));
+            return performFiltering(Objects.requireNonNull(ClientList.findClientId(Integer.parseInt(charSequence.toString()))));
         }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             alertes= (ArrayList<Post>) filterResults.values;
+            if (alertes==null){
+                alertes=new ArrayList<>();
+            }
             notifyDataSetChanged();
         }
     }
