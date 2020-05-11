@@ -37,6 +37,15 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     CommercantObjet homeCom = new CommercantObjet("home","rallo's home", AlertType.DEFAULT,
             null,new GeoPoint(43.65020,7.00517),"em","pas",1,1);
 
+    CommercantObjet epiCom = new CommercantObjet("Epicerie Léa","épicerie chez Léa", AlertType.DEFAULT,
+            null,new GeoPoint(43.65320,7.00617),"epicerie","lea",3,3);
+
+    CommercantObjet bouCom = new CommercantObjet("Boulangerie","magnifique boulangerie", AlertType.DEFAULT,
+            null,new GeoPoint(43.64820,7.00317),"boulanger","pain",4,4);
+
+    CommercantObjet poiCom = new CommercantObjet("Poissonnier","chez Otto ", AlertType.DEFAULT,
+            null,new GeoPoint(43.65820,7.00017),"poisson","poi",5,5);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         CommercantList.add(restoCom);
         CommercantList.add(homeCom);
         CommercantList.add(numero6);
+        CommercantList.add(epiCom);
+        CommercantList.add(poiCom);
+        CommercantList.add(bouCom);
 
         abonnementList.addAbonnement(1, 5);
         abonnementList.addAbonnement(7, 6);
