@@ -1,11 +1,13 @@
 package com.main.exercice2.androidproject.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -14,9 +16,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.main.exercice2.androidproject.Abonnement;
+import com.main.exercice2.androidproject.AlertDialogCustom;
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.ClientList;
+import com.main.exercice2.androidproject.Commercant.CommercantDescription;
 import com.main.exercice2.androidproject.Commercant.CommercantObjet;
+import com.main.exercice2.androidproject.Commercant.MainCommercant;
+import com.main.exercice2.androidproject.EventCalendar;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Post;
 import com.main.exercice2.androidproject.R;
@@ -39,8 +45,8 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        String title = getItem(position).getTitle();
-        String message = getItem(position).getMessage();
+        final String title = getItem(position).getTitle();
+        final String message = getItem(position).getMessage();
         String type = getItem(position).getType();
         Drawable drawable = getItem(position).getDrawable();
         Boolean defaultPicture = getItem(position).getDefaultPicture();
@@ -54,6 +60,13 @@ public class AlerteListAdapter extends ArrayAdapter<Post>implements Filterable {
         TextView tvMessage = (TextView) rowView.findViewById(R.id.textViewMessage);
         TextView tvType = (TextView) rowView.findViewById(R.id.textViewType);
         ImageView ivPhoto = (ImageView) rowView.findViewById(R.id.photo);
+        Button calendar_button = (Button) rowView.findViewById(R.id.calendar_button);
+        calendar_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialogCustom.AlertDialogCalendar(getContext(),title,message);
+            }
+        });
 
         tvTitle.setText(title);
         tvMessage.setText(message);

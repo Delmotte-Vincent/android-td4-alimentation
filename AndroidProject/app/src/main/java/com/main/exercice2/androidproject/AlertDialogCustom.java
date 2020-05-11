@@ -69,7 +69,7 @@ public class AlertDialogCustom {
         SmsManager smsManager = SmsManager.getDefault();
         String title = editTextNumber.getText().toString();
         String descr = editTextMessage.getText().toString();
-        String message = title+" :\n"+descr;
+        String message = (title.equals("")?"Sans titre":title)+" :\n"+(descr.equals("")?"Sans description":descr);
 
         for (int i=0;i<ab.size();i++){
             Client client = ClientList.findClientId(ab.get(i).getIdClient());
