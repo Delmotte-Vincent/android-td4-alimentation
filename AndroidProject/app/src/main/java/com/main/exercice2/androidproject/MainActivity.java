@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     Client numero7 = new Client("7","7","7","7",5556,7);
     Client numero8 = new Client("8","8","8","8",5558,8);
     Client numero9 = new Client("9","9","9","9",5555,9);
-    CommercantObjet numero6 = new CommercantObjet("a","a","a",null,null,"a","a",5554,6);
+    CommercantObjet numero6 = new CommercantObjet("a","a","a",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
 
     CommercantObjet commercantOb = new CommercantObjet("Boucherie Halal","aprés midi","le matin",
             null,new GeoPoint(111,11),"test","test",0,0);
