@@ -152,13 +152,6 @@ public class EventCalendar extends AppCompatActivity implements
 
             Calendar cal = Calendar.getInstance();
 
-            /*
-            // Start Day of the Event
-            contentEvent.put("startDay",cal.get(Calendar.DAY_OF_WEEK);
-            // End Day of the Event
-            contentEvent.put("endDay",cal.get(Calendar.DAY_OF_WEEK));
-             */
-
             // All Day Event
             if (all_day_option.isChecked()) {
                 contentEvent.put("dtstart", cal.getTimeInMillis());

@@ -21,26 +21,13 @@ import java.util.Calendar;
 
 public class MainCommercant extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
 
+    Button deconnexion, categorie_button, description_button, envoyer_signal_button, ouverture_button, fermeture_button, nom_button;
 
-
-    ListView listeCategorie;
-    private String[] categorie = new String[]{
-            "Epicerie", "Poissonnerie", "Boucherie", "Boulangerie"
-    };
-    Button deconnexion ;
-    Button categorie_button ;
-    Button description_button ;
-    Button envoyer_signal_button;
-    Button horaire_button;
-    Button nom_button;
-
-    TextView nom_magasin_text;
-    TextView horaire_text;
-    TextView description_text;
+    TextView nom_magasin_text, ouverture_text, fermeture_text, description_text;
     CommercantObjet commercant;
 
     int hour,minute;
-    String horaire,debut;
+    String heure;
     Bundle bundle;
     int idCommercant;
 
@@ -98,12 +85,20 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
             }
         });
 
-        horaire_text = findViewById(R.id.horaire_text);
-        horaire_button = findViewById(R.id.horaire_button);
-        horaire_button.setOnClickListener(new View.OnClickListener() {
+        ouverture_text = findViewById(R.id.ouverture_text);
+        ouverture_button = findViewById(R.id.ouverture_button);
+        ouverture_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setHoraire();
+                setHoraire(true);
+            }
+        });
+        fermeture_text = findViewById(R.id.fermeture_text);
+        fermeture_button = findViewById(R.id.fermeture_button);
+        fermeture_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setHoraire(false);
             }
         });
 
@@ -152,26 +147,22 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
         nom_magasin_text.setText(nom);
     }
 
-    void setHoraire(){
+    void setHoraire(final boolean ouverture){
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         hour = c.get(Calendar.HOUR_OF_DAY);
         minute = c.get(Calendar.MINUTE);
 
-        // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(MainCommercant.this, new TimePickerDialog.OnTimeSetListener() {
+        final TimePickerDialog timePickerDialog2 = new TimePickerDialog(MainCommercant.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                debut = " - "+hourOfDay + "h" + minute;
-            }
-        }, hour, minute, true);
-        timePickerDialog.show();
-
-        TimePickerDialog timePickerDialog2 = new TimePickerDialog(MainCommercant.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                horaire="Horaires : "+hourOfDay + "h" + minute+debut;
-                horaire_text.setText(horaire);
+                heure=hourOfDay + "h" + ((minute<10)?"0"+minute:minute);
+                if (ouverture){
+                    ouverture_text.setText("Ouverture : "+heure);
+                }
+                else{
+                    fermeture_text.setText("Fermeture : "+heure);
+                }
             }
         }, hour, minute, true);
         timePickerDialog2.show();
