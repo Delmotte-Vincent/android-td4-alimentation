@@ -16,7 +16,7 @@ public class Notification extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        createNotificationChannel("channel de notification","démo", NotificationManager.IMPORTANCE_HIGH);
+        createNotificationChannel("channel de notification","Ce cannal sert à envoyer les notifications", NotificationManager.IMPORTANCE_HIGH);
     }
 
     private void createNotificationChannel(String name,String description, int importanceDefault) {

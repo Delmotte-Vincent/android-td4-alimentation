@@ -135,7 +135,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      */
     public String getSignalTitle() {
         title = findViewById(R.id.titre_signal);
-        return !title.getText().toString().equals("") ? title.getText().toString() : "Sans titre";
+        return title.getText().toString().equals("") ? "Sans Titre" : title.getText().toString();
     }
 
     /**
@@ -144,9 +144,13 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
      */
     public String getSignalDesc() {
         description = findViewById(R.id.desc_signal);
-        return !title.getText().toString().equals("") ? title.getText().toString() : "Sans description";
+        return title.getText().toString().equals("") ? "Sans description" : description.getText().toString();
     }
 
+    /**
+     * Récupère La photo du signalement
+     * @return
+     */
     public Drawable getSignalPicture() {
         ImageView imageView = findViewById(R.id.image_signal);
         return imageView.getDrawable();
@@ -186,30 +190,39 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     private void sendNotificationOnChannel(String titre, String desc, String channelId, int priority) {
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId);
-        RemoteViews expandedView;
 
         if (!this.defaultPicture) {
-            expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_image);
+            RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_image);
 
             expandedView.setImageViewBitmap(R.id.image_view_expanded, this.picture);
             expandedView.setTextViewText(R.id.text_view_expanded_1, titre);
             expandedView.setTextViewText(R.id.text_view_expanded_2, type);
+
+            notification.setSmallIcon(R.drawable.eat_it_white)
+                    .setContentTitle(titre)
+                    .setContentText(type)
+                    .setColor(Color.BLUE)
+                    .setLargeIcon(this.picture)
+                    .setCustomBigContentView(expandedView)
+                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
         }
 
         else {
-            expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_no_image);
+            RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_no_image);
 
             expandedView.setTextViewText(R.id.text_view_expanded_1, titre);
             expandedView.setTextViewText(R.id.text_view_expanded_2, type);
             expandedView.setTextViewText(R.id.text_view_expanded_3, desc);
+
+            notification.setSmallIcon(R.drawable.eat_it_white)
+                    .setContentTitle(titre)
+                    .setContentText(type)
+                    .setColor(Color.BLUE)
+                    .setCustomBigContentView(expandedView)
+                    .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
         }
 
-        notification.setSmallIcon(R.drawable.eat_it_white)
-                .setContentTitle(titre)
-                .setContentText(type)
-                .setColor(Color.BLUE)
-                .setCustomBigContentView(expandedView)
-                .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
+
 
         Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
