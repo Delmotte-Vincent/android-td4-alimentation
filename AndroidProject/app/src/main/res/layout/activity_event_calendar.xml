@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Ajouter un événement au calendirer"
+            android:text="Ajouter un événement à l'agenda"
             android:textAlignment="center"
             android:textSize="25dp"
             android:background="#537fd7"
@@ -135,7 +135,7 @@
 
         <Button
             android:id="@+id/ajout_calendrier_button"
-            android:text="Ajouter l'événement au calendrier"
+            android:text="Ajouter l'événement à l'agenda"
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="15dp"

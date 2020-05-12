@@ -52,7 +52,7 @@
         android:id="@+id/calendar_button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Modifier le calendrier">
+        android:text="Ajouter un événement à l'agenda">
 
     </Button>
 

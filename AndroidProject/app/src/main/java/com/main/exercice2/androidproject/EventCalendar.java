@@ -133,7 +133,7 @@ public class EventCalendar extends AppCompatActivity implements
             // Get calendars name
             String[] calendarNames = new String[cursor.getCount()];
             if (cursor.getCount() == 0) {
-                Toast.makeText(this, "Impossible d'ajouter au calendrier", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Impossible d'ajouter à l'agenda", Toast.LENGTH_SHORT).show();
                 return;
             }
             // Get calendars id
@@ -197,7 +197,7 @@ public class EventCalendar extends AppCompatActivity implements
             }
 
             cursor.close();
-            Toast.makeText(this,"Vous avez créé un événement dans votre calendrier",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Vous avez créé un événement dans votre agenda",Toast.LENGTH_LONG).show();
         }
     }
 

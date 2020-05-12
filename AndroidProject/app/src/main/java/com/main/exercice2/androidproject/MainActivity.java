@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
          */
         abonnementList.addAbonnement(7, 6);
         abonnementList.addAbonnement(8, 6);
+        PostList.getAlertes().add(new Post("Rupture de stock","Les stocks de légumes sont vidés," +
+                " ils seront à nouveau disponible le Vendredi 14 Mai à partir de 8h00", "Légume", null, true,christophe));
 
         load();
         if(idSaved == -1){
