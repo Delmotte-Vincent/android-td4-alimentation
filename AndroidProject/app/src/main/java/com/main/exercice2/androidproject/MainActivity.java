@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     Client coralie = new Client("Coralie","Dupont","coralie","dupont",5556,7);
     Client coralieBis = new Client("Coralie2","Dupont2","coralie2","dupont2",5558,8);
 
-    Client karim = new Client("Karim", "nom", "karim", "nom", 5559, 9);
+    Client karim = new Client("Karim", "Wahad", "karim", "wahad", 5559, 9);
     CommercantObjet christophe = new CommercantObjet("Bio Légume","Vend légumes bio et frais","Légume",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
 
-    
+
 
     /*
      * Mocks
@@ -66,10 +66,13 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
             "boucherieHalal@outlook.com", "test", 0, 20);
 
     CommercantObjet boulangerieTrad = new CommercantObjet("Boulangerie traditionnelle", "Pain de qualité",
-            "Boucherie", null, new GeoPoint(150, 102),
-            "boucherieHalal@outlook.com", "test", 0, 20);
+            "Boulangerie", null, new GeoPoint(151, 122),
+            "boulangerieTrad@outlook.com", "test", 0, 21);
 
-    
+    CommercantObjet fruitEtLegume = new CommercantObjet("Mille et un legume", "Legume de saison et fruit",
+            "Maraicher", null, new GeoPoint(170, 182),
+            "milleunlegume@outlook.com", "test", 0, 22);
+
 
 
     @Override
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         ClientList.add(test);
         ClientList.add(coralie);
         ClientList.add(coralieBis);
+        ClientList.add(karim);
 
         CommercantList.add(commercantOb);
         CommercantList.add(restoCom);
@@ -90,12 +94,19 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         CommercantList.add(epiCom);
         CommercantList.add(poiCom);
         CommercantList.add(bouCom);
+        CommercantList.add(boucherieHalal);
+        CommercantList.add(boulangerieTrad);
+        CommercantList.add(fruitEtLegume);
 
         /*
          * Abonnement Safwane : Coralie et CoralieBis abonnée à Christophe
          */
         abonnementList.addAbonnement(7, 6);
         abonnementList.addAbonnement(8, 6);
+        abonnementList.addAbonnement(9, 20);
+        abonnementList.addAbonnement(9, 21);
+        abonnementList.addAbonnement(9, 22);
+
         PostList.getAlertes().add(new Post("Rupture de stock","Les stocks de légumes sont vidés," +
                 " ils seront à nouveau disponible le Vendredi 15 Mai à partir de 8h00", "Légume", null, true,christophe));
 

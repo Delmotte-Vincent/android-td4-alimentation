@@ -194,8 +194,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         Intent activityIntent = new Intent(this, MainActivity.class);
         PendingIntent intent = PendingIntent.getActivity(this, 0, activityIntent, 0);
 
-
-
         if (!this.defaultPicture) {
             RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_image);
 
@@ -228,8 +226,6 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                     .setCustomBigContentView(expandedView)
                     .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
         }
-
-
 
         Notification.getNotificationManager().notify(++notificationId, notification.build());
     }
