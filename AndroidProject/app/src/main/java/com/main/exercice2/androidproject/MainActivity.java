@@ -30,8 +30,11 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
      */
     Client coralie = new Client("Coralie","Dupont","coralie","dupont",5556,7);
     Client coralieBis = new Client("Coralie2","Dupont2","coralie2","dupont2",5558,8);
+
     Client karim = new Client("Karim", "nom", "karim", "nom", 5559, 9);
     CommercantObjet christophe = new CommercantObjet("Bio Légume","Vend légumes bio et frais","Légume",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
+
+    
 
     /*
      * Mocks
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         abonnementList.addAbonnement(7, 6);
         abonnementList.addAbonnement(8, 6);
         PostList.getAlertes().add(new Post("Rupture de stock","Les stocks de légumes sont vidés," +
-                " ils seront à nouveau disponible le Vendredi 14 Mai à partir de 8h00", "Légume", null, true,christophe));
+                " ils seront à nouveau disponible le Vendredi 15 Mai à partir de 8h00", "Légume", null, true,christophe));
 
         load();
         if(idSaved == -1){

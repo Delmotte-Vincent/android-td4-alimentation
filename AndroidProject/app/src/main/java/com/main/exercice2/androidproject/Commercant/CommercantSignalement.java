@@ -1,5 +1,6 @@
 package com.main.exercice2.androidproject.Commercant;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -34,7 +35,7 @@ import com.main.exercice2.androidproject.abonnementList;
 import com.main.exercice2.androidproject.R;
 
 
-public class CommercantSignalement extends AppCompatActivity {
+public class CommercantSignalement extends AppCompatActivity implements Constantes {
     private static final String CHANNEL_ID ="channel1";
     private IButtonCLickedListener mCallBack;
     private EditText title;
@@ -81,7 +82,7 @@ public class CommercantSignalement extends AppCompatActivity {
 
                 sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
                 Toast.makeText(CommercantSignalement.this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-                PostList.getAlertes().add(new Post(titre,desc, type, draw, true,commercant));
+                PostList.getAlertes().add(new Post(titre,desc, type, draw, false,commercant));
 
             }
         });
@@ -164,4 +165,29 @@ public class CommercantSignalement extends AppCompatActivity {
         this.startActivityForResult(intent, Constantes.REQUEST_CAMERA);
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== REQUEST_CAMERA){
+            if (resultCode==RESULT_OK){
+                picture = (Bitmap) data.getExtras().get("data");
+                this.setImage(picture);
+            }
+            else if (resultCode==RESULT_CANCELED){
+                Toast toast = Toast.makeText(getApplicationContext(),"la photo n'a pas été prise",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(),"Erreur de caméra",Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
+    }
+
+    private void setImage(Bitmap picture) {
+        ImageView i = findViewById(R.id.image_signal);
+        i.setImageBitmap(picture);
+    }
+
 }
