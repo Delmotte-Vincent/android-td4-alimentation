@@ -56,16 +56,12 @@ public class AlertDialogCustom {
                 });
 
         android.app.AlertDialog dialog = builder.create();
-        dialog.setTitle("Calendrier");
+        dialog.setTitle("Agenda");
         dialog.show();
     }
 
     public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage, int idCommercant, int phoneNumber){
         ArrayList<Abonnement> ab = abonnementList.getCommercant(idCommercant);
-        System.out.println(ab);
-        System.out.println(ab.size());
-        System.out.println(idCommercant);
-        System.out.println(phoneNumber);
         SmsManager smsManager = SmsManager.getDefault();
         String title = editTextNumber.getText().toString();
         String descr = editTextMessage.getText().toString();
@@ -77,13 +73,14 @@ public class AlertDialogCustom {
             Client client = ClientList.findClientId(ab.get(i).getIdClient());
             // on vérifie qu'on ne s'envoie pas de message à soi-même
             if (phoneNumber!=client.getPhoneNumber()){
-                smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
+                System.out.println();
+                smsManager.sendTextMessage(String.valueOf(client.getPhoneNumber()),null,message,null,null);
             }
         }
         // Cas du commerçant
         // on vérifie qu'on ne s'envoie pas de message à soi-même
         if (phoneNumber!=CommercantList.findClientId(idCommercant).getPhoneNumber()){
-            smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
+            smsManager.sendTextMessage(String.valueOf(CommercantList.findClientId(idCommercant).getPhoneNumber()),null,message,null,null);
         }
 
         Toast.makeText(context ,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_LONG).show();
