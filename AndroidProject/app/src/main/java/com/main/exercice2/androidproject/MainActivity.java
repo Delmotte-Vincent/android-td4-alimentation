@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     Client coralieBis = new Client("Coralie2","Dupont2","coralie2","dupont2",5558,8);
 
     Client karim = new Client("Karim", "Wahad", "karim", "wahad", 5559, 9);
+    Client pedro=new Client("Pedro","Sanchez","pedro","pedro",5555,13);
     CommercantObjet christophe = new CommercantObjet("Bio Légume","Vend légumes bio et frais","Légume",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
 
 
@@ -81,75 +82,76 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         setContentView(R.layout.activity_main);
         client = findViewById(R.id.client);
         commercant = findViewById(R.id.commercant);
+        if(CommercantList.getCommercants().size()==0) {
+            ClientList.add(test);
+            ClientList.add(coralie);
+            ClientList.add(coralieBis);
+            ClientList.add(karim);
 
-        ClientList.add(test);
-        ClientList.add(coralie);
-        ClientList.add(coralieBis);
-        ClientList.add(karim);
+            CommercantList.add(commercantOb);
+            CommercantList.add(restoCom);
+            CommercantList.add(homeCom);
+            CommercantList.add(christophe);
+            CommercantList.add(epiCom);
+            CommercantList.add(poiCom);
+            CommercantList.add(bouCom);
+            CommercantList.add(boucherieHalal);
+            CommercantList.add(boulangerieTrad);
+            CommercantList.add(fruitEtLegume);
 
-        CommercantList.add(commercantOb);
-        CommercantList.add(restoCom);
-        CommercantList.add(homeCom);
-        CommercantList.add(christophe);
-        CommercantList.add(epiCom);
-        CommercantList.add(poiCom);
-        CommercantList.add(bouCom);
-        CommercantList.add(boucherieHalal);
-        CommercantList.add(boulangerieTrad);
-        CommercantList.add(fruitEtLegume);
+            /*
+             * Abonnement Safwane : Coralie et CoralieBis abonnée à Christophe
+             */
+            abonnementList.addAbonnement(7, 6);
+            abonnementList.addAbonnement(8, 6);
+            abonnementList.addAbonnement(9, 20);
+            abonnementList.addAbonnement(9, 21);
+            abonnementList.addAbonnement(9, 22);
 
-        /*
-         * Abonnement Safwane : Coralie et CoralieBis abonnée à Christophe
-         */
-        abonnementList.addAbonnement(7, 6);
-        abonnementList.addAbonnement(8, 6);
-        abonnementList.addAbonnement(9, 20);
-        abonnementList.addAbonnement(9, 21);
-        abonnementList.addAbonnement(9, 22);
-
-        PostList.getAlertes().add(new Post("Rupture de stock","Les stocks de légumes sont vidés," +
-                " ils seront à nouveau disponible le Vendredi 15 Mai à partir de 8h00", "Légume", null, true,christophe));
-
-        load();
-        if(idSaved == -1){
-            client.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                    intent.putExtra(logClient,true);
-                    startActivity(intent);
-                }
-            });
-
-            commercant.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                    intent.putExtra(logClient,false);
-                    startActivity(intent);
-                }
-            });
-        } else {
-            Intent intent1;
-            if(modeSaved){
-                 intent1 = new Intent(getApplicationContext(),MainClient.class);
-                Bundle b = new Bundle();
-                b.putInt("id",idSaved);
-                intent1.putExtras(b);
-                startActivity(intent1);
-                finish();
-            }
-            else {
-               intent1 = new Intent(getApplicationContext(),MainCommercant.class);
-                Bundle b = new Bundle();
-                b.putInt("id",idSaved);
-                intent1.putExtras(b);
-                startActivity(intent1);
-                finish();
-            }
-
-
+            PostList.getAlertes().add(new Post("Rupture de stock", "Les stocks de légumes sont vidés," +
+                    " ils seront à nouveau disponible le Vendredi 15 Mai à partir de 8h00", "Légume", null, true, christophe));
         }
+
+            load();
+            if (idSaved == -1) {
+                client.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.putExtra(logClient, true);
+                        startActivity(intent);
+                    }
+                });
+
+                commercant.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        intent.putExtra(logClient, false);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                Intent intent1;
+                if (modeSaved) {
+                    intent1 = new Intent(getApplicationContext(), MainClient.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id", idSaved);
+                    intent1.putExtras(b);
+                    startActivity(intent1);
+                    finish();
+                } else {
+                    intent1 = new Intent(getApplicationContext(), MainCommercant.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id", idSaved);
+                    intent1.putExtras(b);
+                    startActivity(intent1);
+                    finish();
+                }
+
+
+            }
+
 
 
     }
