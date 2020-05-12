@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -19,7 +18,7 @@ import com.main.exercice2.androidproject.R;
 
 import java.util.Calendar;
 
-public class MainCommercant extends AppCompatActivity implements ExampleDialog.ExampleDialogListener {
+public class MainCommercant extends AppCompatActivity implements NomMagasinDialog.ExampleDialogListener {
 
     Button deconnexion, categorie_button, description_button, envoyer_signal_button, ouverture_button, fermeture_button, nom_button;
 
@@ -120,8 +119,8 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
     }
 
     public void openDialog() {
-        ExampleDialog exampleDialog = new ExampleDialog();
-        exampleDialog.show(getSupportFragmentManager(), "example dialog");
+        NomMagasinDialog nomMagasinDialog = new NomMagasinDialog();
+        nomMagasinDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
     @Override
@@ -166,10 +165,6 @@ public class MainCommercant extends AppCompatActivity implements ExampleDialog.E
             }
         }, hour, minute, true);
         timePickerDialog2.show();
-    }
-
-    void setDescription(){
-
     }
 
 }

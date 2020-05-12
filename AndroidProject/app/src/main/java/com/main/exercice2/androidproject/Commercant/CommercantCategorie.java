@@ -25,8 +25,7 @@ public class CommercantCategorie extends AppCompatActivity {
     Button DeleteButton;
     EditText GetValue;
     String[] ListElements = new String[] {
-            "Poisson",
-            "Légumes"
+
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +51,19 @@ public class CommercantCategorie extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+                // on vérifie que l'utilisateur entre un nom
                 if (GetValue.getText().toString().isEmpty()){
                     GetValue.setError("Il faut entrer un nom de catégorie");
                     return;
                 }
+                // on vérifie qu'il n'existe pas déjà un nom de catégorie identique à celui que l'on veut ajouter
                 for (int i=0;i<ListElementsArrayList.size();i++){
                     if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
                         GetValue.setError("Une catégorie de ce nom existe déjà");
                         return;
                     }
                 }
+                // on peut ajouter la catégorie
                 ListElementsArrayList.add(GetValue.getText().toString());
                 adapter.notifyDataSetChanged();
                 Toast.makeText(CommercantCategorie.this, "Catégorie \""+GetValue.getText().toString()+"\" ajoutée", Toast.LENGTH_SHORT).show();
@@ -73,6 +74,7 @@ public class CommercantCategorie extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // on parcourt la liste pour trouver la catégorie à supprimer
                 for (int i=0;i<ListElementsArrayList.size();i++){
                     if (ListElementsArrayList.get(i).equals(GetValue.getText().toString())){
                         ListElementsArrayList.remove(GetValue.getText().toString());
@@ -81,6 +83,7 @@ public class CommercantCategorie extends AppCompatActivity {
                         return;
                     }
                 }
+                // on n'a pas trouvé la catégorie demandée
                 GetValue.setError("Il n'existe pas de nom de cette catégorie");
             }
         });

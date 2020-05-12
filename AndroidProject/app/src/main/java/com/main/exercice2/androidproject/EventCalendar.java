@@ -5,7 +5,6 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,12 +25,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.main.exercice2.androidproject.Commercant.CommercantSignalement;
-
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class EventCalendar extends AppCompatActivity implements
         View.OnClickListener {
@@ -179,11 +175,13 @@ public class EventCalendar extends AppCompatActivity implements
             contentEvent.put("eventTimezone", TimeZone.getDefault().getID());
             Uri eventsUri = Uri.parse("content://com.android.calendar/events");
 
+            // on doit vérifier la permission pour mettre une alarme
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
 
             if (alarm_option.isChecked()) {
+                // Ajout d'un rappel/alarme
                 Uri url = getContentResolver().insert(Events.CONTENT_URI, contentEvent);
                 long eventId = Long.parseLong(url.getLastPathSegment());
                 ContentValues reminder = new ContentValues();
@@ -203,6 +201,9 @@ public class EventCalendar extends AppCompatActivity implements
         }
     }
 
+    /*
+     * Fonction qui vérifie que les champs nécessaires soient renseignés
+     */
     private boolean verify() {
         if (all_day_option.isChecked()){
             return true;
@@ -231,9 +232,12 @@ public class EventCalendar extends AppCompatActivity implements
         }
     }
 
+    // Fonction qui calcule la date, l'heure de départ et l'heure de fin de l'événement
     private long[] calculTime(Calendar cal) {
         String [] start;
         if (start_time_text.getText().toString().isEmpty()){
+            // si l'heure n'est pas renseigné ça veut dire qu'on a activé l'événement toute la journée
+            // par défaut on met les valeurs 24 car sinon on a un jour de retard
             start = "24:24".split(":");
         }
         else{
@@ -243,7 +247,9 @@ public class EventCalendar extends AppCompatActivity implements
         startMinute = Integer.parseInt(start[1]);
 
         String [] end;
-        if (start_time_text.getText().toString().isEmpty()){
+        if (end_time_text.getText().toString().isEmpty()){
+            // si l'heure n'est pas renseigné ça veut dire qu'on a activé l'événement toute la journée
+            // par défaut on met les valeurs 24 car sinon on a un jour de retard
             end = "24:24".split(":");
         }
         else{
@@ -255,7 +261,9 @@ public class EventCalendar extends AppCompatActivity implements
         Date date1= null;
         long newTime;
         String sDate1 = date_text.getText().toString();
+        // calcul à partir de la date si elle est renseignée ou non
         if (sDate1.isEmpty()){
+            // la date n'est pas renseignée l'événement aura lieu le jour même
             newTime=cal.getTimeInMillis();
             startHour = startHour - cal.getTime().getHours();
             startMinute = startMinute - cal.getTime().getMinutes();

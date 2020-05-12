@@ -81,8 +81,6 @@ public class CommercantSignalement extends AppCompatActivity {
                 Toast.makeText(CommercantSignalement.this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
                 PostList.getAlertes().add(new Post(titre,desc, type, draw, true,commercant));
 
-                //AlertDialogCustom.AlertDialogCalendar(CommercantSignalement.this, titre_signal.getText().toString(), desc_signal.getText().toString());
-                //AlertDialogCustom.AlertDialogSMS(CommercantSignalement.this, titre_signal, desc_signal,commercant.getId(),commercant.getPhoneNumber());
             }
         });
 

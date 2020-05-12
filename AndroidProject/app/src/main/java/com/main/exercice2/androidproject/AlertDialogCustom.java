@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class AlertDialogCustom {
 
+    // Fonction qui permet d'ouvrir une fenêtre demandant à l'utilisateur s'il veut envoyer des SMS
     public static void AlertDialogSMS(final Context context, final EditText editTextNumber, final EditText editTextMessage, final int idCommercant, final int phoneNumber) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous envoyé un SMS à tous les abonnés ?")
@@ -34,6 +35,7 @@ public class AlertDialogCustom {
         dialog.show();
     }
 
+    // Fonction qui permet d'ouvrir une fenêtre demandant à l'utilisateur s'il veut ajouter un événement à son agenda
     public static void AlertDialogCalendar(final Context context, final String titre, final String description) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(context);
         builder.setMessage("Voulez-vous ajouter un événement à votre agenda ?")
@@ -59,25 +61,27 @@ public class AlertDialogCustom {
     }
 
     public static void sendSMS(Context context, EditText editTextNumber, EditText editTextMessage, int idCommercant, int phoneNumber){
-        /*
-        TelephonyManager tMgr = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
-        String mPhoneNumber = tMgr.getLine1Number();
-        <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-         */
-
         ArrayList<Abonnement> ab = abonnementList.getCommercant(idCommercant);
+        System.out.println(ab);
+        System.out.println(ab.size());
+        System.out.println(idCommercant);
+        System.out.println(phoneNumber);
         SmsManager smsManager = SmsManager.getDefault();
         String title = editTextNumber.getText().toString();
         String descr = editTextMessage.getText().toString();
         String message = (title.equals("")?"Sans titre":title)+" :\n"+(descr.equals("")?"Sans description":descr);
 
+        // on parcourt tout les clients du commerçant
         for (int i=0;i<ab.size();i++){
+            // Cas du client
             Client client = ClientList.findClientId(ab.get(i).getIdClient());
-            // String number = String.valueOf(5554+i);
+            // on vérifie qu'on ne s'envoie pas de message à soi-même
             if (phoneNumber!=client.getPhoneNumber()){
                 smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
             }
         }
+        // Cas du commerçant
+        // on vérifie qu'on ne s'envoie pas de message à soi-même
         if (phoneNumber!=CommercantList.findClientId(idCommercant).getPhoneNumber()){
             smsManager.sendTextMessage(String.valueOf(phoneNumber),null,message,null,null);
         }

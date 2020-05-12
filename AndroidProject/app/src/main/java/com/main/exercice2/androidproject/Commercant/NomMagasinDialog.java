@@ -14,7 +14,7 @@ import android.widget.EditText;
 import com.main.exercice2.androidproject.R;
 
 
-public class ExampleDialog extends AppCompatDialogFragment {
+public class NomMagasinDialog extends AppCompatDialogFragment {
     private EditText edit_nom;
     private ExampleDialogListener listener;
 

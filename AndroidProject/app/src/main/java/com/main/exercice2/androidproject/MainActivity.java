@@ -24,11 +24,17 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     private boolean modeSaved;
 
     Client test = new Client("mohamed","fertala","test","test",0,0);
-    Client numero7 = new Client("7","7","7","7",5556,7);
-    Client numero8 = new Client("8","8","8","8",5558,8);
-    Client numero9 = new Client("9","9","9","9",5555,9);
-    CommercantObjet numero6 = new CommercantObjet("a","a","a",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
 
+    /*
+     * Mocks Safwane
+     */
+    Client coralie = new Client("Coralie","Dupont","coralie","dupont",5556,7);
+    Client coralieBis = new Client("Coralie2","Dupont2","coralie2","dupont2",5558,8);
+    CommercantObjet christophe = new CommercantObjet("Bio Légume","Vend légumes bio et frais","Légume",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
+
+    /*
+     * Mocks
+     */
     CommercantObjet commercantOb = new CommercantObjet("Boucherie Halal","aprés midi","le matin",
             null,new GeoPoint(111,11),"test","test",0,0);
     CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT,
@@ -55,21 +61,22 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         commercant = findViewById(R.id.commercant);
 
         ClientList.add(test);
-        ClientList.add(numero7);
-        ClientList.add(numero8);
-        ClientList.add(numero9);
+        ClientList.add(coralie);
+        ClientList.add(coralieBis);
+
         CommercantList.add(commercantOb);
         CommercantList.add(restoCom);
         CommercantList.add(homeCom);
-        CommercantList.add(numero6);
+        CommercantList.add(christophe);
         CommercantList.add(epiCom);
         CommercantList.add(poiCom);
         CommercantList.add(bouCom);
 
-        abonnementList.addAbonnement(1, 5);
+        /*
+         * Abonnement Safwane : Coralie et CoralieBis abonnée à Christophe
+         */
         abonnementList.addAbonnement(7, 6);
         abonnementList.addAbonnement(8, 6);
-        abonnementList.addAbonnement(9, 6);
 
         load();
         if(idSaved == -1){
