@@ -92,21 +92,22 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
 
             }
         });
+        if(see!=null) {
+            see.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (covered)
+                        pass.setTransformationMethod(null);
+                    else
+                        pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-        see.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(covered)
-                    pass.setTransformationMethod(null);
-                else
-                    pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-                pass.setSelection(pass.getText().length());
-                covered = !covered ;
+                    pass.setSelection(pass.getText().length());
+                    covered = !covered;
 
 
-            }
-        });
+                }
+            });
+        }
     }
 
 
