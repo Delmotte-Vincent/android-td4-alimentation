@@ -67,14 +67,9 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
             }
         }
 
-        // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
 
-        //choix.add(AlertType.DEFAULT);
-        //choix.add(AlertType.BOUCHERIE);
-        //choix.add(AlertType.BOULANGERIE);
-        //choix.add(AlertType.EPICERIE);
-        //choix.add(AlertType.POISONNERIE);
+
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, choix);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

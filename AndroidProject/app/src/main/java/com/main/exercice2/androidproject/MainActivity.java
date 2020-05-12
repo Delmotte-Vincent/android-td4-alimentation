@@ -1,9 +1,11 @@
 package com.main.exercice2.androidproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     private int idSaved;
     private boolean modeSaved;
 
+
+
     Client test = new Client("mohamed","fertala","test","test",0,0);
 
     /*
@@ -33,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
 
     Client karim = new Client("Karim", "Wahad", "karim", "wahad", 5559, 9);
     Client pedro=new Client("Pedro","Sanchez","pedro","pedro",5555,13);
+
+
     CommercantObjet christophe = new CommercantObjet("Bio Légume","Vend légumes bio et frais","Légume",null,new GeoPoint(43.62950, 17.01517),"a","a",5554,6);
 
 
@@ -41,7 +47,8 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
      * Mocks
      */
     CommercantObjet commercantOb = new CommercantObjet("Boucherie Halal","aprés midi","le matin",
-            null,new GeoPoint(111,11),"test","test",0,0);
+            null ,new GeoPoint(111,11),"test","test",0,0);
+
     CommercantObjet restoCom = new CommercantObjet("resto", "delice de maman", AlertType.DEFAULT,
             null, new GeoPoint(43.64950, 7.00517),"them","e",2,2);
 
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
             null,new GeoPoint(43.65320,7.00617),"epicerie","lea",3,3);
 
     CommercantObjet bouCom = new CommercantObjet("Boulangerie","magnifique boulangerie", AlertType.DEFAULT,
-            null,new GeoPoint(43.64820,7.00317),"boulanger","pain",4,4);
+            null ,new GeoPoint(43.64820,7.00317),"boulanger","pain",4,4);
 
     CommercantObjet poiCom = new CommercantObjet("Poissonnier","chez Otto ", AlertType.DEFAULT,
             null,new GeoPoint(43.65820,7.00017),"poisson","poi",5,5);
@@ -79,6 +86,12 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Drawable boucherie =  ResourcesCompat.getDrawable(getResources(),R.drawable.boucherie,null);
+        Drawable boulangerie =  ResourcesCompat.getDrawable(getResources(),R.drawable.boulangerie,null);
+        commercantOb.setDrawable(boucherie);
+        boucherieHalal.setDrawable(boucherie);
+        boulangerieTrad.setDrawable(boulangerie);
+
         setContentView(R.layout.activity_main);
         client = findViewById(R.id.client);
         commercant = findViewById(R.id.commercant);

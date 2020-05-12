@@ -86,4 +86,7 @@ public class CommercantObjet {
         return title;
     }
 
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+    }
 }

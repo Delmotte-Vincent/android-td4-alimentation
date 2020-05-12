@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -170,8 +171,10 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         PostList.getAlertes().add(new Post(titre,desc, type, draw, this.defaultPicture,commercant));
         //clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture,commercant);
         if(checked){
-           // Uri uri = Uri.
-            this.shareOnTwitter(this,titre+"\n"+desc,null);
+            Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                    "://" + getResources().getResourcePackageName(R.drawable.boucherie)
+                    + '/' + getResources().getResourceTypeName(R.drawable.boucherie) + '/' + getResources().getResourceEntryName(R.drawable.boucherie) );
+            this.shareOnTwitter(this,titre+"\n"+desc,imageUri);
 
         }
             //shareTwitter(titre+"\n"+desc);
@@ -238,7 +241,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     @Override
     public void onCheckClicked(View view, boolean status) {
         if(status)
-            Toast.makeText(this,"cette notification va être transferer à Twitter ",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"cette notification va être transferé à Twitter ",Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this,"cette notification ne va pas être transferer à Twitter ",Toast.LENGTH_SHORT).show();
     }
@@ -292,43 +295,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
         }
     }
 
-    private void shareTwitter(String message) {
-        Intent tweetIntent = new Intent(Intent.ACTION_SEND);
-        tweetIntent.putExtra(Intent.EXTRA_TEXT, message);
-        tweetIntent.setType("text/plain");
-        PackageManager packManager = getPackageManager();
-        List<ResolveInfo> resolvedInfoList = packManager.queryIntentActivities(tweetIntent, PackageManager.MATCH_DEFAULT_ONLY);
 
-        boolean resolved = false;
-        for (ResolveInfo resolveInfo : resolvedInfoList) {
-            if (resolveInfo.activityInfo.packageName.startsWith("com.twitter.android")) {
-                tweetIntent.setClassName(
-                        resolveInfo.activityInfo.packageName,
-                        resolveInfo.activityInfo.name);
-                resolved = true;
-                break;
-            }
-        }
-        if (resolved) {
-            startActivity(tweetIntent);
-        } else {
-            Intent i = new Intent();
-            i.putExtra(Intent.EXTRA_TEXT, message);
-            i.setAction(Intent.ACTION_VIEW);
-            i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + urlEncode(message)));
-            startActivity(i);
-            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private String urlEncode(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            Log.wtf(TAG, "UTF-8 should always be supported", e);
-            return "";
-        }
-    }
 
     public  void shareOnTwitter(AppCompatActivity appCompatActivity, String textBody, Uri fileUri) {
         Intent intent = new Intent(Intent.ACTION_SEND);
