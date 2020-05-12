@@ -51,7 +51,7 @@ public class NewClient extends AppCompatActivity {
         String passS  = pass.getText().toString();
         String confirmationS  = confirmation.getText().toString();
         String phoneS = phone.getText().toString();
-        int phoneNumber = Integer.parseInt(phoneS);
+        int phoneNumber=(phoneS.equals(""))?0:Integer.parseInt(phoneS);
         if(ClientList.exist(mailS)) {
             Toast.makeText(this, "cet email est déjà utilisé ", Toast.LENGTH_SHORT).show();
             stop = true ;
