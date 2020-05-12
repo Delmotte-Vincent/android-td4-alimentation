@@ -2,8 +2,10 @@ package com.main.exercice2.androidproject.Interfaces;
 
 import android.view.View;
 
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
+
 public interface IButtonCLickedListener {
-    void onButtonSignalClicked(View but , boolean checked);
+    void onButtonSignalClicked(View but , boolean checked, CommercantObjet commercant);
 
     void onButtonPictureSignalClicked(View view);
 

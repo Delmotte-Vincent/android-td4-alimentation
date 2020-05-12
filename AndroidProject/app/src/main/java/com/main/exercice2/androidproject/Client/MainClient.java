@@ -31,12 +31,10 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import android.widget.TextView;
-
 import com.main.exercice2.androidproject.ClientList;
 
 
-import com.main.exercice2.androidproject.CommercantObjet;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
@@ -44,9 +42,10 @@ import com.main.exercice2.androidproject.Interfaces.ICallBack;
 import com.main.exercice2.androidproject.LoginActivity;
 import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.Notification;
-import com.main.exercice2.androidproject.NotificationReceiver;
+import com.main.exercice2.androidproject.Post;
+import com.main.exercice2.androidproject.PostList;
 import com.main.exercice2.androidproject.R;
-import com.main.exercice2.androidproject.Signalement;
+import com.main.exercice2.androidproject.AlertDialogCustom;
 
 
 import java.io.UnsupportedEncodingException;
@@ -114,7 +113,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                 trans.replace(R.id.client_frame, new ClientProfilFragment());
                 break;
             case R.id.action_alertes :
-                trans.replace(R.id.client_frame, clientAlertFragment);
+                trans.replace(R.id.client_frame, new ClientAlertFragment());
                 break;
             case R.id.action_map:
                 trans.replace(R.id.client_frame, clientMapFragment);
@@ -145,6 +144,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     public String getSignalDesc() {
         description = findViewById(R.id.desc_signal);
         return title.getText().toString().equals("") ? "Sans description" : description.getText().toString();
+
     }
 
     /**
@@ -157,18 +157,18 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
     }
 
     @Override
-    public void onButtonSignalClicked(View but,boolean checked) {
+    public void onButtonSignalClicked(View but,boolean checked,CommercantObjet commercant) {
         String titre = getSignalTitle();
         String desc = getSignalDesc();
         Drawable draw = getSignalPicture();
 
-        Signalement.AlertDialogCalendar(this);
-        Signalement.AlertDialogSMS(this, title, description);
+        AlertDialogCustom.AlertDialogCalendar(this, titre, desc);
+        AlertDialogCustom.AlertDialogSMS(this, title, description,commercant.getId(), client.getPhoneNumber());
 
         sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
         Toast.makeText(this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
-
-        clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture);
+        PostList.getAlertes().add(new Post(titre,desc, type, draw, this.defaultPicture,commercant));
+        //clientAlertFragment.newAlert(titre,desc, type, draw, this.defaultPicture,commercant);
         if(checked){
            // Uri uri = Uri.
             this.shareOnTwitter(this,titre+"\n"+desc,null);
@@ -191,6 +191,11 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
 
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId);
 
+        Intent activityIntent = new Intent(this, MainActivity.class);
+        PendingIntent intent = PendingIntent.getActivity(this, 0, activityIntent, 0);
+
+
+
         if (!this.defaultPicture) {
             RemoteViews expandedView = new RemoteViews(getPackageName(), R.layout.notification_expanded_image);
 
@@ -202,6 +207,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                     .setContentTitle(titre)
                     .setContentText(type)
                     .setColor(Color.BLUE)
+                    .setContentIntent(intent)
                     .setLargeIcon(this.picture)
                     .setCustomBigContentView(expandedView)
                     .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
@@ -218,6 +224,7 @@ public class MainClient extends AppCompatActivity implements IButtonCLickedListe
                     .setContentTitle(titre)
                     .setContentText(type)
                     .setColor(Color.BLUE)
+                    .setContentIntent(intent)
                     .setCustomBigContentView(expandedView)
                     .setStyle(new NotificationCompat.DecoratedCustomViewStyle());
         }

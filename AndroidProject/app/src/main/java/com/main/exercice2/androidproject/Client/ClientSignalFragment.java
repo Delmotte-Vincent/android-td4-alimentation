@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,13 +22,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.main.exercice2.androidproject.Commercant.CommercantSignalement;
+import com.main.exercice2.androidproject.Abonnement;
+import com.main.exercice2.androidproject.Adapter.CommercantListAdapter;
+import com.main.exercice2.androidproject.ClientList;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
+import com.main.exercice2.androidproject.CommercantList;
 import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.Constantes;
 import com.main.exercice2.androidproject.Interfaces.IButtonCLickedListener;
-import com.main.exercice2.androidproject.MainActivity;
 import com.main.exercice2.androidproject.R;
-import com.main.exercice2.androidproject.Signalement;
+import com.main.exercice2.androidproject.abonnementList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
     private IButtonCLickedListener mCallBack;
     private ImageView imageView;
     Spinner spinner;
+    Client client;
+    CommercantObjet commercantNonChoisi;
 
     private CheckBox checkBox ;
 
@@ -51,15 +56,25 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
         imageView = rootView.findViewById(R.id.image_signal);
         checkBox = rootView.findViewById(R.id.checkBox);
         checkBox.setOnClickListener(this);
+        commercantNonChoisi=new CommercantObjet("Choisir un commercant");
+        List choix = new ArrayList<>();
+        choix.add(commercantNonChoisi);
+        client= ClientList.findClientId(getActivity().getIntent().getExtras().getInt("id"));
+        for(Abonnement a : abonnementList.getAbonnementClient(client.getId())){
+            CommercantObjet c = CommercantList.findClientId(a.getIdCommercant());
+            if(!choix.contains(c)){
+                choix.add(c);
+            }
+        }
 
         // Choix du type de signalement menu déroulant
         spinner = rootView.findViewById(R.id.typeAlert);
-        List choix = new ArrayList<>();
-        choix.add(AlertType.DEFAULT);
-        choix.add(AlertType.BOUCHERIE);
-        choix.add(AlertType.BOULANGERIE);
-        choix.add(AlertType.EPICERIE);
-        choix.add(AlertType.POISONNERIE);
+
+        //choix.add(AlertType.DEFAULT);
+        //choix.add(AlertType.BOUCHERIE);
+        //choix.add(AlertType.BOULANGERIE);
+        //choix.add(AlertType.EPICERIE);
+        //choix.add(AlertType.POISONNERIE);
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, choix);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -82,7 +97,14 @@ public class ClientSignalFragment extends Fragment implements View.OnClickListen
         if(view.getId()==R.id.checkBox){
             mCallBack.onCheckClicked(view,checkBox.isChecked());
         }
-        if(view.getId()==R.id.but_signal)mCallBack.onButtonSignalClicked(view,checkBox.isChecked());
+        if(view.getId()==R.id.but_signal){
+            CommercantObjet c=(CommercantObjet)spinner.getSelectedItem();
+            if(!c.equals(commercantNonChoisi)){
+                mCallBack.onButtonSignalClicked(view,checkBox.isChecked(),c);}
+            else{
+                Toast.makeText(this.getContext(),"Selectionnez un commercant auquel vous êtes abonné",Toast.LENGTH_LONG).show();
+            }
+        };
         if(view.getId()==R.id.but_photo_signal){
             if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)== PackageManager.PERMISSION_DENIED){
                 ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.CAMERA}, Constantes.REQUEST_CAMERA);

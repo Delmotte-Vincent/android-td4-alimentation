@@ -47,7 +47,7 @@
         android:layout_below="@+id/supprimer_categorie_button"
         android:layout_marginTop="20dp"
         android:textSize="20sp"
-        android:text="Vos catégories visibles :"
+        android:text="Vos catégories :"
         android:layout_marginLeft="20dp"/>
 
     <ListView

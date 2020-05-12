@@ -16,21 +16,39 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Ajouter un événement au calendirer"
+            android:text="Ajouter un événement à l'agenda"
             android:textAlignment="center"
             android:textSize="25dp"
             android:background="#537fd7"
             android:textColor="#FFFFFF"/>
 
+        <TextView
+            android:id="@+id/titre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp"
+            android:hint="Titre :" />
 
         <EditText
             android:id="@+id/titre_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="Titre" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="25sp"
+            android:hint="Description :" />
 
         <EditText
             android:id="@+id/description_text"
@@ -38,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/titre_text"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:hint="Description" />
 
@@ -71,10 +88,25 @@
             android:text="Activer l'alarme" />
 
         <TextView
+            android:id="@+id/date_text"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp" />
+
+        <Button
+            android:id="@+id/btn_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Sélectionner le jour" />
+
+        <TextView
             android:id="@+id/start_time_text"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:textSize="25sp" />
 
@@ -103,7 +135,7 @@
 
         <Button
             android:id="@+id/ajout_calendrier_button"
-            android:text="Ajouter l'événement au calendrier"
+            android:text="Ajouter l'événement à l'agenda"
             android:layout_width="match_parent"
             android:layout_marginTop="50dp"
             android:layout_marginBottom="15dp"

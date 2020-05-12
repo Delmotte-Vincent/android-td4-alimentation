@@ -20,6 +20,7 @@ public class NewClient extends AppCompatActivity {
     EditText mail ;
     EditText pass ;
     EditText confirmation ;
+    EditText phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class NewClient extends AppCompatActivity {
         prenom=findViewById(R.id.nouveauClientPrenom);
         mail=findViewById(R.id.nouveauClientMail);
         pass = findViewById(R.id.nouveauClientPass);
+        phone = findViewById(R.id.nouveauClientPhone);
         confirmation = findViewById(R.id.nouveauClientPassConf);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +50,8 @@ public class NewClient extends AppCompatActivity {
         String mailS  = mail.getText().toString();
         String passS  = pass.getText().toString();
         String confirmationS  = confirmation.getText().toString();
+        String phoneS = phone.getText().toString();
+        int phoneNumber = Integer.parseInt(phoneS);
         if(ClientList.exist(mailS)) {
             Toast.makeText(this, "cet email est déjà utilisé ", Toast.LENGTH_SHORT).show();
             stop = true ;
@@ -58,7 +62,7 @@ public class NewClient extends AppCompatActivity {
         }
         if(stop)
             return;
-        int id = ClientList.nouveau(nomS,prenomS,mailS,passS);
+        int id = ClientList.nouveau(nomS,prenomS,mailS,passS,phoneNumber);
         Intent intent = new Intent(getApplicationContext(), MainClient.class);
         Toast.makeText(this,"compte crée ",Toast.LENGTH_SHORT).show();
         finishAffinity();

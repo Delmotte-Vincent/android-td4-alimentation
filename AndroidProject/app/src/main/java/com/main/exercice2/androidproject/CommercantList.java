@@ -2,6 +2,8 @@ package com.main.exercice2.androidproject;
 
 import android.graphics.drawable.Drawable;
 
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
+
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -45,8 +47,8 @@ public class CommercantList {
         return false ;
     }
 
-    public static int nouveau(String name, String horaires, String email , GeoPoint geoPoint , Drawable drawable, String pass, String description){
-        CommercantObjet commercant = new CommercantObjet(name,horaires,description,drawable,geoPoint,email, pass,maxId()+1);
+    public static int nouveau(String name, String horaires, String email , GeoPoint geoPoint , Drawable drawable, String pass, String description,int phoneNumber){
+        CommercantObjet commercant = new CommercantObjet(name,horaires,description,drawable,geoPoint,email, pass,phoneNumber,maxId()+1);
         add(commercant);
         return commercant.getId();
     }

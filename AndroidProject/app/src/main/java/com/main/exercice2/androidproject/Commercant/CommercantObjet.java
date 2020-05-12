@@ -1,4 +1,4 @@
-package com.main.exercice2.androidproject;
+package com.main.exercice2.androidproject.Commercant;
 
 import android.graphics.drawable.Drawable;
 
@@ -14,9 +14,10 @@ public class CommercantObjet {
     private GeoPoint geoPoint;
     private String email ;
     private  String pass ;
+    private int phoneNumber;
     private int id ;
 
-    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint,String email , String pass , int id) {
+    public CommercantObjet(String title, String message, String type, Drawable drawable,GeoPoint geopoint,String email , String pass ,int phoneNumber, int id) {
         this.title = title;
         this.message = message;
         this.type = type;
@@ -24,12 +25,16 @@ public class CommercantObjet {
         this.geoPoint=geopoint;
         this.email = email ;
         this.pass = pass ;
+        this.phoneNumber = phoneNumber;
         this.id = id ;
     }
     public CommercantObjet(String title,String message,Drawable drawable){
         this.title = title;
         this.message = message;
         this.drawable=drawable;
+    }
+    public CommercantObjet(String title){
+        this.title=title;
     }
     public String getTitle() {
         return title;
@@ -71,9 +76,14 @@ public class CommercantObjet {
 
     public GeoPoint getGeoPoint(){return this.geoPoint;}
 
+    public int getPhoneNumber(){
+        return this.phoneNumber;
+    }
+
     @NonNull
     @Override
     public String toString() {
         return title;
     }
+
 }

@@ -45,8 +45,8 @@ public class ClientList {
         return false ;
     }
 
-    public static int nouveau(String firstName, String lastName,String email ,String password){
-        Client client = new Client(firstName,lastName,email,password,maxId()+1);
+    public static int nouveau(String firstName, String lastName,String email ,String password, int phoneNumber){
+        Client client = new Client(firstName,lastName,email,password,phoneNumber,maxId()+1);
         add(client);
         return client.getId();
     }

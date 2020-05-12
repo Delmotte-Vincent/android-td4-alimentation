@@ -54,6 +54,24 @@ public class abonnementList
 
 
     public static void  addAbonnement(int idClient , int idCommercant){
+        for(Abonnement a : abonnements){
+            if(a.getIdCommercant()==idCommercant && a.getIdClient()==idClient){
+                // Cet abonnement existe déjà
+                return;
+            }
+        }
         abonnements.add(new Abonnement(idClient,idCommercant));
+    }
+
+    public static void  delAbonnement(int idClient , int idCommercant){
+        ArrayList<Abonnement> del=new ArrayList<Abonnement>();
+        for(Abonnement a : abonnements){
+            if(a.getIdCommercant()==idCommercant && a.getIdClient()==idClient){
+                del.add(a);
+            }
+        }
+        for(Abonnement a : del){
+            abonnements.remove(a);
+        }
     }
 }

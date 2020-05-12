@@ -16,12 +16,10 @@ import android.widget.Toast;
 import com.main.exercice2.androidproject.Client.Client;
 import com.main.exercice2.androidproject.Client.MainClient;
 import com.main.exercice2.androidproject.Client.NewClient;
+import com.main.exercice2.androidproject.Commercant.CommercantObjet;
 import com.main.exercice2.androidproject.Commercant.MainCommercant;
 import com.main.exercice2.androidproject.Commercant.NewCommercant;
-import com.main.exercice2.androidproject.Interfaces.AlertType;
 import com.main.exercice2.androidproject.Interfaces.LoginAs;
-
-import org.osmdroid.util.GeoPoint;
 
 public class LoginActivity extends AppCompatActivity implements LoginAs {
     boolean client ;
