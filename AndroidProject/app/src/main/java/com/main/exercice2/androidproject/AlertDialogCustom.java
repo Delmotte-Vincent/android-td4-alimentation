@@ -83,6 +83,6 @@ public class AlertDialogCustom {
             smsManager.sendTextMessage(String.valueOf(CommercantList.findClientId(idCommercant).getPhoneNumber()),null,message,null,null);
         }
 
-        Toast.makeText(context ,"SMS envoyé a "+ab.size()+" personnes",Toast.LENGTH_LONG).show();
+        Toast.makeText(context ,"Votre SMS a bien été envoyé à tous les abonnés",Toast.LENGTH_LONG).show();
     }
 }

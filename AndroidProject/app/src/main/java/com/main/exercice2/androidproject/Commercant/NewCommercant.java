@@ -54,7 +54,7 @@ public class NewCommercant extends AppCompatActivity {
         String passS =pass.getText().toString();
         String passConfS =passConf.getText().toString();
         String phoneS=phoneNumber.getText().toString();
-        int phoneNumber=Integer.parseInt(phoneS);
+        int phoneNumber=(phoneS.equals(""))?0:Integer.parseInt(phoneS);
 
         if(CommercantList.exist(mailS)) {
             Toast.makeText(this, "cet email est déjà utilisé ", Toast.LENGTH_SHORT).show();
