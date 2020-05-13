@@ -37,13 +37,15 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
     String  mailIn ;
     String  passIn ;
     Button nouveau ;
-    Button see ;
+    ImageView see ;
     boolean covered ;
+    ImageView back ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        back = findViewById(R.id.back);
         info =findViewById(R.id.InfoApp);
         profile=findViewById(R.id.profile);
         connexion = findViewById(R.id.connexion);
@@ -53,6 +55,13 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
         see = findViewById(R.id.see) ;
         Intent intent = this.getIntent();
         client= intent.getBooleanExtra(logClient,true);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         TextView qui = findViewById(R.id.qui);
         covered = true ;
@@ -85,7 +94,6 @@ public class LoginActivity extends AppCompatActivity implements LoginAs {
                     intent = new Intent(getApplicationContext(), NewCommercant.class);
 
                 }
-                finishAffinity();
                 intent.putExtra("client",client);
                 startActivity(intent);
 

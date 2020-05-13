@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,6 +44,8 @@ public class ClientProfilFragment extends Fragment implements AdapterView.OnItem
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         client= ClientList.findClientId(getActivity().getIntent().getExtras().getInt("id"));
         View rootView = inflater.inflate(R.layout.frag_profil,container,false);
+        TextView nomP = rootView.findViewById(R.id.nom_prenom);
+        nomP.setText(client.getFirstName() +" " + client.getLastName());
         deconnexion = rootView.findViewById(R.id.deconnexion);
         commerce.clear();
         for(Abonnement a :abonnementList.getAbonnementClient(client.getId()) ){

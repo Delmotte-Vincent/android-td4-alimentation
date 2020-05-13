@@ -88,13 +88,17 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
         super.onCreate(savedInstanceState);
         Drawable boucherie =  ResourcesCompat.getDrawable(getResources(),R.drawable.boucherie,null);
         Drawable boulangerie =  ResourcesCompat.getDrawable(getResources(),R.drawable.boulangerie,null);
+        Drawable poisson =  ResourcesCompat.getDrawable(getResources(),R.drawable.poissonnerie,null);
+        Drawable fruit = ResourcesCompat.getDrawable(getResources(),R.drawable.mar,null);
+
         commercantOb.setDrawable(boucherie);
         boucherieHalal.setDrawable(boucherie);
         boulangerieTrad.setDrawable(boulangerie);
-
+        fruitEtLegume.setDrawable(fruit);
         setContentView(R.layout.activity_main);
         client = findViewById(R.id.client);
         commercant = findViewById(R.id.commercant);
+        poiCom.setDrawable(poisson);
         if(CommercantList.getCommercants().size()==0) {
             ClientList.add(test);
             ClientList.add(coralie);
@@ -120,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements LoginAs {
             abonnementList.addAbonnement(9, 20);
             abonnementList.addAbonnement(9, 21);
             abonnementList.addAbonnement(9, 22);
+
+            abonnementList.addAbonnement(test.getId(),boucherieHalal.getId());
+            abonnementList.addAbonnement(test.getId(),poiCom.getId());
+
+            PostList.alertes.add(new Post("test","message","type",boucherie,false,boucherieHalal));
 
             PostList.getAlertes().add(new Post("Rupture de stock", "Les stocks de légumes sont vidés," +
                     " ils seront à nouveau disponible le Vendredi 15 Mai à partir de 8h00", "Légume", null, true, christophe));
