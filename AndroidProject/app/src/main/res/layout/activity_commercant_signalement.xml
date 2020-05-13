@@ -36,12 +36,12 @@
 
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxCom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="partager sur Twitter "
+        android:layout_marginHorizontal="20dp"
         android:textColor="#00F"
-        android:onClick="onCheckboxClicked"
         />
 
     <LinearLayout

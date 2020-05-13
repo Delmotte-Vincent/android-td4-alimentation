@@ -8,15 +8,19 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RemoteViews;
@@ -47,7 +51,7 @@ public class CommercantSignalement extends AppCompatActivity implements Constant
     private boolean defaultPicture;
     private int notificationId = 0;
     private Bitmap picture;
-
+    CheckBox checkBox ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class CommercantSignalement extends AppCompatActivity implements Constant
         Bundle b = this.getIntent().getExtras();
         int id =b.getInt("id");
         commercant = CommercantList.findClientId(id);
+        checkBox = findViewById(R.id.checkBoxCom);
 
         //this.defaultPicture=true;
 
@@ -83,6 +88,13 @@ public class CommercantSignalement extends AppCompatActivity implements Constant
                 sendNotificationOnChannel(titre, desc, CHANNEL_ID, NotificationCompat.PRIORITY_MAX);
                 Toast.makeText(CommercantSignalement.this,"Nouveau Signalement : "+titre+" à été créé",Toast.LENGTH_LONG).show();
                 PostList.getAlertes().add(new Post(titre,desc, type, draw, false,commercant));
+                if(checkBox.isChecked()){
+                    Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                            "://" + getResources().getResourcePackageName(R.drawable.boucherie)
+                            + '/' + getResources().getResourceTypeName(R.drawable.boucherie) + '/' + getResources().getResourceEntryName(R.drawable.boucherie) );
+                    shareOnTwitter(titre+"\n"+desc,imageUri);
+                }
+
 
             }
         });
@@ -188,6 +200,27 @@ public class CommercantSignalement extends AppCompatActivity implements Constant
     private void setImage(Bitmap picture) {
         ImageView i = findViewById(R.id.image_signal);
         i.setImageBitmap(picture);
+    }
+
+    public  void shareOnTwitter( String textBody, Uri fileUri) {
+        AppCompatActivity appCompatActivity = this ;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.setPackage("com.twitter.android");
+        intent.putExtra(Intent.EXTRA_TEXT,!TextUtils.isEmpty(textBody) ? textBody : "");
+
+        if (fileUri != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/*");
+        }
+
+        try {
+            appCompatActivity.startActivity(intent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            ex.printStackTrace();
+            Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
+        }
     }
 
 }
